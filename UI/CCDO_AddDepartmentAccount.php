@@ -9,7 +9,7 @@ $handler = new AccountHandler();
 $typeDepartment = $handler->getTypeOfDepartment();
 include('../UI/header/header_admin.php');
 ?>
-<form action="addDepartmentAccountFunction.php" method="POST">
+<form action="addDepartmentAccountFunction.php" method="POST" class="form-validate-jquery">
                         <!-- Page header -->
                         <div class="page-header page-header-default">
                             <div class="page-header-content">

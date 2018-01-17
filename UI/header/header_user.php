@@ -8,31 +8,43 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
+    $arrs[3]="";
     $title = "CCDO - Add Document";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
     $arrs[0]="";
     $arrs[1]="active";
     $arrs[2]="";
+    $arrs[3]="";
     $title = "CCDO - Document List";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')){
     $arrs[0]="";
     $arrs[1]="";
     $arrs[2]="active";
+    $arrs[3]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')){
 	$arrs[0]="";
     $arrs[1]="";
     $arrs[2]="active";
+    $arrs[3]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
     $arrs[0]="";
     $arrs[1]="active";
     $arrs[2]="";
+    $arrs[3]="";
     $title = "CCDO - Document List";
+}
+else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="active";
+    $title = "CCDO - Trash";
 }
 ?>
 <!DOCTYPE html>
@@ -69,6 +81,14 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
 
 </head>
 <body>
@@ -79,7 +99,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
         <div id="header" class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
-                <img src="assets/images/CCDO Logo.png" alt=""style="background-color:#ffffff"  /></a>
+                <img src="assets/images/CCDO Logo.png"/></a>
 
             <ul class="nav navbar-nav visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -181,12 +201,19 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
                                 <div class="category-content no-padding">
                                     <ul class="navigation navigation-main navigation-accordion">
 
-                                       <li class="active">
-                                            <a href="#"><i class="icon-calendar"></i><span> Document</span></a>
+                                       <li>
+                                            <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
                                             <ul>
                                                 <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Add Document</a></li>
                                                 <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li>
+                                            <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
+                                            <ul>
                                                 <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <span class="badge bg-blue-400"><?php echo '1' ?></span></a></li>
+                                                <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
                                             </ul>
                                         </li>
 

@@ -139,7 +139,7 @@ include('../UI/header/header_user.php');
                                                   <table class="table datatable-html" id="table" style="font-size: 13px; width: 100%;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 5%;"><input type="checkbox" id="select-all" class="form-control" name="" ></th>
+                                                                    <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" ></th>
                                                                     <th style="width: 30%;">Recipients</th>
                                                                     <th style="width: 20%;">Email</th>
                                                                     <th style="width: 20%;">Type</th>
@@ -149,7 +149,7 @@ include('../UI/header/header_user.php');
                                                                 <?php if($cooperativeProfile){
                                                                     foreach($cooperativeProfile as $coop){?>
                                                                 <tr>
-                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
+                                                                    <td><input type="checkbox"  name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
                                                                      <td><?php echo $coop['Cooperative_Name'];?></td>
                                                                      <td><?php echo $coop['Email_Address'];?></td>
                                                                      <td>Cooperative</td>

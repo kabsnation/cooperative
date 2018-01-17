@@ -14,7 +14,7 @@ $id = $_SESSION['idAccount'];
                 <div class="page-header page-header-default has-cover" style="border: 1px solid #ddd; border-bottom: 0;">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i><span class="text-semibold">Messages</span> - Trash</h4>
+                            <h4><i class="icon-mail5 position-left"></i><span class="text-semibold">Messages</span> - Trash</h4>
                         </div>
 
                         <div class="heading-elements">

@@ -51,6 +51,21 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
+    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/uploaders/fileinput.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/uploader_bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jasny_bootstrap.min"></script>
+    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
@@ -58,12 +73,6 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
     <!-- /theme JS files -->
 </head>
 <body>

@@ -60,14 +60,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>First name:</strong></label>
-                                                                <input  ID="txtFirstName" name="txtFirstName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control" placeholder="Juan" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtFirstName" name="txtFirstName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control"  onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Middle name:</strong></label>
-                                                                <input  ID="txtMiddleName" name="txtMiddleName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control" placeholder="Dela Cruz" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtMiddleName" name="txtMiddleName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control" onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -84,7 +84,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label><span class="text-danger">* </span><strong>Phone Number:</strong></label>
-                                                                <input ID="txtPhone" type="phone" name="txtPhone" required="required" class="form-control"></input>
+                                                                <input ID="txtPhone" type="text" data-mask="(+63)99-999-9999" name="txtPhone" required="required" placeholder="(+63) 999-999-9999" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -149,7 +149,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Date of Registration:</strong></label>
-                                                                <input  ID="txtDateOfRegistration" name="txtDateOfRegistration" class="form-control" required="required" placeholder="mm/dd/yyyy"></input>
+                                                                <input  ID="txtDateOfRegistration" name="txtDateOfRegistration" class="form-control" required="required" placeholder="MM/DD/YYYY"></input>
                                                             </div>
                                                         </div>
 
@@ -188,7 +188,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Affiliation:</strong></label>
-                                                                <input  ID="txtAffiliation" name="txtAffiliation" class="form-control" required="required" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtAffiliation" name="txtAffiliation" class="form-control" required="required" type="text" onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
 
@@ -318,7 +318,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Date of Regular General Assembly Meeting:</strong></label>
                                                                 <input  ID="txtDateofRegularGeneralAssemblyMeeting" 
-                                                                name="txtDateofRegularGeneralAssemblyMeeting" required="required" class="form-control"></input>
+                                                                name="txtDateofRegularGeneralAssemblyMeeting" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -326,7 +326,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Date of Monthly Board Meeting:</strong></label>
                                                                 <input  ID="txtDateofMonthlyBoardMeeting"
-                                                                 name="txtDateofMonthlyBoardMeeting" required="required" class="form-control"></input>
+                                                                 name="txtDateofMonthlyBoardMeeting" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -334,7 +334,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Date of Committee Meeting:</strong></label>
                                                                 <input  ID="txtDateofCommitteeMeeting" 
-                                                                name="txtDateofCommitteeMeeting" required="required" class="form-control"></input>
+                                                                name="txtDateofCommitteeMeeting" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -396,14 +396,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Beginning: </strong></label>
-                                                                <input  ID="txtBeginning" name="txtBeginning" required="required" class="form-control"></input>
+                                                                <input  ID="txtBeginning" name="txtBeginning" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Beginning:</strong></label>
-                                                                <input  ID="txtBeginning1" name="txtBeginning1" required="required" class="form-control"></input>
+                                                                <input  ID="txtBeginning1" name="txtBeginning1" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -412,14 +412,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>To Date: </strong></label>
-                                                                <input  ID="txtToDate" name="txtToDate" required="required" class="form-control"></input>
+                                                                <input  ID="txtToDate" name="txtToDate" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>To Date:</strong></label>
-                                                                <input  ID="txtToDate1" name="txtToDate1" required="required" class="form-control"></input>
+                                                                <input  ID="txtToDate1" name="txtToDate1" required="required" placeholder="MM/DD/YYYY" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -683,35 +683,35 @@ include('../UI/header/header_admin.php');
             });
 
             jQuery(function ($) {
-                $("#txtDateOfRegistration").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtDateOfRegistration").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             });
 
             jQuery(function ($) {
-                $("#txtBeginning").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtBeginning").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             });
 
             jQuery(function ($) {
-                $("#txtBeginning1").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtBeginning1").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             });
 
             jQuery(function ($) {
-                $("#txtToDate").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtToDate").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             });
 
             jQuery(function ($) {
-                $("#txtToDate1").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtToDate1").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             });
 
             jQuery(function ($) {
-                $("#txtDateofCommitteeMeeting").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtDateofCommitteeMeeting").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             })
 
             jQuery(function ($) {
-                $("#txtDateofRegularGeneralAssemblyMeeting").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtDateofRegularGeneralAssemblyMeeting").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             })
 
             jQuery(function ($) {
-                $("#txtDateofMonthlyBoardMeeting").mask("99/99/9999", { placeholder: "mm/dd/yyyy" });
+                $("#txtDateofMonthlyBoardMeeting").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             })
 
             function Validate(txt) {
