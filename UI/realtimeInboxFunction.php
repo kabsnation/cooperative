@@ -17,6 +17,7 @@ $id = $_POST['id'];
 	            	$myArray[3][] = "idTracking=".$row['idTracking'];
 	            $myArray[4][] = $row['idlocation'];
 	            $myArray[5][] = $row['isopen'];
+	            $myArray[6][]= $row['canbedeleted'];
 	    }
 	    $_SESSION['defaultInbox'] = 0;
 	    echo json_encode($myArray);

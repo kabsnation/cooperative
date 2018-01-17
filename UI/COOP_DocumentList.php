@@ -73,7 +73,7 @@ include('../UI/header/header_user.php');
     });
     table.columns.adjust().draw();
     function realTime(){
-        setTimeout(realTime,1000);
+        setTimeout(realTime,10000);
         var tablee = $('#tableCoopeartiveAccount').DataTable();
         var info = tablee.page.info();
          $.ajax({

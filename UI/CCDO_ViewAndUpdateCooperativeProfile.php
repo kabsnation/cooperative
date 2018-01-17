@@ -1,85 +1,19 @@
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head >
-    <title>CCDO - Update Cooperative Profile</title>
-
-    <link rel="icon" href="/assets/images/CCDO Logo.png" />
-
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript" src="assets/js/sweetalert-dev.js"></script>
-    <link rel="stylesheet" href="assets/css/sweetalert.css" />
-
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
-    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/colors.css" rel="stylesheet" type="text/css" />
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-    <!-- /theme JS files -->
-</head>
-<body>
-    <form id="form1"  class="form-validate-jquery">
-
-    <!-- Main navbar -->
-    <div class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/CCDO Logo.png" alt=""style="background-color:#ffffff"  /></a>
-
-            <ul class="nav navbar-nav visible-xs-block">
-                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
-                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-        </div>
-
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <ul class="nav navbar-nav">
-                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-
-                <li class="dropdown dropdown-user">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="">
-                        <i class="icon-cog5"></i>
-                        <span>Username</span>
-                        <i class="caret"></i>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- /main navbar -->
+<?php
+session_start();
+if(!isset($_SESSION['idAccountAdmin'])){
+    echo "<script>window.location='index.php';</script>";
+}
+require("../Handlers/AccountHandler.php");
+require("../config/config.php");
+$handler = new AccountHandler();
+$typeCooperative = $handler->getTypeOfCooperative();
+$membership = $handler->getMembership();
+$area = $handler->getAreaOfOperation();
+$composition = $handler->getMembershipComposition();
+$id = $_GET['id'];
+$info = $handler->getCoopAccountById($id);
+include('../UI/header/header_admin.php');
+?>
 
         <!-- Page container -->
         <div class="page-container">
@@ -232,34 +166,23 @@
                                             <div class="col-md-4">
                                                 <div class="form-group has-feedback">
                                                     <label><span class="text-danger">* </span><strong>Type of Cooperative:</strong></label>
-                                                    <select disabled="true"  ID="ddlTypeOfCooperative" required="required" class="form-control">
-                                                        <option Value="" Text=""></option>
-                                                        <option Value="1" Text="Bank"></option>
-                                                        <option Value="2" Text="Credit"></option>
-                                                        <option Value="3" Text="Consumers"></option>
-                                                        <option Value="4" Text="Federation"></option>
-                                                        <option Value="5" Text="Laboratory"></option>
-                                                        <option Value="6" Text="Marketing"></option>
-                                                        <option Value="7" Text="Multi-Purpose (Agri)"></option>
-                                                        <option Value="8" Text="Multi-Purpose (Non-Agri)"></option>
-                                                        <option Value="9" Text="Producers"></option>
-                                                        <option Value="10" Text="Service"></option>
-                                                        <option Value="11" Text="Union"></option>
-                                                        <option Value="12" Text="Others"></option>
-                                                    </select>
+                                                    <select  ID="ddlTypeOfCooperative" name="ddlTypeOfCooperative" required="required" class="form-control" disabled="true">
+                                                                   <?php foreach($typeCooperative as $type){?>
+                                                                   <option value="<?php echo $type['idType'];?>"><?php echo $type['Cooperative_Type'];?></option>
+                                                                   <?php }?>
+                                                                </select>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group has-feedback">
                                                     <label><span class="text-danger">* </span><strong>Common Bond of Membership:</strong></label>
-                                                    <select disabled="true"  ID="ddlCommonBondOfMembership" required="required" class="form-control">
-                                                        <option Value="" Text=""></option>
-                                                        <option Value="1" Text="Associational"></option>
-                                                        <option Value="2" Text="Institutional"></option>
-                                                        <option Value="3" Text="Occupational"></option>
-                                                        <option Value="4" Text="Residential"></option>
-                                                    </select>
+                                                     <select  ID="ddlCommonBondOfMembership" 
+                                                                name="ddlCommonBondOfMembership" required="required" class="form-control" disabled="true">
+                                                                    <?php foreach($membership as $member){?>
+                                                                   <option value="<?php echo $member['idCommonBond_of_Membership'];?>"><?php echo $member['Membership'];?></option>
+                                                                   <?php }?>
+                                                                </select>
                                                 </div>
                                             </div>
 
@@ -276,11 +199,11 @@
                                             <div class="col-md-4">
                                                 <div class="form-group has-feedback">
                                                     <label><span class="text-danger">* </span><strong>Area of Operation:</strong></label>
-                                                    <select disabled="true"  ID="ddlAreaOfOperation" required="required" class="form-control">
-                                                        <option Value="" Text=""></option>
-                                                        <option Value="1" Text="Barangay"></option>
-                                                        <option Value="2" Text="City"></option>
-                                                    </select>
+                                                    <select  ID="ddlAreaOfOperation" name="ddlAreaOfOperation" required="required" class="form-control" disabled="true">
+                                                                    <?php foreach($area as $operation){?>
+                                                                   <option value="<?php echo $operation['idarea_of_operation'];?>"><?php echo $operation['area'];?></option>
+                                                                   <?php }?>
+                                                                </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -662,19 +585,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group has-feedback">
                                                     <label><span class="text-danger">* </span><strong>Membership Composition:</strong></label>
-                                                    <select disabled="true"  ID="ddlMembershipComposition" required="required" class="form-control">
-                                                        <option Value="" Text=""></option>
-                                                        <option Value="1" Text="Drivers/ Operators"></option>
-                                                        <option Value="2" Text="Farmers"></option>
-                                                        <option Value="3" Text="Fisherfolks"></option>
-                                                        <option Value="4" Text="Government Employees"></option>
-                                                        <option Value="5" Text="Indigenous Community"></option>
-                                                        <option Value="6" Text="Persons with Disability"></option>
-                                                        <option Value="7" Text="Private Employees"></option>
-                                                        <option Value="8" Text="Women"></option>
-                                                        <option Value="9" Text="Youth"></option>
-                                                        <option Value="10" Text="Others (Specify)"></option>
-                                                    </select>
+                                                     <select  ID="ddlMembershipComposition" 
+                                                                name="ddlMembershipComposition" required="required" class="form-control" disabled="true">
+                                                                    <?php foreach($composition as $comp){?>
+                                                                    <option value="<?php echo $comp['idMembership_composition'];?>"><?php echo $comp['Composition'];?></option>
+                                                                    <?php }?>
+                                                                </select>
                                                 </div>
                                             </div>
 

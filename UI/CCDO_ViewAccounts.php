@@ -67,8 +67,8 @@ include('../UI/header/header_admin.php');
                                                                                     </a>
 
                                                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                                                        <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?<?php echo $coop['idCooperative_Profile'];?>" onclick="viewCooperative()"><i class="icon-eye"></i> View</a></li>
-                                                                                        <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?<?php echo $coop['idCooperative_Profile'];?>"><i class="icon-pencil7"></i> Update</a></li>
+                                                                                        <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?id=<?php echo $coop['idCooperative_Profile'];?>" onclick="viewCooperative()"><i class="icon-eye"></i> View</a></li>
+                                                                                        <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?id=<?php echo $coop['idCooperative_Profile'];?>"><i class="icon-pencil7"></i> Update</a></li>
                                                                                         <li><a href="#"><i class="icon-user-minus"></i> Delete</a></li>
                                                                                     </ul>
                                                                                 </li>
@@ -108,7 +108,7 @@ include('../UI/header/header_admin.php');
                                                                                         </a>
 
                                                                                         <ul class="dropdown-menu dropdown-menu-right">
-                                                                                            <li><a href="#"><i class="icon-eye"></i> View</a></li>
+                                                                                            <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?"><i class="icon-eye"></i> View</a></li>
                                                                                             <li><a href="#"><i class="icon-pencil7"></i> Update</a></li>
                                                                                             <li><a href="#"><i class="icon-user-minus"></i> Delete</a></li>
                                                                                         </ul>

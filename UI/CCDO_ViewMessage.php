@@ -11,7 +11,9 @@ $con = $connect-> connectDB();
 if(isset($_GET['idTracking'])){
 	$idTracking = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idTracking'])));
 	//check if read or not
-	$check = $doc->checkIfRead($idTracking,$id);
+	$doc->checkIfRead($idTracking,$id);
+	//check if need a reply
+	$doc->checkReply($idTracking,$id);
 	$infos = $doc->getInboxInfo($idTracking,$id);
 	$firstRowLocation = $doc->getTrackingLocationById($idTracking,$id);
 	$trackingLocation = $doc->getTrackingLocation($idTracking);
@@ -160,7 +162,7 @@ else if(isset($_GET['idReply'])){
 						</div>
                     </div>
                     <!-- /media library -->
-
+<?php if(isset($info['needReply']) && $info['needReply']=='1' ||$type='reply'){ ?>
 				<form action="replyFunction.php" method="POST">
                     <!-- Summernote editor -->
 					<div class="panel panel-white">
@@ -170,21 +172,10 @@ else if(isset($_GET['idReply'])){
 
 						<div class="panel-body">
 							<div>
-								<?php if(isset($info['needReply']) && $info['needReply']=='1'){?>
+								
 									<textarea type="text" class="summernote" id="reply" name="reply"></textarea>
-								<?php $dsbl ='';}
-								else if(!isset($info['needReply']) && $type=='tracking' || $info['needReply']=='0'){ $dsbl ='disabled';?>
-								<div class="text-center">
-									<input id="acknowledge" class="btn bg-info-400" type="button" onclick="disableButton()" value="ACKNOWLEDGE">
-								</div>
-								<?php }
-								else if($type=='reply'){?>
-								<textarea type="text" class="summernote" id="reply" name="reply"></textarea>
-								<?php $dsbl ='';}?> 
 								
 							</div>
-
-<?php }}?>
 
 
 							<div class="text-right">
@@ -196,13 +187,14 @@ else if(isset($_GET['idReply'])){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="submit" id="send" class="btn bg-teal" value="Send" name="send" <?php echo $dsbl;?> />
+									<input type="submit" id="send" class="btn bg-teal" value="Send" name="send"/>
 					</div>
+					
 					<!-- /summernote editor -->
 				</form>
 				</div>
 				<!-- /content area -->
-
+<?php }}}?>
 			</div>
 			<!-- /main content -->
 

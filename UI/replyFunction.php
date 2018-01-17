@@ -22,6 +22,7 @@ if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id'])
 		$id = $_POST['id'];
 		$trackingNumber = $_POST['trackingNumber'];
 		$receiverId = $_POST['receiverId'];
+		$result = $doc->changeInboxStatus($id,$idTracking);
 		if(strpos($_POST['title'],'reply:')!== false)
 			 $title = $_POST['title'];
 		else

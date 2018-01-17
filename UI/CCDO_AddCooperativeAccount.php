@@ -561,7 +561,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Membership Composition:</strong></label>
                                                                 <select  ID="ddlMembershipComposition" 
-                                                                name="ddlMembershipComposition" required="required" class="form-control">
+                                                                name="ddlMembershipComposition" required="required" class="form-control" >
                                                                     <?php foreach($composition as $comp){?>
                                                                     <option value="<?php echo $comp['idMembership_composition'];?>"><?php echo $comp['Composition'];?></option>
                                                                     <?php }?>
