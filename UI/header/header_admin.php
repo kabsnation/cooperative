@@ -3,19 +3,20 @@ $handler = new AccountHandler();
 $admin = $handler->getAccountById($_SESSION['idAccountAdmin']);
 $arrs = array();
 $title ="";
-if($_SERVER['REQUEST_URI'] =='/coop/CCDO_AddCooperativeAccount.php'){
+if(strpos($_SERVER['REQUEST_URI'],'CCDO_AddCooperativeAccount.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
     $title = "CCDO - Add Cooperative Account";
 }
-else if($_SERVER['REQUEST_URI'] =='/coop/CCDO_AddDepartmentAccount.php'){
+
+else if(strpos($_SERVER['REQUEST_URI'],'CCDO_AddDepartmentAccount.php')){
     $arrs[0]="";
     $arrs[1]="active";
     $arrs[2]="";
     $title = "CCDO - Add Department Account";
 }
-else {
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     $arrs[0]="";
     $arrs[1]="";
     $arrs[2]="active";

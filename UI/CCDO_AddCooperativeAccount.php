@@ -19,7 +19,7 @@ include('../UI/header/header_admin.php');
                         <div class="page-header page-header-default">
                             <div class="page-header-content">
                                 <div class="page-title">
-                                    <h4><span class="text-semibold">Manage Department Accounts</span> - Add Cooperative Accounts</h4>
+                                    <h4><span class="text-semibold">Manage Accounts</span> - Add Cooperative Accounts</h4>
                                 </div>
                             </div>
                         </div>
