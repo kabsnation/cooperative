@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['idAccount'])){
+    echo "<script>window.location='index.php';</script>";
+}
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
@@ -19,7 +22,9 @@ $id = $_SESSION['idAccount'];
 
 						<div class="heading-elements">
 							<div class="heading-btn-group">
-								<a onclick="deleteAll()" class="btn btn-link btn-float has-text"><i class="icon-trash text-danger"></i> <span>Delete</span></a>
+								<a  id="mark" onclick="showDelete()" class="btn btn-link btn-float has-text"><i class="icon-checkmark text-primary"></i> <span>Mark Item</span></a>
+								<a  id="delt" onclick="deleteAll()" class="btn btn-link btn-float has-text" hidden="true" style="margin-left: -100px;"><i class="icon-trash text-danger" ></i> <span>Delete</span></a>
+								<a  id="cancel" onclick="cancel()" class="btn btn-link btn-float has-text" hidden="true" style="margin-top: -64px;"><i class="icon-cross text-danger" ></i> <span>Cancel</span></a>
 							</div>
 						</div>
 					</div>
@@ -44,7 +49,7 @@ $id = $_SESSION['idAccount'];
 						<table class="table datatable-html" id="tableInbox">
 	                        <thead>
 	                            <tr>
-	                            	<th><input type="checkbox" id="select-all" class="styled"></th>
+	                            	<th><input type="checkbox" id="select-all" onclick="selectAll()" class="styled"></th>
 	                            	<th>Subject</th>
 	                                <th>From</th>
 	                                <th>Date</th>
@@ -70,8 +75,78 @@ $id = $_SESSION['idAccount'];
 </body>
 </html>
 <script>
+	var tabl = $('#tableInbox').DataTable();
+	cancel();
+	function showDelete(){
+		tabl.column( 0 ).visible( true );
+		tabl.column( 4 ).visible( false );
+		document.getElementById("mark").style.display = "none";
+		document.getElementById("delt").style.display = "block";
+		document.getElementById("cancel").style.display = "block";
+		 var counter = 0;
+		 $('#select-all').click(function(event) {   
+		        if(counter ==0){
+		            $(':checkbox').each(function() {
+		                this.checked = true;                   
+		            });
+		            counter = 1;
+		            }
+		        else{
+		            $(':checkbox').each(function() {
+		                    this.checked = false;                        
+		                });
+		            counter = 0;
+		            }
+		});
+	}
+	function cancel(){
+		tabl.column( 0 ).visible( false );
+		tabl.column( 4 ).visible( true );
+		document.getElementById("mark").style.display = "block";
+		document.getElementById("delt").style.display = "none";
+		document.getElementById("cancel").style.display = "none";
+	}
+	var counter2 = 0;
+	function selectAll(){
+		if(counter2 ==0){
+			 var counter = 0;
+			 $('#select-all').click(function(event) {   
+			        if(counter ==0){
+			            $(':checkbox').each(function() {
+			                this.checked = true;                   
+			            });
+			            counter = 1;
+			            }
+			        else{
+			            $(':checkbox').each(function() {
+			                    this.checked = false;                        
+			                });
+			            counter = 0;
+			            }
+			});
+			 counter2=1;
+		}
+		else{
+			 var counter = 0;
+			 $('#select-all').click(function(event) {   
+			        if(counter ==0){
+			            $(':checkbox').each(function() {
+			                this.checked = false;                   
+			            });
+			            counter = 1;
+			            }
+			        else{
+			            $(':checkbox').each(function() {
+			                    this.checked = true;                        
+			                });
+			            counter = 0;
+			            }
+			});
+			 counter2 = 0;
+		}
+	}
     function realTime(){
-        setTimeout(realTime,1000);
+        setTimeout(realTime,10000);
         var tablee = $('#tableInbox').DataTable();
         var info = tablee.page.info();
          $.ajax({
@@ -105,7 +180,12 @@ $id = $_SESSION['idAccount'];
                     
                     var type = "<td>"+data[1][i]+"</td>";
                     var date = "<td>"+data[2][i]+"</td>";
-                    var action = "<td class='text-center'><a href='CCDO_ViewMessage.php?"+data[3][i]+"'><i class='icon-mail-read'></i> Open </a></li><a href='#' class='text-danger' onclick='promptDelete("+data[4][i]+");'><i class='icon-trash'></i> Delete </a></li>";
+                    if(data[6][i]=='0'){
+                    	  var action = "<td class='text-center'><a href='CCDO_ViewMessage.php?"+data[3][i]+"'><i class='icon-mail-read'></i> Open </a></li>";
+                    }
+                    else{
+                    	var action = "<a href='CCDO_ViewMessage.php?"+data[3][i]+"' class='text-center'><i class='icon-mail-read'></i> Open </a></li><a href='#' class='text-danger' onclick='promptDelete("+data[4][i]+");'><i class='icon-trash'></i> Delete </a></li>";
+                    }
                     table.row.add([checkbox,title,type,date, action]).draw(false);
                 }
                 realTime();
@@ -137,27 +217,17 @@ $id = $_SESSION['idAccount'];
     	$.ajax({
             type: "POST",
             url: "deleteInbox.php",
-            data: "id="+val+"&check=0",
+            data: "id="+val+"&check=0&del=1",
             success: function(data){
-            	setTimeout(function(){
-            		displayNext();
-                        },100);
+            	success();
             }
         });
     }
-    function displayNext(){
-    	swal({
-			  title: "Success!",
-			  text: "",
-			  type: "success"
-			}
-		);
-    }
     function deleteAll(){
-    	var checker = document.getElementById("check");
-    	var checkboxes = $('#check');
-    	if(checker.checked == true){
-    			swal({
+    	var checkboxes = $('input[type=checkbox]:checked');
+    	var ids = [];
+	    if(checkboxes != 0){
+	    		swal({
 				    	title: "Are you sure?",
 				        text: "You will not be able to recover this information!",
 				        type: "warning",
@@ -167,48 +237,51 @@ $id = $_SESSION['idAccount'];
 				        closeOnConfirm: true,
 				        closeOnCancel: true
 				   	},
-			    function(isConfirm){
-			       	if(isConfirm){
-			       		$.each($('input[type=checkbox]:checked'), function(){
-			       			if(this.value !='on'){
-			       				$.ajax({
+				   function(isConfirm){
+				      	if(isConfirm){
+				      		var count = 0;
+				      		$.each($('input[type=checkbox]:checked'), function(){
+				      			if(this.value !='on'){
+				      				ids[count] = this.value;
+				      				count++;
+				      			}
+				      		});
+				      		var jsonString = JSON.stringify(ids);
+				      		$.ajax({
 						            type: "POST",
 						            url: "deleteInbox.php",
-						            data: "id="+this.value,
+						            data: {id : jsonString,del :1},
 						            success: function(data){
+						            	if(data == '1'){
+						            		failed();
+						            	}
+						            	else{
+						            		success();
+						            	}
 						            }
 						        });
-			       			}
-			       		});
-			       		setTimeout(function(){
-			       			swal({
-								  title: "Success!",
-								  text: "",
-								  type: "success"
-								},
-								 function(isConfirm){
-			       					window.location='CCDO_Inbox.php';
-								 }
-
-							);
-			       		},500);
-			   		}
-			});
-    	}
+				  		}
+				});
+    		}
     }
- var counter = 0;
- $('#select-all').click(function(event) {   
-        if(counter ==0){
-            $(':checkbox').each(function() {
-                this.checked = true;                   
-            });
-            counter = 1;
-            }
-        else{
-            $(':checkbox').each(function() {
-                    this.checked = false;                        
-                });
-            counter = 0;
-            }
-});
+    function success(){
+    	setTimeout(function(){
+			swal({
+				title: "Success!",
+				text: "",
+				type: "success"
+				},
+				function(isConfirm){
+					window.location='CCDO_Inbox.php';
+				});},500); 
+    }
+    function failed(){
+		setTimeout(function(){
+			swal({
+			    title: "Failed!",
+				text: "Some items has not yet been responded",
+				type: "warning"
+				},
+				function(isConfirm){});},500);
+    }
 </script>

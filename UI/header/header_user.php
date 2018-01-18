@@ -142,7 +142,20 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
             }
         });
         }
-
+        function realTime(){
+            setTimeout(realTime,10000);
+             $.ajax({
+                type: "POST",
+                url: "checkerInbox.php",
+                data: "count="+info.recordsTotal+"&id="+<?php echo $id;?>,
+                success: function(data){
+                     if(data == 1){
+                        addRow();
+                    }
+                },
+                dataType: "json"
+            });
+        }  
         function newMessageNotification(){
             PNotify.desktop.permission();
             (new PNotify({

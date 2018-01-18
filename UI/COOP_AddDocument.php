@@ -246,5 +246,24 @@ table.columns.adjust().draw();
            }
         });
     }
-
+      function success(){
+        setTimeout(function(){
+            swal({
+                title: "Success!",
+                text: "",
+                type: "success"
+                },
+                function(isConfirm){
+                    window.location='CCDO_Inbox.php';
+                });},500); 
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
 </script>
