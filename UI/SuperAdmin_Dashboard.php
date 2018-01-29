@@ -40,7 +40,7 @@
 
 </head>
 
-	<!-- Main navbar -->
+<!-- Main navbar -->
     <div id="header" class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
@@ -88,7 +88,7 @@
     </script>
     <!-- /main navbar -->
 
-    	<!-- Page container -->
+    <!-- Page container -->
 	<div class="page-container">
 
 		<!-- Page content -->
@@ -155,7 +155,7 @@
 				<div class="page-header page-header-default">
 					<div class="page-header-content">
 						<div class="page-title">
-							<h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Administrator</span> - Dashboard</h4>
+							<h4> <span class="text-semibold">Welcome!</span> - Administrator</h4>
 						</div>
 
 					</div>
@@ -203,12 +203,12 @@
 									<div class="panel-body">
 
 										<h3 class="no-margin"><?php echo '23' ?></h3>
-										Online Users
+										Registered Users
 										<div class="text-muted text-size-small"><p class="text-muted btn-link"><i class="icon-eye"></i> Click to View</p></div>
 									</div>
 								</div>
 							</a>
-							
+
 						</div>
 
 						<div class="col-lg-3">
