@@ -128,44 +128,40 @@
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="activity">
-                                        
-                                        <div class="row" style="font-size: 14px;">
-                                            <div class="col-lg-8">
-                                                <div class="panel panel-flat">
-                                                    <div class="panel-body">
 
-                                                        <legend class="text-semibold">General Information</legend>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Name</h6>
+                                                        Juan Dela Cruz
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Name:</label>
-                                                            <div class="col-lg-8">
-                                                                <label class="text-semibold">Juan Dela Cruz</label>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Username</h6>
+                                                        juandelacruz01
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Username:</label>
-                                                            <div class="col-lg-8">
-                                                                <label class="text-semibold">cooperativeaccount</label>
-                                                            </div>
-                                                        </div>
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Email Address</h6>
+                                                        juandelacruz01@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                        <legend class="text-semibold" style="margin-top: 90px;">Contact Information</legend>
-
-                                                        <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Email Address:</label>
-                                                            <div class="col-lg-8">
-                                                                <label class="text-semibold">juandelacruz@gmail.com</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="col-lg-4 control-label">Contact Number:</label>
-                                                            <div class="col-lg-8">
-                                                                <label class="text-semibold">(+63)9-9999-9999</label>
-                                                            </div>
-                                                        </div>
-
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Phone Number</h6>
+                                                        (+63)99-999-9999
                                                     </div>
                                                 </div>
                                             </div>
