@@ -163,7 +163,7 @@ else if(isset($_GET['idReply'])){
                     </div>
                     <!-- /media library -->
 <?php if(isset($info['needReply']) && $info['needReply']=='1' ||$type='reply'){ ?>
-				<form action="replyFunction.php" method="POST">
+				<form action="replyFunction.php" id='form1' method="POST">
                     <!-- Summernote editor -->
 					<div class="panel panel-white">
 						<div class="panel-heading">
@@ -187,7 +187,7 @@ else if(isset($_GET['idReply'])){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="submit" id="send" class="btn bg-teal" value="Send" name="send"/>
+									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
 					</div>
 					
 					<!-- /summernote editor -->
@@ -241,4 +241,49 @@ else if(isset($_GET['idReply'])){
 			send.prop('class','btn bg-teal');
 			send.prop('disabled',false);
 	}
+	 function confirm(){
+        swal({
+                    title: "Are you sure?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF7043",
+                    confirmButtonText: "Submit",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+            function(isConfirm){
+                if(isConfirm){
+                    var form_data = $('#form1').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "replyFunction.php",
+                        data: form_data,
+                        success: function(data){
+                           success();
+                        }
+                    });
+           }
+        });
+    }
+    function success(){
+        setTimeout(function(){
+            swal({
+                title: "Success!",
+                text: "",
+                type: "success"
+                },
+                function(isConfirm){
+                    window.location='COOP_AddDocument.php';
+                });},500); 
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
 </script>

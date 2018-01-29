@@ -242,5 +242,8 @@ class DocumentHandler{
 		$query = "UPDATE location SET isnotified = 1 WHERE idlocation =$idlocation";
 		$result = $con->update($query);
 	}
+	public function getTransactionLogs($id){
+		
+	}
 }
 ?>

@@ -178,7 +178,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" onclick="testing();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +229,7 @@ var table = $('#table').DataTable();
             }
 });
 table.columns.adjust().draw();
-    function testing(){
+    function confirm(){
         swal({
                     title: "Are you sure?",
                     text: "",

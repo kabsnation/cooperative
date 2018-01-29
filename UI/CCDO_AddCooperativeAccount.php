@@ -653,7 +653,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type="submit" ID="btnSubmit" class="btn btn-primary" Text="Submit" />
+                                                <input type='button' onclick="confirm()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
 
                                         </div>
@@ -729,6 +729,51 @@ include('../UI/header/header_admin.php');
             function changeCoopLbl(txt){
                 $('#lblCoopName').html(txt);
             }
+             function confirm(){
+                swal({
+                            title: "Are you sure?",
+                            text: "",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#FF7043",
+                            confirmButtonText: "Submit",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                    },
+                function(isConfirm){
+                    if(isConfirm){
+                        var form_data = $('#form1').serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "addCoopFunction.php",
+                            data: form_data,
+                            success: function(data){
+                               success();
+                            }
+                        });
+                    }
+                });
+            }
+    function success(){
+        setTimeout(function(){
+            swal({
+                title: "Success!",
+                text: "",
+                type: "success"
+                },
+                function(isConfirm){
+                    window.location='CCDO_AddCooperativeAccount.php';
+                });},500); 
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
         </script>
         
 </html>

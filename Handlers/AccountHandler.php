@@ -181,7 +181,6 @@ class AccountHandler{
 		$con = new Connect();
 		$query = "UPDATE membership_profile SET Total_Number_of_Membership='$membertrainings', Total_Male='$male',Total_Female='$female', Number_of_Regular='$regularmember', Number_of_Associate='$associatemember', Training_Attended_by_Member='$membertrainings', Training_Attended_by_Officers ='$officertrainings', idMembership_composition='$composition' ,Training_Attended_by_Mgt_Staff='$stafftrainings' WHERE idMembership_Profile= $idmember";
 		$result = $con->update($query);
-		return $query;
 	}
 }
 ?>
