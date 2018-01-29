@@ -19,7 +19,7 @@ include('../UI/header/header_user.php');
 ?>
 
                   <div class="content-wrapper">
-                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
+                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data" onsubmit="return validateForm()">
 
                     <div class="content-wrapper">
                         <div class="content">
@@ -89,6 +89,7 @@ include('../UI/header/header_user.php');
                                                 <div class="form-group">
                                                     <label class="control-label"><span class="text-danger">* </span> <strong>Document Type: </strong></label>
                                                     <select  class="form-control select" required="required" name="documentType" ID="documentType">
+                                                        <option></option>
                                                         <?php if($documentType){
                                                             foreach($documentType as $type){?>
                                                             <option value="<?php echo $type['idDocument_Type'];?>"><?php echo $type['Document'];?></option>
@@ -111,9 +112,9 @@ include('../UI/header/header_user.php');
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label><strong>Upload File:</strong></label>
-                                                    <label class="text-danger">Paki-zip/rar kung mahigit sa dalawa ang iuupload.</label>
+                                                    <label><span class="text-danger">* </span><strong>Upload File:</strong></label>
                                                     <input type="file" id="file" name="file" required="required" />
+                                                    <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
                                                 </div>
                                             </div>
 
@@ -178,7 +179,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="submit" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -274,4 +275,20 @@ table.columns.adjust().draw();
                 },
                 function(isConfirm){});},500);
     }
+
+    function validateForm(){
+        var fields = $(".panel-body")
+            .find("select, textarea, input").serializeArray();
+      
+    $.each(fields, function(i, field) {
+            swal({
+                title: "Failed!",
+                text: "Fill out all the required fields.",
+                confirmButtonColor: "#EF5350",
+                type: "error"
+            });
+       }); 
+    }
+
+
 </script>

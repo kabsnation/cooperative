@@ -66,7 +66,6 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
     <script type="text/javascript" src="assets/js/core/libraries/jasny_bootstrap.min"></script>
     <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>

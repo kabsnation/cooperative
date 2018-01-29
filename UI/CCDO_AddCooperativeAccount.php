@@ -14,7 +14,7 @@ $composition = $handler->getMembershipComposition();
 include('../UI/header/header_admin.php');
 ?>
 
-<form id="form1" method="POST" action="addCoopFunction.php"  class="form-validate-jquery">
+<form id="form1" method="POST" action="addCoopFunction.php"  class="form-validate-jquery" onsubmit="return validateForm()">
                         <!-- Page header -->
                         <div class="page-header page-header-default">
                             <div class="page-header-content">
@@ -653,7 +653,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type='button' onclick="confirm()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
+                                                <input type='submit' onclick="confirm()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
 
                                         </div>
@@ -754,26 +754,40 @@ include('../UI/header/header_admin.php');
                     }
                 });
             }
-    function success(){
-        setTimeout(function(){
-            swal({
-                title: "Success!",
-                text: "",
-                type: "success"
-                },
-                function(isConfirm){
-                    window.location='CCDO_AddCooperativeAccount.php';
-                });},500); 
-    }
-    function failed(){
-        setTimeout(function(){
-            swal({
-                title: "Failed!",
-                text: "Some items has not yet been responded",
-                type: "warning"
-                },
-                function(isConfirm){});},500);
-    }
+            function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location='CCDO_AddCooperativeAccount.php';
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Some items has not yet been responded",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
+
+            function validateForm(){
+                var fields = $(".panel-body")
+                        .find("select, textarea, input").serializeArray();
+                  
+                $.each(fields, function(i, field) {
+                        swal({
+                            title: "Failed!",
+                            text: "Fill out all the required fields.",
+                            confirmButtonColor: "#EF5350",
+                            type: "error"
+                        });
+                   }); 
+            }
         </script>
         
 </html>

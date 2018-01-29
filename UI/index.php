@@ -45,7 +45,7 @@ else if(isset($_SESSION['idAccount']))
 </head>
 
 <body class="login-container" style="background-color:#009688;">
-    <form id="form1" action="loginFunction.php" method="POST">
+    <form id="form1" action="loginFunction.php" method="POST" onsubmit="return validateForm()">
         <!-- Page container -->
         <div class="page-container">
 
@@ -69,18 +69,20 @@ else if(isset($_SESSION['idAccount']))
 		                            </div>
 	                                <br />
                             </div>
+                            <div class="validata">
 
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="text" ID="username" name="username" class="form-control" Placeholder="Username" required="required">
-                                <div class="form-control-feedback">
-                                    <i class="icon-user text-muted"></i>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="text" ID="username" name="username" class="form-control" Placeholder="Username" required="required">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user text-muted"></i>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="password" ID="password" name="password" class="form-control" Placeholder="Password" required="required">
-                                <div class="form-control-feedback">
-                                    <i class="icon-lock2 text-muted"></i>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="password" ID="password" name="password" class="form-control" Placeholder="Password" required="required">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-lock2 text-muted"></i>
+                                    </div>
                                 </div>
                             </div>
 
@@ -88,7 +90,7 @@ else if(isset($_SESSION['idAccount']))
                             <br />
 
                             <div class="form-group">
-                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
+                            	<input type="submit" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
                             </div>
 
                         </div>
@@ -131,23 +133,36 @@ else if(isset($_SESSION['idAccount']))
 		});
 	}
       function success(location){
-                setTimeout(function(){
-                    swal({
-                        title: "Success!",
-                        text: "",
-                        type: "success"
-                        },
-                        function(isConfirm){
-                            window.location=location;
-                        });},500); 
-            }
-            function failed(){
-                setTimeout(function(){
-                    swal({
-                        title: "Failed!",
-                        text: "Username or Password is incorrect",
-                        type: "warning"
-                        },
-                        function(isConfirm){});},500);
-            }
+            setTimeout(function(){
+                swal({
+                    title: "Success!",
+                    text: "",
+                    type: "success"
+                    },
+                    function(isConfirm){
+                        window.location=location;
+                    });},500); 
+        }
+        function failed(){
+            setTimeout(function(){
+                swal({
+                    title: "Failed!",
+                    text: "Username or Password is incorrect",
+                    type: "warning"
+                    },
+                    function(isConfirm){});},500);
+        }
+    function validateForm(){
+        var fields = $(".validata")
+                .find("select, textarea, input").serializeArray();
+          
+        $.each(fields, function(i, field) {
+                swal({
+                    title: "Failed!",
+                    text: "Fill out all the required fields.",
+                    confirmButtonColor: "#EF5350",
+                    type: "error"
+                });
+           }); 
+    }
 </script>
