@@ -100,6 +100,12 @@ class DocumentHandler{
 		$result = $con->select($query);
 		return $result;
 	}
+	public function getNewMessageCount($id){
+		$con = new Connect();
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0;";
+		$result = $con->select($query);
+		return $result;
+	}
 	public function getReplyInfo($idReply,$id){
 		$con = new Connect();
 		$query ="SELECT reply.idAccounts as receiverId,reply.idreply,DateTime,reply.trackingNumber as trackingNumber,location.idAccounts as receiver,username,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = location.idAccounts),cooperative_profile.Email_Address) as email FROM reply JOIN inbox_info ON reply.idinbox_info = inbox_info.idinbox_info JOIN location ON location.idreply = reply.idreply LEFT OUTER JOIN accounts ON accounts.idAccounts = reply.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts  where location.idAccounts =$id and location.idReply = $idReply";
@@ -225,6 +231,16 @@ class DocumentHandler{
 				return $result;
 		}
 	}
-
+	function getNotification($id){
+		$con = new Connect();
+		$query = "SELECT isnotified,location.idlocation,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM location LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE location.idAccounts = $id and markasdeleted =0 and isnotified = 0";
+		$result = $con->select($query);
+		return $result;
+	}
+	function updateNotification($idlocation){
+		$con = new Connect();
+		$query = "UPDATE location SET isnotified = 1 WHERE idlocation =$idlocation";
+		$result = $con->update($query);
+	}
 }
 ?>

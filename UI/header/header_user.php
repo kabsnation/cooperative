@@ -3,7 +3,8 @@ $handler = new AccountHandler();
 $admin = $handler->getAccountById($_SESSION['idAccount']);
 $arrs = array();
 $title ="";
-
+$_SESSION['counter']=0;
+$id = $_SESSION['idAccount'];
 if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[0]="active";
     $arrs[1]="";
@@ -131,48 +132,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
             </ul>
         </div>
     </div>
-    <script type="text/javascript">
-        function logOut(){
-            $.ajax({
-            type: "POST",
-            url: "/coop/UI/logout.php",
-            data: "type='admin'",
-            success: function(data){
-                 window.location ='index.php';
-            }
-        });
-        }
-        function realTime(){
-            setTimeout(realTime,10000);
-             $.ajax({
-                type: "POST",
-                url: "checkerInbox.php",
-                data: "count="+info.recordsTotal+"&id="+<?php echo $id;?>,
-                success: function(data){
-                     if(data == 1){
-                        addRow();
-                    }
-                },
-                dataType: "json"
-            });
-        }  
-        function newMessageNotification(){
-            PNotify.desktop.permission();
-            (new PNotify({
-                title: 'New Message',
-                type: 'success',
-                text: 'Subject: From: ',
-                desktop: {
-                    desktop: true,
-                    icon: 'assets/images/pnotify/info.png'
-                }
-            })
-            ).get().click(function(e) {
-                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
-                alert('Redirect to view messge');
-            });
-        }
-    </script>
+
     <!-- /main navbar -->
 
             <!-- Page container -->
@@ -225,7 +185,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
                                         <li>
                                             <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
                                             <ul>
-                                                <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <span class="badge bg-blue-400"><?php echo '1' ?></span></a></li>
+                                                <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
                                                 <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
                                             </ul>
                                         </li>
@@ -239,3 +199,88 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
                     </div>
                     <!--/ Main sidebar -->
 
+    <script type="text/javascript">
+
+        function logOut(){
+            $.ajax({
+            type: "POST",
+            url: "/coop/UI/logout.php",
+            data: "type='admin'",
+            success: function(data){
+                 window.location ='index.php';
+            }
+        });
+        }
+        setInterval(realTime1,1000);
+        function realTime1(){
+             $.ajax({
+                type: "POST",
+                url: "checkerCounter.php",
+                data: "id=<?php echo $id;?>",
+                success: function(data){
+                     if(data == 1){
+                        addToCounter();
+                    }
+                },
+                dataType: "json"
+            });
+        } 
+        function addToCounter(){
+             $.ajax({
+                type: "POST",
+                url: "realtimeCounter.php",
+                data: "",
+                success: function(data){ 
+                    var badge = document.getElementById('badge');
+                    if(data !=0){
+                        badge.innerHTML = data;
+                        toNotify();  
+                    }
+                    
+                    else{
+
+                        badge.innerHTML = null;
+                    }
+                    
+                },
+                dataType: "json",
+                error:function(data){
+                    alert(data);
+                }
+            });
+        }
+        function toNotify(){
+            $.ajax({
+                type: "POST",
+                url: "notifyFunction.php",
+                data: "id=<?php echo $id;?>",
+                success: function(data){ 
+                    if(data!=0){
+                        for(var i =0; i<data.length;i++){
+                            newMessageNotification(data[i].title,data[i].name);
+                        }
+                    }  
+                },
+                dataType: "json",
+                error:function(data){
+                    alert(data);
+                }
+            });
+        }
+        function newMessageNotification(title,sender){
+            PNotify.desktop.permission();
+            (new PNotify({
+                title: 'You have new message from '+sender,
+                type: 'success',
+                text: title,
+                desktop: {
+                    desktop: true,
+                    icon: 'assets/images/pnotify/info.png'
+                }
+            })
+            ).get().click(function(e) {
+                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
+                alert('Redirect to view messge');
+            });
+        }
+    </script>

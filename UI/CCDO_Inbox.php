@@ -145,8 +145,21 @@ $id = $_SESSION['idAccount'];
 			 counter2 = 0;
 		}
 	}
+	// if(typeof(EventSource) !== "undefined") {
+	// 	var tablee = $('#tableInbox').DataTable();
+ //        var info = tablee.page.info();
+	//     var source = new EventSource("checkerInbox.php?id=1&count="+info.recordsTotal);
+	//     source.onmessage = function(event) {
+	//     	if(event.data == 1){
+	//     		addRow();
+	//     	}
+	//     }
+	// } 
+	// else {
+	//    alert('please download chrome in latest version. Thank you.')
+	// }
+	setInterval(realTime,1000);
     function realTime(){
-        setTimeout(realTime,10000);
         var tablee = $('#tableInbox').DataTable();
         var info = tablee.page.info();
          $.ajax({
@@ -188,12 +201,10 @@ $id = $_SESSION['idAccount'];
                     }
                     table.row.add([checkbox,title,type,date, action]).draw(false);
                 }
-                realTime();
             },
             dataType: "json"
         });
     } 
-    realTime();
     function promptDelete(val){
 			swal({
 			    	title: "Are you sure?",
@@ -225,8 +236,9 @@ $id = $_SESSION['idAccount'];
     }
     function deleteAll(){
     	var checkboxes = $('input[type=checkbox]:checked');
+    	var check = $('#check').checked;
     	var ids = [];
-	    if(checkboxes != 0){
+	    if(checkboxes != 0 || check == true){
 	    		swal({
 				    	title: "Are you sure?",
 				        text: "You will not be able to recover this information!",
