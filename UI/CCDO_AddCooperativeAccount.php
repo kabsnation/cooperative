@@ -428,8 +428,8 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><strong>Assisting Financial Institution, if any:</strong></label>
-                                                                <input  ID="txtAssistingFinancialInstitution" 
-                                                                name="txtAssistingFinancialInstitution" class="form-control"></input>
+                                                                <textarea ID="txtAssistingFinancialInstitution" 
+                                                                name="txtAssistingFinancialInstitution" class="form-control"></textarea>
                                                             </div>
                                                         </div>
 
@@ -572,27 +572,27 @@ include('../UI/header/header_admin.php');
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Basic Trainings Attended by Members:</strong></label>
-                                                                <input  ID="txtBasicTrainingsAttendedByMembers" 
-                                                                name="txtBasicTrainingsAttendedByMembers" required="required" class="form-control"></input>
+                                                                <textarea  ID="txtBasicTrainingsAttendedByMembers" 
+                                                                name="txtBasicTrainingsAttendedByMembers" required="required" class="form-control"></textarea>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Basic Trainings Attended by Officers:</strong></label>
-                                                                <input  ID="txtBasicTrainingsAttendedByOfficers" 
-                                                                name="txtBasicTrainingsAttendedByOfficers" required="required" class="form-control"></input>
+                                                                <textarea  ID="txtBasicTrainingsAttendedByOfficers" 
+                                                                name="txtBasicTrainingsAttendedByOfficers" required="required" class="form-control"></textarea>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Basic Trainings Attended by Management Staff:</strong></label>
-                                                                <input  ID="txtBasicTrainingsAttendedByManagementStaff" 
-                                                                name= "txtBasicTrainingsAttendedByManagementStaff" required="required" class="form-control"></input>
+                                                                <textarea  ID="txtBasicTrainingsAttendedByManagementStaff" 
+                                                                name= "txtBasicTrainingsAttendedByManagementStaff" required="required" class="form-control"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>

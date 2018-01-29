@@ -109,7 +109,7 @@
 
                         <div class="navbar-collapse collapse" id="navbar-filter">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-cogs position-left"></i> General Account Settings</a></li>
+                                <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-cogs position-left"></i> General</a></li>
                                 <li><a href="#settings" data-toggle="tab"><i class="icon-lock2 position-left"></i> Security and Login</a></li>
                             </ul>
                         </div>
