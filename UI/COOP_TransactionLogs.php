@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head >
-    <title>CCDO - Transaction Logs</title>
+    <title>CCDO - Logs</title>
  <link rel="icon" href="../assets/images/CCDO Logo.png" />
 
     <!-- Global stylesheets -->
@@ -177,6 +177,8 @@
                                             </ul>
                                         </li>
 
+                                        <li class="active"><a href="COOP_TransactionLogs.php"><i class="icon-stack-text"></i><span> Logs</span></a></li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -249,16 +251,6 @@
                                                     <div class="tab-pane animated fadeIn" id="deptAccounts">
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-
-                                                                <div class="col-lg-12">
-                                                                    <div class="text-right">
-                                                                        <div class="form-group">Select Date Range:
-                                                                            <button type="button" class="btn btn-info daterange-ranges">
-                                                                                <i class="icon-calendar22 position-left"></i> <span></span> <b class="caret"></b>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="col-lg-12">
                                                                     <table class="table datatable-html" id="tableCoopeartiveAccount" style="font-size: 13px; width: 100%;">
