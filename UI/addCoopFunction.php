@@ -12,7 +12,6 @@ if(isset($_POST['txtUsername'])){
 	$position = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPosition'])));
 	$contactNumber = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPhone'])));
 	$respondentEmailAddress= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEmail'])));
-	$respondentName = $lastName.", ".$firstName." ".$middleName;
 	//cooperative profile
 
 	$coopName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtCoopName'])));
@@ -81,10 +80,10 @@ $basicTraningsOfMgt= mysqli_real_escape_string($con,stripcslashes(trim($_POST['t
 	$password= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPassword'])));
 
 	//insert respondent and return id
-	$respondentId = $handler->addRespondent($respondentName,$contactNumber,$position,$respondentEmailAddress);
+	$respondentId = $handler->addRespondent($firstName,$lastName,$middleName,$contactNumber,$position,$respondentEmailAddress);
 	if($respondentId!=""){
 		//insert org aspect
-		$orgAspectId = $handler->addOrganizationalAspect($numberOfBoardOfDirectors,$numberOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionChairman,$med,$otherCommittees,$dateOfgeneralMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting);
+		$orgAspectId = $handler->addOrganizationalAspect($numberOfBoardOfDirectors,$numberOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionChairman,$med,$otherCommittees,$dateOfgeneralMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting,$creditChairman);
 
 		if($orgAspectId!=""){
 			//regulatory requirements
@@ -100,7 +99,7 @@ $basicTraningsOfMgt= mysqli_real_escape_string($con,stripcslashes(trim($_POST['t
 					if($paidUpId!=""){
 						$coopAssetId = $handler ->addCoopAsset($totalCoopAsset,$beginningCoop,$toDateCoop);
 						if($coopAssetId!=""){
-							$businessOperationId = $handler->addBusinessOperation($businessEngaged,$otherBusiness,$serviceBenefits,$paidUpId,$coopAssetId,$assistingFinancial);
+							$businessOperationId = $handler->addBusinessOperation($businessEngaged,$otherBusiness,$serviceBenefits,$paidUpId,$coopAssetId,$assistingFinancial,$totalVolumeOfSales);
 							if($businessOperationId!=""){
 								$cooperativeId = $handler->addCooperative($coopName,$address,$telephoneNumber,$emailAddress,$cda,$dateOfRegistration,$cin,$orgAspectId,$respondentId,$businessOperationId,$membership,$membershipId,$affiliation,$regulatoryId,$cooperativeType,$areaOfOperation);
 								if($cooperativeId!=""){

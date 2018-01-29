@@ -1,4 +1,5 @@
 <?php
+$_SESSION['counter'] = 0;
 session_start();
 if(isset($_SESSION['idSuperAdmin']))
     echo "<script> window.location='';</script>";

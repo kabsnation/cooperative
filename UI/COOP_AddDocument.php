@@ -242,11 +242,19 @@ table.columns.adjust().draw();
                 },
             function(isConfirm){
                 if(isConfirm){
-                    $('#form1').submit();
+                    var form_data = $('#form1').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "documentFunction.php",
+                        data: form_data,
+                        success: function(data){
+                           success();
+                        }
+                    });
            }
         });
     }
-      function success(){
+    function success(){
         setTimeout(function(){
             swal({
                 title: "Success!",
@@ -254,7 +262,7 @@ table.columns.adjust().draw();
                 type: "success"
                 },
                 function(isConfirm){
-                    window.location='CCDO_Inbox.php';
+                    window.location='COOP_AddDocument.php';
                 });},500); 
     }
     function failed(){
