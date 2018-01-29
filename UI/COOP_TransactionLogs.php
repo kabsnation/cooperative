@@ -39,6 +39,8 @@
     <script type="text/javascript" src="assets/js/core/app.js"></script>
     <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
 
+
+
 </head>
 <body>
     
@@ -218,21 +220,35 @@
 
                                                 <div class="tab-content">
                                                     <div class="tab-pane animated fadeIn active" id="coopAccounts">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
 
-                                                                <div class="col-lg-12">
-                                                                    <div class="text-right">
-                                                                        <div class="form-group">Select Date Range:
-                                                                            <button type="button" class="btn btn-info daterange-ranges">
-                                                                                <i class="icon-calendar22 position-left"></i> <span></span> <b class="caret"></b>
-                                                                            </button>
+                                                        <div class="row">
+
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="col-lg-9">
+                                                                        <div class="row">
+                                                                            <label class="col-lg-1 control-label">From:</label>
+                                                                            <div class="col-md-4">
+                                                                                <input type="text" id="min-date" class="form-control daterange-single" value="01/01/2018"/>
+                                                                            </div>
+
+                                                                            <label class="col-lg-1 control-label">To:</label>
+                                                                            <div class="col-md-4">
+                                                                                <input type="text" id="max-date" class="form-control daterange-single" value="01/01/2018"/>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row" style="margin-top: 20px">
+
+                                                            <div class="form-group">
 
                                                                 <div class="col-lg-12">
-                                                                    <table class="table datatable-html" id="tableCoopeartiveAccount" style="font-size: 13px; width: 100%;">
+                                                                    <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Tracking No.</th>
@@ -241,11 +257,20 @@
                                                                                 <th class="text-center">Actions</th>
                                                                             </tr>
                                                                         </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>CCDO-0001</td>
+                                                                                <td>Sample</td>
+                                                                                <td>01-01-2013</td>
+                                                                                <td></td>
+                                                                            </tr>
+
+                                                                        </tbody>
                                                                     </table>
                                                                 </div>
                                                             </div>
-
                                                         </div>
+
                                                     </div>
 
                                                     <div class="tab-pane animated fadeIn" id="deptAccounts">
@@ -293,3 +318,32 @@
     </form>
 </body>
 </html>
+
+<script type="text/javascript">
+
+
+    table = $('#my-table').DataTable({
+    });
+
+    $.fn.dataTable.ext.search.push(
+        function( settings, data, dataIndex ) {
+            var min  = $('#min-date').val();
+            var max  = $('#max-date').val();
+            var createdAt = data[2] || 0;
+
+            if  ( 
+                    ( min == "" || max == "" )
+                    || 
+                    ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
+                )
+            {
+                return true;
+            }
+            return false;
+        }
+    );
+
+    $('.daterange-single').change( function() {
+        table.draw();
+    } );
+</script>
