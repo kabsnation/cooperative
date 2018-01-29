@@ -32,6 +32,8 @@ else if(isset($_SESSION['idAccount']))
     <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -86,7 +88,7 @@ else if(isset($_SESSION['idAccount']))
                             <br />
 
                             <div class="form-group">
-                            	<input type="submit"  class="btn bg-teal btn-block" Text="Log In">
+                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
                             </div>
 
                         </div>
@@ -108,13 +110,44 @@ else if(isset($_SESSION['idAccount']))
 </html>
 
 <script type="text/javascript">
-	function submitLogin(username,password){
+	function submitLogin(){
+        var username = $('#username').val();
+        var password = $('#password').val();
 		$.ajax({
 			type:"POST",
 			url: "loginFunction.php",
-			data:'password='+password+",username="+username,
+			data:'password='+password+"&username="+username,
 			success:function(data){
-			}
+                if(data[0]==1){
+                    success(data[1]);
+                }
+                else
+                    failed();
+			},
+            error:function(data){
+                failed();
+            },
+            dataType: "json"
 		});
 	}
+      function success(location){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location=location;
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Username or Password is incorrect",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
 </script>

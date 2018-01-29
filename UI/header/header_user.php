@@ -10,6 +10,7 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[1]="";
     $arrs[2]="";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Add Document";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
@@ -17,6 +18,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
     $arrs[1]="active";
     $arrs[2]="";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Document List";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')){
@@ -24,6 +26,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')){
     $arrs[1]="";
     $arrs[2]="active";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')){
@@ -31,6 +34,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')){
     $arrs[1]="";
     $arrs[2]="active";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
@@ -38,6 +42,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
     $arrs[1]="active";
     $arrs[2]="";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Document List";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
@@ -45,7 +50,16 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
     $arrs[1]="";
     $arrs[2]="";
     $arrs[3]="active";
+    $arrs[4]="";
     $title = "CCDO - Trash";
+}
+else if(strpos($_SERVER['REQUEST_URI'],'COOP_TransactionLogs.php')){
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="active";
+    $title = "CCDO - Logs";
 }
 ?>
 <!DOCTYPE html>
@@ -90,6 +104,16 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+     <script type="text/javascript" src="assets/js/plugins/notifications/jgrowl.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/anytime.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
+    <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+    
 
 </head>
 <body>
@@ -189,7 +213,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
                                                 <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
                                             </ul>
                                         </li>
-
+                                        <li class="<?php echo $arrs[4]?>"><a href="COOP_TransactionLogs.php"><i class="icon-stack-text"></i><span> Logs</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -280,7 +304,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
             })
             ).get().click(function(e) {
                 if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
-                alert('Redirect to view messge');
+                window.location='CCDO_Inbox.php';
             });
         }
     </script>
