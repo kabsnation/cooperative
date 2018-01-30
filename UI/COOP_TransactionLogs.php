@@ -23,7 +23,7 @@ $history = $doc->getHistory($id);
 
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h1 class="panel-title">Logs</h1>
+                                                <h1 class="panel-title">Transaction Logs</h1>
                                             </div>
 
 
@@ -33,109 +33,62 @@ $history = $doc->getHistory($id);
                                             </div>
                                         </div>
 
-                                        <div class="panel-body">
+                                        <div class="panel-body" onload="load();">
 
-                                            <div class="tabbable">
-                                                <ul class="nav nav-tabs nav-tabs-bottom">
-                                                    <li class="active"><a href="#coopAccounts" data-toggle="tab">Transaction Logs</a></li>
-                                                    <li><a href="#deptAccounts" data-toggle="tab">History</a></li>
-                                                </ul>
+                                            <div class="row">
 
-                                                <div class="tab-content" onload="load()" >
-                                                    <div class="tab-pane animated fadeIn active"  id="coopAccounts">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-9">
+                                                            <div class="row">
+                                                                <label class="col-lg-1 control-label">From:</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" id="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                </div>
 
-                                                        <div class="row">
-
-                                                            <div class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <div class="col-lg-9">
-                                                                        <div class="row">
-                                                                            <label class="col-lg-1 control-label">From:</label>
-                                                                            <div class="col-md-4">
-                                                                                <input type="text" id="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
-                                                                            </div>
-
-                                                                            <label class="col-lg-1 control-label">To:</label>
-                                                                            <div class="col-md-4">
-                                                                                <input type="text" id="max-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <label class="col-lg-1 control-label">To:</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="text" id="max-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
                                                             </div>
-
-                                                        </div>
-
-                                                        <div class="row" style="margin-top: 20px">
-
-                                                            <div class="form-group">
-
-                                                                <div class="col-lg-12">
-                                                                    <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Tracking No.</th>
-                                                                                <th>Title</th>
-                                                                                <th>Type</th>
-                                                                                <th>Date Added</th>
-                                                                                <th>Date Completed</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <?php if($trackings){foreach($trackings as $tracking){?>
-                                                                            <tr>
-                                                                               
-                                                                                 <td><?php echo $tracking['trackingNumber'];?></td>
-                                                                                <td><?php echo $tracking['title'];?></td>
-                                                                                <td><?php echo $tracking['Document'];?></td>
-                                                                                <td><?php echo $tracking['dateadded'];?></td>
-                                                                                <td><?php echo $tracking['datecompleted'];?></td>
-                                                                            </tr>
-                                                                            <?php }}?>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="tab-pane animated fadeIn" id="deptAccounts">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-
-                                                                <div class="col-lg-12">
-                                                                    <table class="table datatable-html" id="tableHistory" style="font-size: 13px; width: 100%;">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Tracking No.</th>
-                                                                                <th>Title</th>
-                                                                                <th>Status</th>
-                                                                                <th>Date</th>
-                                                                                <th>Receipients</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <?php if($history){foreach($history as $hist){?>
-                                                                            <tr>
-                                                                                <td><?php echo $hist['trackingNumber'];?></td>
-                                                                                <td><?php echo $hist['title'];?></td>
-                                                                                <td><?php echo $hist['status'];?></td>
-                                                                                <td><?php echo $hist['datetime'];?></td>
-                                                                                <td><?php echo $hist['name'];?></td>
-                                                                            </tr>
-                                                                            <?php }}?>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-lg-12" style="margin-top: 20px">
+
+                                                    <div class="form-group">
+
+                                                        <div class="col-lg-12">
+                                                            <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Tracking No.</th>
+                                                                        <th>Title</th>
+                                                                        <th>Type</th>
+                                                                        <th>Date Added</th>
+                                                                        <th>Date Completed</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php if($trackings){foreach($trackings as $tracking){?>
+                                                                    <tr>
+                                                                       
+                                                                         <td><?php echo $tracking['trackingNumber'];?></td>
+                                                                        <td><?php echo $tracking['title'];?></td>
+                                                                        <td><?php echo $tracking['Document'];?></td>
+                                                                        <td><?php echo $tracking['dateadded'];?></td>
+                                                                        <td><?php echo $tracking['datecompleted'];?></td>
+                                                                    </tr>
+                                                                    <?php }}?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
-                                            
                                         </div>
 
                                     </div>

@@ -11,6 +11,7 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Add Document";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
@@ -19,6 +20,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Document List";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')){
@@ -27,6 +29,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')){
     $arrs[2]="active";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')){
@@ -35,6 +38,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')){
     $arrs[2]="active";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Inbox";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
@@ -43,6 +47,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Document List";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
@@ -51,6 +56,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')){
     $arrs[2]="";
     $arrs[3]="active";
     $arrs[4]="";
+    $arrs[5]="";
     $title = "CCDO - Trash";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_TransactionLogs.php')){
@@ -59,7 +65,17 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_TransactionLogs.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="active";
-    $title = "CCDO - Logs";
+    $arrs[5]="";
+    $title = "CCDO - Transaction Logs";
+}
+else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
+    $title = "CCDO - History";
 }
 ?>
 <!DOCTYPE html>
@@ -216,7 +232,15 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_TransactionLogs.php')){
                                                 <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
                                             </ul>
                                         </li>
-                                        <li class="<?php echo $arrs[4]?>"><a href="COOP_TransactionLogs.php"><i class="icon-stack-text"></i><span> Logs</span></a></li>
+
+                                        <li>
+                                            <a href="#"><i class="icon-stack-text"></i><span>Logs</span></a>
+                                            <ul>
+                                                <li class="<?php echo $arrs[4]?>"><a href="COOP_TransactionLogs.php">Transaction Logs</a></li>
+                                                <li class="<?php echo $arrs[5]?>"><a href="COOP_History.php">History</a></li>
+                                            </ul>
+                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </div>
