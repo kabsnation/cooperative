@@ -195,7 +195,7 @@
     }
 
     .secondary-text-color {
-      color: #8277c9 !important;
+      color: #fff !important;
     }
 
 
@@ -210,11 +210,16 @@
       color:  !important;
     }
 
+    body {
+      transition: background-color 2s cubic-bezier(1, 1, 1, 1);
+      transition-delay: 0s;
+    }
+
 
 </style>
 
   </head>
-  <body class="plain error-page-wrapper background-color background-image">
+  <body class="plain error-page-wrapper background-image">
     <div class="content-container">
 	<div class="head-line secondary-text-color">
 		Offline
@@ -239,6 +244,16 @@
 
 
     <script>
+      var colors = ["#F44336", "#FF9800", "#FFEB3B", "#4CAF50", "#2196F3", "#673AB7"];
+      var currentIndex = 0;
+
+      setInterval(function() {
+        document.body.style.cssText = "background-color: " + colors[currentIndex];
+        currentIndex++;
+        if (currentIndex == undefined || currentIndex >= colors.length) {
+          currentIndex = 0;
+        }
+      }, 3000);
       function goBack(){
         var oldURL = document.referrer;
         alert(oldURL);
