@@ -2,6 +2,7 @@ UI/sam.php
 UI/sama.php
 UI/sample.php
 UI/files/1514704493.ttf
+<<<<<<< HEAD
 *.jpg
 *.sql
 *.rar
@@ -9,3 +10,8 @@ UI/files/1514704493.ttf
 *.docx
 UI/files/1514811263.docx
 UI/files/1516216914.pdf
+=======
+*.docx
+*.zip
+*.jpg
+>>>>>>> bdd1b05e00071451a122445d11695ed18c2add86

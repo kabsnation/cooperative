@@ -1,4 +1,5 @@
 <?php
+
 require('../Handlers/DocumentHandler.php');
 require('../config/config.php');
 session_start();
@@ -12,5 +13,7 @@ $count = $handler->getInboxCountById($id);
  	else
  		$_SESSION['defaultInbox'] = 0;
  }
+// echo "data: {$_SESSION['defaultInbox']}\n\n";
+//  flush();
  echo $_SESSION['defaultInbox'];
 ?>

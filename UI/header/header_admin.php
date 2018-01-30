@@ -3,19 +3,20 @@ $handler = new AccountHandler();
 $admin = $handler->getAccountById($_SESSION['idAccountAdmin']);
 $arrs = array();
 $title ="";
-if($_SERVER['REQUEST_URI'] =='/coop/CCDO_AddCooperativeAccount.php'){
+if(strpos($_SERVER['REQUEST_URI'],'CCDO_AddCooperativeAccount.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
     $title = "CCDO - Add Cooperative Account";
 }
-else if($_SERVER['REQUEST_URI'] =='/coop/CCDO_AddDepartmentAccount.php'){
+
+else if(strpos($_SERVER['REQUEST_URI'],'CCDO_AddDepartmentAccount.php')){
     $arrs[0]="";
     $arrs[1]="active";
     $arrs[2]="";
     $title = "CCDO - Add Department Account";
 }
-else {
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     $arrs[0]="";
     $arrs[1]="";
     $arrs[2]="active";
@@ -50,19 +51,27 @@ else {
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
+    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/uploaders/fileinput.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/uploader_bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jasny_bootstrap.min"></script>
+    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
     <!-- /theme JS files -->
 </head>
 <body>

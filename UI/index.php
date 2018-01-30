@@ -1,4 +1,5 @@
 <?php
+$_SESSION['counter'] = 0;
 session_start();
 if(isset($_SESSION['idSuperAdmin']))
     echo "<script> window.location='';</script>";
@@ -31,6 +32,8 @@ else if(isset($_SESSION['idAccount']))
     <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -42,7 +45,7 @@ else if(isset($_SESSION['idAccount']))
 </head>
 
 <body class="login-container" style="background-color:#009688;">
-    <form id="form1" action="loginFunction.php" method="POST">
+    <form id="form1" method="POST" onsubmit="return validateForm()">
         <!-- Page container -->
         <div class="page-container">
 
@@ -66,18 +69,20 @@ else if(isset($_SESSION['idAccount']))
 		                            </div>
 	                                <br />
                             </div>
+                            <div class="validata">
 
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="text" ID="username" name="username" class="form-control" Placeholder="Username" required="required">
-                                <div class="form-control-feedback">
-                                    <i class="icon-user text-muted"></i>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="text" ID="username" name="username" class="form-control" Placeholder="Username" required="required">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user text-muted"></i>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group has-feedback has-feedback-left">
-                                <input type="password" ID="password" name="password" class="form-control" Placeholder="Password" required="required">
-                                <div class="form-control-feedback">
-                                    <i class="icon-lock2 text-muted"></i>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="password" ID="password" name="password" class="form-control" Placeholder="Password" required="required">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-lock2 text-muted"></i>
+                                    </div>
                                 </div>
                             </div>
 
@@ -85,7 +90,7 @@ else if(isset($_SESSION['idAccount']))
                             <br />
 
                             <div class="form-group">
-                            	<input type="submit"  class="btn bg-teal btn-block" Text="Log In">
+                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
                             </div>
 
                         </div>
@@ -107,13 +112,57 @@ else if(isset($_SESSION['idAccount']))
 </html>
 
 <script type="text/javascript">
-	function submitLogin(username,password){
+	function submitLogin(){
+        var username = $('#username').val();
+        var password = $('#password').val();
 		$.ajax({
 			type:"POST",
 			url: "loginFunction.php",
-			data:'password='+password+",username="+username,
+			data:'password='+password+"&username="+username,
 			success:function(data){
-			}
+                if(data[0]==1){
+                    success(data[1]);
+                }
+                else
+                    failed();
+			},
+            error:function(data){
+                failed();
+            },
+            dataType: "json"
 		});
 	}
+      function success(location){
+            setTimeout(function(){
+                swal({
+                    title: "Success!",
+                    text: "",
+                    type: "success"
+                    },
+                    function(isConfirm){
+                        window.location=location;
+                    });},500); 
+        }
+        function failed(){
+            setTimeout(function(){
+                swal({
+                    title: "Failed!",
+                    text: "Username or Password is incorrect",
+                    type: "warning"
+                    },
+                    function(isConfirm){});},500);
+        }
+    function validateForm(){
+        var fields = $(".validata")
+                .find("input").serializeArray();
+          
+        $.each(fields, function(i, field) {
+                swal({
+                    title: "Failed!",
+                    text: "Fill out all the required fields.",
+                    confirmButtonColor: "#EF5350",
+                    type: "error"
+                });
+           }); 
+    }
 </script>

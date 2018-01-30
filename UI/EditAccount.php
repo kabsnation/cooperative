@@ -43,13 +43,12 @@
     <!-- /theme JS files -->
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
+
    	<!-- Main navbar -->
 	<div class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
-                <img src="assets/images/CCDO Logo.png" alt=""style="background-color:#ffffff"  /></a>
+                <img src="assets/images/CCDO Logo.png" alt=""/></a>
 
             <ul class="nav navbar-nav visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -89,23 +88,139 @@
 
             <!-- Main Content -->
             <div class="content-wrapper">
+
+                <!-- Page header -->
+                <div class="page-header">
+
+                    <!-- Header content -->
+                    <div class="page-header-content">
+                        <div class="page-title">
+                            <h4><span class="text-semibold">Account Settings</span></h4>
+                        </div>
+                    </div>
+                    <!-- /header content -->
+
+
+                    <!-- Toolbar -->
+                    <div class="navbar navbar-default navbar-component navbar-xs">
+                        <ul class="nav navbar-nav visible-xs-block">
+                            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                        </ul>
+
+                        <div class="navbar-collapse collapse" id="navbar-filter">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-cogs position-left"></i> General</a></li>
+                                <li><a href="#settings" data-toggle="tab"><i class="icon-lock2 position-left"></i> Security and Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /toolbar -->
+
+                </div>
+                <!-- /page header -->
+
                 <div class="content">
 
-                    <div class="panel panel-flat">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h3 class="panel-title"><strong>Edit Your Account Profile</strong></h3>
-                            </div>
+                    <!-- User profile -->
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="tabbable">
+                                <div class="tab-content">
 
-                            <div class="heading-elements">
-                                <div class="heading-btn-group">
+                                    <div class="tab-pane active" id="activity">
+
+                                        <div class="row">
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Name</h6>
+                                                        Juan Dela Cruz
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Username</h6>
+                                                        juandelacruz01
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Email Address</h6>
+                                                        juandelacruz01@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Phone Number</h6>
+                                                        (+63)99-999-9999
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="tab-pane" id="settings">
+
+                                        <div class="row" id="changePass" style="display: block;">
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Change Password <a onclick="editPassword()" class="text-muted"><i class="icon-pencil4 pull-right"></i></a></h6>
+                                                        It's a good idea to use a strong password that you're not using elsewhere
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="updatePass" style="display: none;">
+                                            <div class="col-lg-4 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Update Password <a onclick="updatePassword()" class="text-muted"><i class="icon-cross3 pull-right" title="Cancel"></i></a></h6>
+
+                                                        <div class="form-group">
+                                                            <label>Old Password:</label>
+                                                            <input type="password" class="form-control" />
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>New Password:</label>
+                                                            <input type="password" id="txtPassword" class="form-control" />
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Re-enter New Password:</label>
+                                                            <input type="password" equalTo="#txtPassword" class="form-control" />
+                                                        </div>
+
+                                                        <div class="text-right">
+                                                            <div class="form-group">
+                                                                <input type="button" value="Save" class="btn btn-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
+                    <!-- User profile -->
 
                 </div>
             </div>
@@ -116,7 +231,22 @@
     </div>
     <!-- /Page container -->
 
-        </div>
-    </form>
+    <script type="text/javascript">
+        function editPassword(){
+            var x = document.getElementById("changePass");
+            var y = document.getElementById("updatePass");
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function updatePassword(){
+            var x = document.getElementById("changePass");
+            var y = document.getElementById("updatePass");
+            x.style.display = "block";
+            y.style.display = "none";
+        }
+    </script>
+
 </body>
 </html>
+

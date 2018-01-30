@@ -4,24 +4,33 @@ require("../Handlers/DocumentHandler.php");
 $conn = new Connect();
 $con=$conn->connectDB();
 $doc = new DocumentHandler();
+if(isset($_POST['check'])){
 	$idlocation = $_POST['id'];
-	$result = $doc->deleteInbox($idlocation);
+	$del = $_POST['del'];
+	$result = $doc->deleteInbox($idlocation,$del);
 	if($result){
 		echo $result;
 	}
-	else{
-		echo 'error';
+}
+else{
+	$counter = 0;
+	$dataa = json_decode($_POST['id']);
+	$del = $_POST['del'];
+	foreach($dataa as $data){
+		$result = $doc->checkDelete($data);
+		if($result =='0'){
+			$counter = 1;
+			break;
+		}
 	}
-
-// else{
-// 	if(isset($_POST['checkboxx'])){
-// 		// for($i=0;$i<sizeof($_POST['check']);$i++){
-// 		// 	// $result = $doc->deleteInbox($_POST['check'][$i]);
-// 		// 	echo $_POST['check'][$i];
-// 		// }
-// 		echo $_POST['checkboxx'][3];
-		
-// 	}
-// }
-
+	if($counter ==1)
+		echo '1';
+	else{
+		foreach($dataa as $data){
+			$result = $doc->deleteInbox($data,$del);
+		}
+		echo '0';
+	}
+}
+	
 ?>

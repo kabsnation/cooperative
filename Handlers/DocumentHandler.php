@@ -34,7 +34,7 @@ class DocumentHandler{
 		$con = new Connect();
 		$query= "INSERT INTO inbox_info(title,message) VALUES('".$title."','".$message."')";
 		$result = $con->insertReturnLastId($query);
-		$query = "INSERT INTO tracking(trackingNumber,DateTime,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('".$trackingNumber."','".date("Y/m/d-h:i:sa")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
+		$query = "INSERT INTO tracking(trackingNumber,dateadded,timeadded,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('".$trackingNumber."','".date("m/d/Y")."','".date("h:i:sa")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
 		$result = $con->insertReturnLastId($query);
 		
 		return $result;
@@ -47,13 +47,13 @@ class DocumentHandler{
 	}
 	public function getTrackingById($id){
 		$con = new Connect();
-		$query = "SELECT trackingNumber,DateTime,Document,Status FROM tracking,document_type WHERE Status='ONGOING' and tracking.idDocument_Type= document_type.idDocument_Type and idAccounts='".$id."' ORDER BY idTracking DESC";
+		$query = "SELECT trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status FROM tracking,document_type WHERE Status='ONGOING' and tracking.idDocument_Type= document_type.idDocument_Type and idAccounts=$id ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getTracking(){
 		$con = new Connect();
-		$query = "SELECT trackingNumber,DateTime,Document,Status FROM tracking,document_type WHERE Status='ONGOING' and tracking.idDocument_Type= document_type.idDocument_Type ORDER BY idTracking DESC";
+		$query = "SELECT trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status FROM tracking,document_type WHERE Status='ONGOING' and tracking.idDocument_Type= document_type.idDocument_Type ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -71,7 +71,7 @@ class DocumentHandler{
 	}
 	public function getTrackingInfo($trackingNumber){
 		$con = new Connect();
-		$query ="SELECT trackingNumber,DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts where trackingNumber = '$trackingNumber'";
+		$query ="SELECT trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts where trackingNumber = '$trackingNumber'";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -88,15 +88,21 @@ class DocumentHandler{
 		$result = $con->select($query);
 		return $result;
 	}
-	public function inboxCoopById($id){
+	public function inboxCoopById($id,$deleted = 0){
 		$con = new Connect();
-		$query ="SELECT isopen,location.idlocation, tracking.idTracking,reply.idreply,ifnull(tracking.DateTime,reply.DateTime) as DateTime,ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber,reply.idAccounts as reply_sender,location.idAccounts as receiver,username,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM location LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE location.idAccounts = $id and markasdeleted =0 ORDER BY location.idlocation DESC";
+		$query ="SELECT canbedeleted, isopen,location.idlocation, tracking.idTracking,reply.idreply,ifnull(CONCAT(dateadded,'-',timeadded),reply.DateTime) as DateTime,ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber,reply.idAccounts as reply_sender,location.idAccounts as receiver,username,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM location LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE location.idAccounts = $id and markasdeleted =$deleted ORDER BY location.idlocation DESC";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getInboxInfo($idTracking,$id){
 		$con = new Connect();
-		$query ="SELECT Document,tracking.idAccounts as receiverId,needReply,filePath,tracking.idTracking,DateTime,tracking.trackingNumber as trackingNumber,location.idAccounts as receiver,username,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking .idAccounts),cooperative_profile.Email_Address) as email FROM location LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN document_type ON tracking.idDocument_Type = document_type.idDocument_Type WHERE location.idAccounts =$id and tracking.idTracking = $idTracking;";
+		$query ="SELECT Document,tracking.idAccounts as receiverId,needReply,filePath,tracking.idTracking,CONCAT(dateadded,'-',timeadded) as DateTime,tracking.trackingNumber as trackingNumber,location.idAccounts as receiver,username,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking .idAccounts),cooperative_profile.Email_Address) as email FROM location LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN document_type ON tracking.idDocument_Type = document_type.idDocument_Type WHERE location.idAccounts =$id and tracking.idTracking = $idTracking;";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getNewMessageCount($id){
+		$con = new Connect();
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0;";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -124,26 +130,39 @@ class DocumentHandler{
 		$result = $con->select($query);
 		return $result;
 	}
-	public function changeInboxStatus($id,$idTracking){
+	public function changeInboxStatus($id,$idTracking,$type='RECEIVED'){
 		$con = new Connect();
-		$query = "UPDATE location  SET status ='RECEIVED' WHERE idAccounts = $id and idTracking = $idTracking";
-		$result = $con->update($query);
-		if($result){
-	 		//checking 
-	 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
-	 		$checkResult = $con->select($check);
-	 		if($checkResult){
-	 			$row = $checkResult->fetch_assoc();
-	 			if($row['counter']==0){
-	 				$doneQuery = "UPDATE tracking SET Status='DONE' WHERE idTracking = $idTracking";
-	 				$resultDone = $con->update($doneQuery);
-	 			}
-	 		}
-	 		return $result;
-	 	}
-	 	else
-	 		return null;
-		return $result;
+		$setDelete = "UPDATE location SET canbedeleted = 1 WHERE idTracking = $idTracking and idAccounts = $id";
+		$resultSet = $con->update($setDelete);
+		$selectQuery = "SELECT status FROM location  WHERE idAccounts = $id and idTracking = $idTracking";
+		$status= $con->select($selectQuery);
+		$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'$type','".date("m/d/Y-h:i:sa")."')";
+		$con->insert($queryHistory);
+		if($row=$status->fetch_assoc()){
+			if($row['status']=='WAITING FOR CONFIRMATION' ){
+				$query = "UPDATE location  SET status ='RECEIVED' WHERE idAccounts = $id and idTracking = $idTracking";
+				$result = $con->update($query);
+				if($result){
+			 		//checking 
+			 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
+			 		$checkResult = $con->select($check);
+			 		if($checkResult){
+			 			$row = $checkResult->fetch_assoc();
+			 			if($row['counter']==0){
+			 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
+			 				$resultDone = $con->update($doneQuery);
+			 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
+							$con->insert($queryHistory);
+			 			}
+			 		}
+			 		return $result;
+			 	}
+			 	else
+			 		return null;
+				return $result;
+			}
+		}
+		
 	}
 	 public function replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message,$idTracking){
 	 	$con = new Connect();
@@ -151,31 +170,23 @@ class DocumentHandler{
 	 	$result = $con->insertReturnLastId($query);
 	 	$query = "INSERT INTO reply(idAccounts,idinbox_info,trackingNumber) VALUES($id,$result,'$trackingNumber')";
 	 	$result = $con->insertReturnLastId($query);
-	 	$query = "INSERT INTO location(idreply,idAccounts) VALUES($result,$receiverId)";
+	 	$query = "INSERT INTO location(idreply,idAccounts,canbedeleted) VALUES($result,$receiverId,1)";
 	 	$result = $con->insert($query);
-	 	$update = "UPDATE location  SET status ='RECEIVED' WHERE idAccounts = $id and idTracking = $idTracking";
-	 	$updateResult = $con->update($update);
-	 	if($updateResult){
-	 		//checking 
-	 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
-	 		$checkResult = $con->select($check);
-	 		if($checkResult){
-	 			$row = $checkResult->fetch_assoc();
-	 			if($row['counter']==0){
-	 				$doneQuery = "UPDATE tracking SET Status='DONE' WHERE idTracking = $idTracking";
-	 				$resultDone = $con->update($doneQuery);
-	 			}
-	 		}
-	 		return $result;
-	 	}
-	 	else
-	 		return null;
-	}
-	public function deleteInbox($idlocation){
-		$con = new Connect();
-		$query = "UPDATE location SET markasdeleted = 1 WHERE idlocation = $idlocation";
-		$result = $con->update($query);
 		return $result;
+	}
+	public function deleteInbox($idlocation,$del){
+		$con = new Connect();
+		$query = "UPDATE location SET markasdeleted = $del WHERE idlocation = $idlocation";
+		$result = $con->update($query);
+		return $result;		
+		
+	}
+	public function checkDelete($idlocation){
+		$con = new Connect();
+		$query = "SELECT canbedeleted FROM location WHERE idlocation = $idlocation";
+		$result = $con->select($query);
+		$row=$result->fetch_assoc();
+		return $row['canbedeleted'];
 	}
 	public function checkIfRead($idTracking,$id){
 		$con = new Connect();
@@ -186,10 +197,38 @@ class DocumentHandler{
 				//update to open
 			$queryUpdate = "UPDATE location SET isopen= 1 WHERE idTracking =$idTracking and idAccounts = $id";
 			$resultUpdate = $con->update($queryUpdate);
-			return $resultUpdate;
+			
 			}
-			else
-				return $result;
+		}
+	}
+	public function checkReply($idTracking,$id){
+		$con = new Connect();
+		$query = "SELECT needReply FROM tracking WHERE idTracking = $idTracking";
+		$result = $con->select($query);
+		if($row=$result->fetch_assoc()){
+			if($row['needReply']==0){
+				//update to open
+			$queryUpdate = "UPDATE location SET status ='RECEIVED' WHERE idTracking =$idTracking and idAccounts = $id";
+			$resultUpdate = $con->update($queryUpdate);
+			$queryDelete = "UPDATE location SET canbedeleted = 1 WHERE idTracking = $idTracking and idAccounts = $id";
+			$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'RECEIVED','".date("m/d/Y-h:i:sa")."')";
+			$con->insert($queryHistory);
+			$resultDelete = $con->update($queryDelete);
+				if($resultUpdate){
+		 		//checking 
+			 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
+			 		$checkResult = $con->select($check);
+			 		if($checkResult){
+			 			$row = $checkResult->fetch_assoc();
+			 			if($row['counter']==0){
+			 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
+			 				$resultDone = $con->update($doneQuery);
+			 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
+							$con->insert($queryHistory);
+				 		}
+					}
+				}
+			}
 		}
 	}
 	public function checkIfReadReply($idReply,$id){
@@ -207,6 +246,28 @@ class DocumentHandler{
 				return $result;
 		}
 	}
-
+	function getNotification($id){
+		$con = new Connect();
+		$query = "SELECT isnotified,location.idlocation,title,message,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM location LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE location.idAccounts = $id and markasdeleted =0 and isnotified = 0";
+		$result = $con->select($query);
+		return $result;
+	}
+	function updateNotification($idlocation){
+		$con = new Connect();
+		$query = "UPDATE location SET isnotified = 1 WHERE idlocation =$idlocation";
+		$result = $con->update($query);
+	}
+	public function getTransactionLogs($id){
+		$con = new Connect();
+		$query = "SELECT trackingNumber,dateadded,datecompleted,Document,Status,title FROM tracking,document_type,inbox_info WHERE Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and idAccounts=$id ORDER BY idTracking DESC";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getHistory($id){
+		$con = new Connect();
+		$query="SELECT ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber, history.status,history.datetime,location.idlocation,title,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM history JOIN location ON history.idlocation = location.idlocation LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON location.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE tracking.idAccounts = $id ORDER BY idhistory DESC";
+		$result = $con->select($query);
+		return $result;
+	}
 }
 ?>

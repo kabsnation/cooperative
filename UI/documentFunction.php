@@ -49,9 +49,6 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 			$result = $doc->addDocumentLocation($recipient,$trackingId);
 		} 
 	}
-	if($result){
-		echo "<script>window.location='COOP_AddDocument.php';alert('Success!');</script>";
-	}
 }
 else{
 	//echo "<script>window.location='COOP_AddDocument.php';alert('Please provide the information for all the required fields!');</script>";

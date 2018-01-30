@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 session_start();
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
@@ -11,7 +12,9 @@ $con = $connect-> connectDB();
 if(isset($_GET['idTracking'])){
 	$idTracking = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idTracking'])));
 	//check if read or not
-	$check = $doc->checkIfRead($idTracking,$id);
+	$doc->checkIfRead($idTracking,$id);
+	//check if need a reply
+	$doc->checkReply($idTracking,$id);
 	$infos = $doc->getInboxInfo($idTracking,$id);
 	$firstRowLocation = $doc->getTrackingLocationById($idTracking,$id);
 	$trackingLocation = $doc->getTrackingLocation($idTracking);
@@ -160,8 +163,8 @@ else if(isset($_GET['idReply'])){
 						</div>
                     </div>
                     <!-- /media library -->
-
-				<form action="replyFunction.php" method="POST">
+<?php if(isset($info['needReply']) && $info['needReply']=='1' || $type=='reply'){ ?>
+				<form action="replyFunction.php" id='form1' method="POST">
                     <!-- Summernote editor -->
 					<div class="panel panel-white">
 						<div class="panel-heading">
@@ -170,21 +173,10 @@ else if(isset($_GET['idReply'])){
 
 						<div class="panel-body">
 							<div>
-								<?php if(isset($info['needReply']) && $info['needReply']=='1'){?>
+								
 									<textarea type="text" class="summernote" id="reply" name="reply"></textarea>
-								<?php $dsbl ='';}
-								else if(!isset($info['needReply']) && $type=='tracking' || $info['needReply']=='0'){ $dsbl ='disabled';?>
-								<div class="text-center">
-									<input id="acknowledge" class="btn bg-info-400" type="button" onclick="disableButton()" value="ACKNOWLEDGE">
-								</div>
-								<?php }
-								else if($type=='reply'){?>
-								<textarea type="text" class="summernote" id="reply" name="reply"></textarea>
-								<?php $dsbl ='';}?> 
 								
 							</div>
-
-<?php }}?>
 
 
 							<div class="text-right">
@@ -196,13 +188,14 @@ else if(isset($_GET['idReply'])){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="submit" id="send" class="btn bg-teal" value="Send" name="send" <?php echo $dsbl;?> />
+									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
 					</div>
+					
 					<!-- /summernote editor -->
 				</form>
 				</div>
 				<!-- /content area -->
-
+<?php }}}?>
 			</div>
 			<!-- /main content -->
 
@@ -249,4 +242,49 @@ else if(isset($_GET['idReply'])){
 			send.prop('class','btn bg-teal');
 			send.prop('disabled',false);
 	}
+	 function confirm(){
+        swal({
+                    title: "Are you sure?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF7043",
+                    confirmButtonText: "Submit",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+            function(isConfirm){
+                if(isConfirm){
+                    var form_data = $('#form1').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "replyFunction.php",
+                        data: form_data,
+                        success: function(data){
+                           success(data);
+                        }
+                    });
+           }
+        });
+    }
+    function success(location){
+        setTimeout(function(){
+            swal({
+                title: "Success!",
+                text: "",
+                type: "success"
+                },
+                function(isConfirm){
+                    window.location=location;
+                });},500); 
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
 </script>

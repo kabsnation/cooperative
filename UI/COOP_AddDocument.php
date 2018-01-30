@@ -19,7 +19,7 @@ include('../UI/header/header_user.php');
 ?>
 
                   <div class="content-wrapper">
-                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
+                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data" onsubmit="return validateForm()">
 
                     <div class="content-wrapper">
                         <div class="content">
@@ -89,6 +89,7 @@ include('../UI/header/header_user.php');
                                                 <div class="form-group">
                                                     <label class="control-label"><span class="text-danger">* </span> <strong>Document Type: </strong></label>
                                                     <select  class="form-control select" required="required" name="documentType" ID="documentType">
+                                                        <option></option>
                                                         <?php if($documentType){
                                                             foreach($documentType as $type){?>
                                                             <option value="<?php echo $type['idDocument_Type'];?>"><?php echo $type['Document'];?></option>
@@ -111,9 +112,9 @@ include('../UI/header/header_user.php');
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label><strong>Upload File:</strong></label>
-                                                    <label class="text-danger">Paki-zip/rar kung mahigit sa dalawa ang iuupload.</label>
+                                                    <label><span class="text-danger">* </span><strong>Upload File:</strong></label>
                                                     <input type="file" id="file" name="file" required="required" />
+                                                    <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
                                                 </div>
                                             </div>
 
@@ -139,7 +140,7 @@ include('../UI/header/header_user.php');
                                                   <table class="table datatable-html" id="table" style="font-size: 13px; width: 100%;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 5%;"><input type="checkbox" id="select-all" class="form-control" name="" ></th>
+                                                                    <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" ></th>
                                                                     <th style="width: 30%;">Recipients</th>
                                                                     <th style="width: 20%;">Email</th>
                                                                     <th style="width: 20%;">Type</th>
@@ -149,7 +150,7 @@ include('../UI/header/header_user.php');
                                                                 <?php if($cooperativeProfile){
                                                                     foreach($cooperativeProfile as $coop){?>
                                                                 <tr>
-                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
+                                                                    <td><input type="checkbox"  name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
                                                                      <td><?php echo $coop['Cooperative_Name'];?></td>
                                                                      <td><?php echo $coop['Email_Address'];?></td>
                                                                      <td>Cooperative</td>
@@ -178,7 +179,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" onclick="testing();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +230,7 @@ var table = $('#table').DataTable();
             }
 });
 table.columns.adjust().draw();
-    function testing(){
+    function confirm(){
         swal({
                     title: "Are you sure?",
                     text: "",
@@ -242,9 +243,52 @@ table.columns.adjust().draw();
                 },
             function(isConfirm){
                 if(isConfirm){
-                    $('#form1').submit();
+                    var form_data = $('#form1').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "documentFunction.php",
+                        data: form_data,
+                        success: function(data){
+                           success(data);
+                        }
+                    });
            }
         });
     }
+    function success(){
+        setTimeout(function(){
+            swal({
+                title: "Success!",
+                text: "",
+                type: "success"
+                },
+                function(isConfirm){
+                    window.location='COOP_AddDocument.php';
+                });},500); 
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
+
+    function validateForm(){
+        var fields = $(".panel-body")
+            .find("select, textarea, input").serializeArray();
+      
+    $.each(fields, function(i, field) {
+            swal({
+                title: "Failed!",
+                text: "Fill out all the required fields.",
+                confirmButtonColor: "#EF5350",
+                type: "error"
+            });
+       }); 
+    }
+
 
 </script>

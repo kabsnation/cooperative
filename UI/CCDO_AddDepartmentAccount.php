@@ -9,7 +9,7 @@ $handler = new AccountHandler();
 $typeDepartment = $handler->getTypeOfDepartment();
 include('../UI/header/header_admin.php');
 ?>
-<form action="addDepartmentAccountFunction.php" method="POST">
+<form action="addDepartmentAccountFunction.php" method="POST" id="form1" class="form-validate-jquery" onsubmit="return validateForm()">
                         <!-- Page header -->
                         <div class="page-header page-header-default">
                             <div class="page-header-content">
@@ -205,6 +205,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Department:</strong></label>
                                                                 <select  ID="ddlDepartment" name="ddlDepartment" required="required" class="form-control">
+                                                                    <option></option>
                                                                    <?php foreach($typeDepartment as $type){?>
                                                                    <option value="<?php echo $type['idDepartment'];?>"><?php echo $type['Department'];?></option>
                                                                    <?php }?>
@@ -229,7 +230,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type="submit" ID="btnSubmit" class="btn btn-primary" Text="Submit" />
+                                                <input type='submit' onclick="confirm();" ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
                                         </div>
                                     </div>
@@ -248,5 +249,70 @@ include('../UI/header/header_admin.php');
             <!-- /Page container -->
         </div>
     </form>
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $("#txtCellphoneNumber").mask("(+63) 999-999-9999");
+            });
+            
+             function confirm(){
+                swal({
+                            title: "Are you sure?",
+                            text: "",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#FF7043",
+                            confirmButtonText: "Submit",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                    },
+                function(isConfirm){
+                    if(isConfirm){
+                        var form_data = $('#form1').serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "addDepartmentAccountFunction.php",
+                            data: form_data,
+                            success: function(data){
+                               success();
+                            }
+                        });
+                    }
+                });
+            }
+            function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location='CCDO_AddCooperativeAccount.php';
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Some items has not yet been responded",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
+            function validateForm(){
+                var fields = $(".panel-body")
+                        .find("select, textarea, input").serializeArray();
+                  
+                $.each(fields, function(i, field) {
+                        swal({
+                            title: "Failed!",
+                            text: "Fill out all the required fields.",
+                            confirmButtonColor: "#EF5350",
+                            type: "error"
+                        });
+                   }); 
+            }
+        </script>
 </body>
 </html>
