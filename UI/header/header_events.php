@@ -75,7 +75,9 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <img alt="">
                         <i class="icon-cog5"></i>
-                        <span>Username</span>
+                        <?php if($eventmanager){
+                            foreach($eventmanager as $info){?>
+                        <span><?php echo $info['Username'];?></span>
                         <i class="caret"></i>
                     </a>
 
@@ -108,12 +110,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
                                         </div>
                                         <div class="media-body">
                                             <span class="media-heading text-semibold">
-                                                <label  ID="txtUser" Text="Username"></label></span>
-                                            <div class="text-size-mini text-muted">
-                                                <i class="icon-pin text-size-small"></i>&nbsp;Santa Rosa, Laguna
-								
-                                       
-                                            </div>
+                                                <label  ID="txtUser" Text="Username"><?php echo $info['name'];}}?></label></span>
                                         </div>
 
                                         <div class="media-right media-middle">
