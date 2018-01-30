@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 session_start();
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
@@ -162,7 +163,7 @@ else if(isset($_GET['idReply'])){
 						</div>
                     </div>
                     <!-- /media library -->
-<?php if(isset($info['needReply']) && $info['needReply']=='1' ||$type='reply'){ ?>
+<?php if(isset($info['needReply']) && $info['needReply']=='1' || $type=='reply'){ ?>
 				<form action="replyFunction.php" id='form1' method="POST">
                     <!-- Summernote editor -->
 					<div class="panel panel-white">
@@ -260,13 +261,13 @@ else if(isset($_GET['idReply'])){
                         url: "replyFunction.php",
                         data: form_data,
                         success: function(data){
-                           success();
+                           success(data);
                         }
                     });
            }
         });
     }
-    function success(){
+    function success(location){
         setTimeout(function(){
             swal({
                 title: "Success!",
@@ -274,7 +275,7 @@ else if(isset($_GET['idReply'])){
                 type: "success"
                 },
                 function(isConfirm){
-                    window.location='COOP_AddDocument.php';
+                    window.location=location;
                 });},500); 
     }
     function failed(){

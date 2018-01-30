@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Manila');
 require("../config/config.php");
 require("../Handlers/DocumentHandler.php");
 $conn = new Connect();
@@ -22,7 +23,7 @@ if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id'])
 		$id = $_POST['id'];
 		$trackingNumber = $_POST['trackingNumber'];
 		$receiverId = $_POST['receiverId'];
-		$result = $doc->changeInboxStatus($id,$idTracking);
+		$result = $doc->changeInboxStatus($id,$idTracking,'REPLIED');
 		if(strpos($_POST['title'],'reply:')!== false)
 			 $title = $_POST['title'];
 		else
@@ -30,16 +31,10 @@ if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id'])
 		$result = $doc->replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message,$idTracking);
 		if($result){
 			if($_POST['type']=="reply"){
-				echo "<script>
-				window.location='CCDO_ViewMessage.php?idReply=".$_POST['idReply']."';
-				alert('Success');
-				</script>";
+				echo "CCDO_ViewMessage.php?idReply=".$_POST['idReply']."";
 			}
 			else{
-				echo "<script>
-				window.location='CCDO_ViewMessage.php?idTracking=".$_POST['idTracking']."';
-				alert('Success');
-				</script>";
+				echo "CCDO_ViewMessage.php?idTracking=".$_POST['idTracking']."";
 			}
 		}
 	}

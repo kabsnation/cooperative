@@ -45,7 +45,7 @@ else if(isset($_SESSION['idAccount']))
 </head>
 
 <body class="login-container" style="background-color:#009688;">
-    <form id="form1" action="loginFunction.php" method="POST" onsubmit="return validateForm()">
+    <form id="form1" method="POST" onsubmit="return validateForm()">
         <!-- Page container -->
         <div class="page-container">
 
@@ -90,7 +90,7 @@ else if(isset($_SESSION['idAccount']))
                             <br />
 
                             <div class="form-group">
-                            	<input type="submit" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
+                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
                             </div>
 
                         </div>
@@ -154,7 +154,7 @@ else if(isset($_SESSION['idAccount']))
         }
     function validateForm(){
         var fields = $(".validata")
-                .find("select, textarea, input").serializeArray();
+                .find("input").serializeArray();
           
         $.each(fields, function(i, field) {
                 swal({

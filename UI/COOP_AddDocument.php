@@ -179,7 +179,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="submit" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -249,7 +249,7 @@ table.columns.adjust().draw();
                         url: "documentFunction.php",
                         data: form_data,
                         success: function(data){
-                           success();
+                           success(data);
                         }
                     });
            }
