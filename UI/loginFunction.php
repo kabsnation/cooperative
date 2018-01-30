@@ -23,6 +23,10 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 				$_SESSION["idAccount"]= $result["idAccounts"];
 				echo "<script> window.location='COOP_AddDocument.php'</script>";
 			}
+			else if($result['idaccount_type']==4){
+				$_SESSION["idEvent"]= $result["idAccounts"];
+				echo "<script> window.location='COOP_AddEvent.php'</script>";
+			}
 		}
 	}
 	else{
