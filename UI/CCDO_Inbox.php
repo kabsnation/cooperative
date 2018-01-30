@@ -46,17 +46,23 @@ $id = $_SESSION['idAccount'];
 		                	</div>
 						</div>
 
-						<table class="table datatable-html" id="tableInbox">
-	                        <thead>
-	                            <tr>
-	                            	<th><input type="checkbox" id="select-all" onclick="selectAll()" class="styled"></th>
-	                            	<th>Subject</th>
-	                                <th>From</th>
-	                                <th>Date</th>
-	                                <th class="text-center">Actions</th>
-	                            </tr>
-	                        </thead>
-	                    </table>
+						<div class="panel-body">
+							<div class="col-lg-12">
+								<table class="table datatable-html" id="tableInbox">
+			                        <thead>
+			                            <tr>
+			                            	<th><input type="checkbox" id="select-all" onclick="selectAll()" class="styled"></th>
+			                            	<th>Subject</th>
+			                                <th>From</th>
+			                                <th>Date</th>
+			                                <th class="text-center">Actions</th>
+			                            </tr>
+			                        </thead>
+			                    </table>
+							</div>
+						</div>
+
+						
                     </div>
                     <!-- /media library -->
 
@@ -171,6 +177,9 @@ $id = $_SESSION['idAccount'];
                     addRow();
                 }
             },
+            error: function(data){
+	        	window.location = "Offline.php";
+	        },
             dataType: "json"
         });
     }  
