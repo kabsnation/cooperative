@@ -47,7 +47,6 @@ if(isset($_POST['txtEventName'])){
 		    }
 
 		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$startDateTime,$endDateTime,$target_file,$idAccounts);
-		
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
 					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);

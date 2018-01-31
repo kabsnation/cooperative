@@ -13,7 +13,7 @@ $trackings = $doc->getTransactionLogs($id);
 $history = $doc->getHistory($id);
 ?>
 
-<!-- Main content -->    
+                    <!-- Main content -->    
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
