@@ -15,12 +15,25 @@ class EventHandler{
 		return $result;
 	}
 
-	public function addRecipient($idEvents,$idAccounts){
+	public function addRecipient($idEvents,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
 		$con = new Connect();
+		$SMS = new SMSHandler();
 		$query = "INSERT INTO location(idEvents,idAccounts,status) VALUES('".$idEvents."','".$idAccounts."','WAITING FOR CONFIRMATION')";
 		$result = $con->insert($query);
+		$number = $this->getMobileNo($idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);
+		$message = $SMS->sendSMS($number,$eventName,$eventLocation,$startDateTime,$endDateTime); 
 		return $result;
 	}
+
+	public function getMobileNo($idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
+		$con = new Connect();
+		$query = "SELECT Telephone_Number FROM cooperative_profile c INNER JOIN accounts a on a.idCooperative_Profile = c.idCooperative_Profile WHERE a.idaccounts = ".$idAccounts;
+		$result = $con->select($query);
+		$row = $result->fetch_assoc();
+		
+		return $row['Telephone_Number'];
+	}
+
 
 	public function getEvents(){
 		$query = "SELECT * FROM Events JOIN accounts ON accounts.idAccounts = events.idAccounts WHERE events.markasdeleted = 0 ";

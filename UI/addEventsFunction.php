@@ -2,6 +2,7 @@
 session_start();
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
+require("../Handlers/SMSHandler.php");
 $handler = new EventHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
@@ -49,11 +50,8 @@ if(isset($_POST['txtEventName'])){
 		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$startDateTime,$endDateTime,$target_file,$idAccounts);
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
-					$result = $handler->addRecipient($EventId,$idAccounts);
+					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);
 				} 
-			}
-			if($result){
-				echo "<script>window.location='COOP_AddEvent.php';alert('Success!');</script>";
 			}
 		}
 

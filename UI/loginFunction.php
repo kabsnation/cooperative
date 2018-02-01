@@ -9,6 +9,7 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 	$password=mysqli_real_escape_string($con,stripcslashes(trim($_POST["password"])));
 	$results=$handler->getAccount($username,$password);
 	session_start();
+	$arrs = array();
 	if(isset($results)){
 		foreach ($results as $result) {
 			if($result['idaccount_type']==1){
@@ -23,6 +24,7 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 				$_SESSION["idAccount"]= $result["idAccounts"];
 				$arrs[1] ="COOP_AddDocument.php";
 			}
+
 			else if($result['idaccount_type']==4){
 				$_SESSION["idEvent"]= $result["idAccounts"];
 				$arrs[1] ="COOP_AddEvent.php";
@@ -32,8 +34,6 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 		}
 	}
 	else{
-		echo '<script type="text/javascript">
-		alert("Login Failed");window.location="index.php"</script> ';
 		$arrs[0]= 0;
 		echo json_encode($arrs);
 	}
