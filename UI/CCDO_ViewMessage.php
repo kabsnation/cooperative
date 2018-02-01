@@ -199,8 +199,7 @@ else if(isset($_GET['idEvents'])){
 
 						<div class="panel-body">
 							<div>
-								
-									<textarea type="text" class="summernote" id="reply" name="reply"></textarea>
+									<textarea type="text" class="summernote" id="reply" name="reply" required="required"></textarea>
 								
 							</div>
 
@@ -214,7 +213,7 @@ else if(isset($_GET['idEvents'])){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+									<input type="button" id="send" onclick="confirm(1)" class="btn bg-teal" value="Send" name="send"/>
 					</div>
 					
 					<!-- /summernote editor -->
@@ -307,7 +306,7 @@ else if(isset($_GET['idEvents'])){
 			send.prop('class','btn bg-teal');
 			send.prop('disabled',false);
 	}
-	 function confirm(){
+	 function confirm(val=""){
         swal({
                     title: "Are you sure?",
                     text: "",
@@ -320,18 +319,38 @@ else if(isset($_GET['idEvents'])){
                 },
             function(isConfirm){
                 if(isConfirm){
-                    var form_data = $('#form1').serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "replyFunction.php",
-                        data: form_data,
-                        success: function(data){
-                           success(data);
-                        }
-                    });
+                	var checkk ='';
+                	if(val==1){
+                		var rep = $('#reply').val();
+                		if(rep=='' || rep == ' ')
+                			checkk='1';
+                	}
+                	if(checkk !='1'){
+                		var form_data = $('#form1').serialize();
+	                    $.ajax({
+	                        type: "POST",
+	                        url: "replyFunction.php",
+	                        data: form_data,
+	                        success: function(data){
+	                           success(data);
+	                        }
+	                    });
+                	}
+                	else
+                		validate();
+                    
            }
         });
     }
+    function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out reply field.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
+            }
     function success(location){
         setTimeout(function(){
             swal({

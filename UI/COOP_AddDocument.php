@@ -20,7 +20,6 @@ include('../UI/header/header_user.php');
 
                   <div class="content-wrapper">
                     <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
-
                     <div class="content-wrapper">
                         <div class="content">
 
@@ -137,10 +136,12 @@ include('../UI/header/header_user.php');
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label><span class="text-danger">* </span><strong>Choose Recipients:</strong></label>
+
+                                        <input type="text" id="checker" class="label" disabled="true" required="required" >
                                                   <table class="table datatable-html" id="table" style="font-size: 13px; width: 100%;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" ></th>
+                                                                    <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" onchange="addToHidden(this)" ></th>
                                                                     <th style="width: 30%;">Recipients</th>
                                                                     <th style="width: 20%;">Email</th>
                                                                     <th style="width: 20%;">Type</th>
@@ -150,7 +151,7 @@ include('../UI/header/header_user.php');
                                                                 <?php if($cooperativeProfile){
                                                                     foreach($cooperativeProfile as $coop){?>
                                                                 <tr>
-                                                                    <td><input type="checkbox"  name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
+                                                                    <td><input type="checkbox"  name="checkbox[]" onchange="addToHidden(this)" value="<?php echo $coop['idAccounts'];?>"></td>
                                                                      <td><?php echo $coop['Cooperative_Name'];?></td>
                                                                      <td><?php echo $coop['Email_Address'];?></td>
                                                                      <td>Cooperative</td>
@@ -159,7 +160,7 @@ include('../UI/header/header_user.php');
                                                                 <?php if($departmentProfile){
                                                                     foreach($departmentProfile as $dept){?>
                                                                 <tr>
-                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $dept['idAccounts'];?>"></td>
+                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $dept['idAccounts'];?>" onchange="addToHidden(this)"></td>
                                                                      <td><?php echo $dept['Department'];?></td>
                                                                      <td><?php echo $dept['Email_Address'];?></td>
                                                                      <td>Department</td>
@@ -179,7 +180,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="submit" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="button" onclick="confirm()" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -199,6 +200,14 @@ include('../UI/header/header_user.php');
 </body>
 </html>
 <script type="text/javascript">
+    function addToHidden(checkbox){
+        if(checkbox.checked == true){
+            document.getElementById('checker').value='true';
+        }
+        else{
+            document.getElementById('checker').value=null;
+        }
+    }
 var table = $('#table').DataTable();
  function selectAll(){
     alert('asd');
@@ -248,18 +257,69 @@ table.columns.adjust().draw();
                 },
             function(isConfirm){
                 if(isConfirm){
-                   document.getElementById('form1').submit();
+                    var status = validateForm();
+                         if(status==1){
+                            validate();
+                         }
+                         else{
+                             $.ajax({
+                                type: "POST",
+                                url: "documentFunction.php",
+                                data: $('#form1').serialize(),
+                                success: function(data){
+                                    success();
+                                },
+                                error: function(data){
+                                    failed();
+                                }
+
+                            });
+                        }
            }
         });
     }
-    function success(){
-        setTimeout(function(){
-            swal({
-                title: "Success!",
-                text: "",
-                type: "success"
-                });},500); 
-    }
+    function validateForm(){
+                var inputs = document.getElementsByTagName('input');
+                var checker = document.getElementById('checker');
+                var selects  = document.getElementsByTagName('select');
+                if(checker.value==''){
+                    return 1;
+                }
+                for(var i = 0; i<inputs.length; ++i){
+                    for(var o = 0; o<selects.length; ++o){
+                        if(!selects[o].checkValidity()){
+                            //console.log(selects[o].value);
+                            return 1;
+                            break;
+                        }
+                    }
+                    if(!inputs[i].checkValidity()){
+                        //console.log(inputs[o].value);
+                        return 1;
+                        break;
+                    }
+                }
+            }
+            function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out all the required fields.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
+            }
+   function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location=window.location;
+                        });},500); 
+            }
     function failed(){
         setTimeout(function(){
             swal({
@@ -268,20 +328,6 @@ table.columns.adjust().draw();
                 type: "warning"
                 },
                 function(isConfirm){});},500);
-    }
-
-    function validateForm(){
-        var fields = $(".panel-body")
-            .find("select, textarea, input").serializeArray();
-      
-    $.each(fields, function(i, field) {
-            swal({
-                title: "Failed!",
-                text: "Fill out all the required fields.",
-                confirmButtonColor: "#EF5350",
-                type: "error"
-            });
-       }); 
     }
     <?php
 
