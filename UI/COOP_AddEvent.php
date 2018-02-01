@@ -37,14 +37,14 @@ include('../UI/header/header_events.php');
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label><span class="text-danger">* </span><strong>Event Name:</strong></label>
-                                                        <textarea  ID="txtEventName" name="txtEventName" rows="4" cols="5" class="form-control" type="MultiLine" required="required"></textarea>
+                                                        <textarea  ID="txtEventName" name="txtEventName" rows="4" cols="5" class="form-control" type="MultiLine" required="required" maxlength="45"></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label><span class="text-danger">* </span><strong>Event Location:</strong></label>
-                                                        <textarea  ID="txtEventLocation" name="txtEventLocation" rows="4" cols="5" class="form-control" type="MultiLine" required="required"></textarea>
+                                                        <textarea  ID="txtEventLocation" name="txtEventLocation" rows="4" cols="5" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
