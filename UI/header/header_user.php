@@ -211,7 +211,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                         <div class="media-right media-middle">
                                             <ul class="icons-list">
                                                 <li>
-                                                    <a href="#"><i class="icon-cog3"></i></a>
+                                                    <a  href="EditAccount.php"><i class="icon-cog3"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
