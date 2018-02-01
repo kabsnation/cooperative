@@ -14,7 +14,7 @@ class AccountHandler{
 	}
 	public function getAccount($userName,$password){
 		$con = new Connect();
-		$query = "SELECT * FROM Accounts WHERE userName='".$userName."' AND password ='" .$password."' and markasdeleted = 0";
+		$query = "SELECT * FROM Accounts WHERE Username='".$userName."' AND Password ='" .$password."' and markasdeleted = 0";
 		$result = $con->select($query);
 		return $result;
 	}
