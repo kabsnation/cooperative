@@ -77,6 +77,15 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
     $arrs[5]="active";
     $title = "CCDO - History";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
+    $title = "CCDO - Edit Account";
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">

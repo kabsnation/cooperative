@@ -22,6 +22,12 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     $arrs[2]="active";
     $title = "CCDO - View Accounts";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $title = "CCDO - Edit Account";
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -106,7 +112,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                        <li><a href="EditAccount.php"><i class="icon-cog5"></i> Account settings</a></li>
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>

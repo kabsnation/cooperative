@@ -13,6 +13,11 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
     $arrs[1]="active";
     $title = "COOP - Event Lists";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $title = "COOP - Edit Account";
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -96,14 +101,25 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
+                        <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
     <!-- /main navbar -->
-
+  <script type="text/javascript">
+        function logOut(){
+            $.ajax({
+            type: "POST",
+            url: "/coop/UI/logout.php",
+            data: "type='admin'",
+            success: function(data){
+                 window.location ='index.php';
+            }
+        });
+        }
+    </script>
             <!-- Page container -->
             <div class="page-container">
 

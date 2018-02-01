@@ -27,11 +27,11 @@ class EventHandler{
 
 	public function getMobileNo($idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
 		$con = new Connect();
-		$query = "SELECT Telephone_Number FROM cooperative_profile c INNER JOIN accounts a on a.idCooperative_Profile = c.idCooperative_Profile WHERE a.idaccounts = ".$idAccounts;
+		$query = "SELECT Contact_Number FROM respondent JOIN cooperative_profile as c ON c.idRespondent = respondent.idRespondent JOIN accounts ON accounts.idCooperative_Profile = c.idCooperative_Profile  WHERE a.idaccounts = ".$idAccounts;
 		$result = $con->select($query);
 		$row = $result->fetch_assoc();
 		
-		return $row['Telephone_Number'];
+		return $row['Contact_Number'];
 	}
 
 

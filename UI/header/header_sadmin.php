@@ -53,6 +53,13 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAndUpdateDepartmentProfile.php
     $arrs[3]="active";
     $title = "CCDO - Account List";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $title = "CCDO - Edit Account";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

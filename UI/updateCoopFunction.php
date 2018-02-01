@@ -13,9 +13,12 @@ if(isset($_POST['id'])){
 		$firstname = mysqli_real_escape_string($con,stripcslashes(trim($_POST['firstname'])));
 		$middlename = mysqli_real_escape_string($con,stripcslashes(trim($_POST['middlename'])));
 		$rNumber = mysqli_real_escape_string($con,stripcslashes(trim($_POST['rNumber'])));
+		$number = explode("(+63) ", $rNumber);
+		$number = explode("-", $number[1]);
+		$number = "0".$number[0].$number[1].$number[2];
 		$position = mysqli_real_escape_string($con,stripcslashes(trim($_POST['position'])));
 		$rEmail = mysqli_real_escape_string($con,stripcslashes(trim($_POST['rEmail'])));
-		$handler->updateRespondent($firstname,$lastname,$middlename,$position,$rNumber,$rEmail,$id);
+		$handler->updateRespondent($firstname,$lastname,$middlename,$position,$number,$rEmail,$id);
 	}
 	if(isset($_POST['idcoop'])){
 		$idcoop = $_POST['idcoop'];

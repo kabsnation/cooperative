@@ -6,6 +6,12 @@ class AccountHandler{
 		$result = $con->update($query);
 		return $result;
 	}
+	public function changePassword($id,$password){
+		$con = new Connect();
+		$query = "UPDATE accounts SET password='$password' WHERE idAccounts=$id";
+		$result = $con->update($query);
+		return $result;
+	}
 	public function getAccount($userName,$password){
 		$con = new Connect();
 		$query = "SELECT * FROM Accounts WHERE userName='".$userName."' AND password ='" .$password."' and markasdeleted = 0";
@@ -74,7 +80,7 @@ class AccountHandler{
 	}
 	public function addCooperative($cooperativeName,$address,$telephoneNumber,$emailAddress,$CDA_Reg_No,$Date_of_Reg,$CIN,$orgAspectId,$respondentId,$businessOperationId,$commonBondOfMembershipId,$memberProfileId,$affiliation,$regulatoryId,$coopertaiveType,$areaId){
 		$con = new Connect();
-		$query = "INSERT INTO Cooperative_Profile(Cooperative_Name,Address,Telephone_Number,Email_Address,CDA_Reg_No,Date_of_Reg,CIN,idRespondent,idOrganizational_Aspect,idBusiness_Operation,idType,idCommonBond_of_Membership,idarea_of_operation,idMembership_Profile,Affilation,idRegulatory_Requirements) VALUES('".$cooperativeName."','".$address."','".$telephoneNumber."','".$emailAddress."','".$CDA_Reg_No."','".$Date_of_Reg."','".$CIN."','".$respondentId."','".$orgAspectId."','".$businessOperationId."','".$coopertaiveType."','".$commonBondOfMembershipId."','".$areaId."','".$memberProfileId."','".$affiliation."','".$regulatoryId."')";
+		$query = "INSERT INTO Cooperative_Profile(Cooperative_Name,Address,Telephone_Number,Email_Address,CDA_Reg_No,Date_of_Reg,CIN,idRespondent,idOrganizational_Aspect,idBusiness_Operation,idType,idCommonBond_of_Membership,idarea_of_operation,idMembership_Profile,Affiliation,idRegulatory_Requirements) VALUES('".$cooperativeName."','".$address."','".$telephoneNumber."','".$emailAddress."','".$CDA_Reg_No."','".$Date_of_Reg."','".$CIN."','".$respondentId."','".$orgAspectId."','".$businessOperationId."','".$coopertaiveType."','".$commonBondOfMembershipId."','".$areaId."','".$memberProfileId."','".$affiliation."','".$regulatoryId."')";
 		$cooperativeId = $con->insertReturnLastId($query);
 		return $cooperativeId;
 	}
@@ -94,7 +100,7 @@ class AccountHandler{
 	}
 	public function addOrganizationalAspect($noOfBoardOfDirectors,$noOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionCommitteeChair,$medAndConciliation,$otherCommittee,$dateOfRegularMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting,$creditChairman){
 		$con = new Connect();
-		$query="INSERT INTO Organizational_Aspect(No_of_Board_of_Directors,No_of_Employees,BOD_Chairman,Manager,BOD_Vice_Chairman,Secretary,Audit,Treasurer,Election_Committee_Chair,Med_and_Conciliation,Other_Commitees,Date_of_Regular_Meeting,Date_of_Monthly_Meeting,Date_of_Commitee_Meeting,credit_comittee_chair) VALUES('".$noOfBoardOfDirectors."','".$noOfEmployees."','".$chairman."','".$manager."','".$viceChairman."','".$secretary."','".$audit."','".$treasurer."','".$electionCommitteeChair."','".$medAndConciliation."','".$otherCommittee."','".$dateOfRegularMeeting."','".$dateOfMonthlyMeeting."','".$dateOfCommitteeMeeting."','".$creditChairman."')";
+		$query="INSERT INTO Organizational_Aspect(No_of_Board_of_Directors,No_of_Employees,BOD_Chairman,Manager,BOD_Vice_Chairman,Secretary,Audit,Treasurer,Election_Committee_Chair,Med_and_Conciliation,Other_Commitees,Date_of_Regular_Meeting,Date_of_Monthly_Meeting,Date_of_Commitee_Meeting,credit_committee_chair) VALUES('".$noOfBoardOfDirectors."','".$noOfEmployees."','".$chairman."','".$manager."','".$viceChairman."','".$secretary."','".$audit."','".$treasurer."','".$electionCommitteeChair."','".$medAndConciliation."','".$otherCommittee."','".$dateOfRegularMeeting."','".$dateOfMonthlyMeeting."','".$dateOfCommitteeMeeting."','".$creditChairman."')";
 		$orgAspectId = $con->insertReturnLastId($query);
 		return $orgAspectId;
 	}

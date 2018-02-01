@@ -14,7 +14,7 @@ $composition = $handler->getMembershipComposition();
 include('../UI/header/header_admin.php');
 ?>
 
-<form id="form1" method="POST" action="addCoopFunction.php"  class="form-validate-jquery" onsubmit="return validateForm()">
+<form id="form1" method="POST" action="addCoopFunction.php"  class="form-validate-jquery" >
                         <!-- Page header -->
                         <div class="page-header page-header-default">
                             <div class="page-header-content">
@@ -653,7 +653,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type='submit' onclick="confirm()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
+                                                <input type='button' onclick="checkUsername()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
 
                                         </div>
@@ -774,7 +774,22 @@ include('../UI/header/header_admin.php');
                         },
                         function(isConfirm){});},500);
             }
-
+            function checkUsername(){
+                var username = $('#txtUsername').val();
+                        $.ajax({
+                            type: "POST",
+                            url: "checkUsername.php",
+                            data: "txtUsername="+username,
+                            success: function(data){
+                               if(data =='1'){
+                                alert("Username already exist");
+                               }
+                               else{
+                                    $('#form1').submit();
+                               }
+                            }
+                        });
+            }
             function validateForm(){
                 var fields = $(".panel-body")
                         .find("select, textarea, input").serializeArray();

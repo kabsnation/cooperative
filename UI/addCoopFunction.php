@@ -16,7 +16,9 @@ if(isset($_POST['txtUsername'])){
 		$contactNumber = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPhone'])));
 		$respondentEmailAddress= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEmail'])));
 		//cooperative profile
-
+		$number = explode("(+63) ", $contactNumber);
+		$number = explode("-", $number[1]);
+		$number = "0".$number[0].$number[1].$number[2];
 		$coopName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtCoopName'])));
 		$address= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtAddress'])));
 		$telephoneNumber= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtTelephone'])));
@@ -83,7 +85,7 @@ if(isset($_POST['txtUsername'])){
 		$password= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPassword'])));
 
 		//insert respondent and return id
-		$respondentId = $handler->addRespondent($firstName,$lastName,$middleName,$contactNumber,$position,$respondentEmailAddress);
+		$respondentId = $handler->addRespondent($firstName,$lastName,$middleName,$number,$position,$respondentEmailAddress);
 		if($respondentId!=""){
 			//insert org aspect
 			$orgAspectId = $handler->addOrganizationalAspect($numberOfBoardOfDirectors,$numberOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionChairman,$med,$otherCommittees,$dateOfgeneralMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting,$creditChairman);
@@ -142,6 +144,6 @@ if(isset($_POST['txtUsername'])){
 			echo "<script>alert('error respondent');</script> ";
 	}
 	else
-		echo "<script>window.location='CCDO_AddDepartmentAccount.php';alert('Username Already Exist!');</script>";
+		echo "<script>window.location='CCDO_AddCooperativeAccount.php';alert('Username Already Exist!');</script>";
 }
 ?>
