@@ -96,7 +96,7 @@ else
                                     <div class="tab-pane" id="settings">
 
                                         <div class="row" id="changePass" style="display: block;">
-                                            <div class="col-lg-4 col-sm-7">
+                                            <div class="col-lg-6 col-sm-7">
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Change Password <a onclick="editPassword()" class="text-muted"><i class="icon-pencil4 pull-right"></i></a></h6>
@@ -107,25 +107,25 @@ else
                                         </div>
 
                                         <div class="row" id="updatePass" style="display: none;">
-                                            <div class="col-lg-4 col-sm-7">
+                                            <div class="col-lg-6 col-sm-7">
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Update Password <a onclick="updatePassword()" class="text-muted"><i class="icon-cross3 pull-right" title="Cancel"></i></a></h6>
 
                                                         <div class="form-group">
                                                             <label>Old Password:</label>
-                                                            <input type="password" id="oldpass" class="form-control" />
+                                                            <input type="password" id="oldpass" class="form-control" minlength="6" maxlength="20" />
                                                             <input type="hidden" name="oldpassword" id="oldpassword" value="<?php echo $info['Password'];?>" class="form-control" />
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>New Password:</label>
-                                                            <input type="password" id="txtPassword" minlength="5" name="newpassword" class="form-control" required="required" />
+                                                            <input type="password" id="txtPassword" minlength="6" maxlength="20" name="newpassword" class="form-control" required="required" />
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>Re-enter New Password:</label>
-                                                            <input type="password" equalTo="#txtPassword"  class="form-control" />
+                                                            <input type="password" equalTo="#txtPassword" minlength="6" maxlength="20" class="form-control" />
                                                         </div>
 
                                                         <div class="text-right">

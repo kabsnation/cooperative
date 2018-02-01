@@ -53,21 +53,21 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Last name:</strong></label>
-                                                                <input  ID="txtLastName" name="txtLastName" MaxLength="45" autofocus Style="text-transform: uppercase" required="required" class="form-control" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtLastName" name="txtLastName" MaxLength="45" autofocus Style="text-transform: uppercase" required="required" maxlength="45" class="form-control" onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>First name:</strong></label>
-                                                                <input  ID="txtFirstName" name="txtFirstName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control"  onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtFirstName" name="txtFirstName" MaxLength="45" Style="text-transform: uppercase" required="required" maxlength="45"  class="form-control"  onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Middle name:</strong></label>
-                                                                <input  ID="txtMiddleName" name="txtMiddleName" MaxLength="45" Style="text-transform: uppercase" required="required" class="form-control" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtMiddleName" name="txtMiddleName" MaxLength="45" Style="text-transform: uppercase" required="required" maxlength="45" class="form-control" onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,7 +91,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Email Address:</strong></label>
-                                                                <input  ID="txtEmail" name="txtEmail" required="required" class="form-control" type="email"></input>
+                                                                <input  ID="txtEmail" name="txtEmail" required="required" maxlength="45" class="form-control" type="email"></input>
                                                             </div>
                                                         </div>
 
@@ -108,7 +108,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-12">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Business/ Cooperative Name:</strong></label>
-                                                                <input  ID="txtCoopName" name="txtCoopName" MaxLength="100" Style="text-transform: uppercase" required="required" class="form-control" onkeyup="Validate(this)" onkeypress="changeCoopLbl(this.value)"></input>
+                                                                <input  ID="txtCoopName" name="txtCoopName" MaxLength="100" Style="text-transform: uppercase" required="required" maxlength="45" class="form-control" onkeyup="Validate(this)" onkeypress="changeCoopLbl(this.value)"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -117,7 +117,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-12">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Address:</strong></label>
-                                                                <input  ID="txtAddress" name="txtAddress" MaxLength="100" Style="text-transform: uppercase" required="required" class="form-control" onkeyup="Validate(this)"></input>
+                                                                <textarea ID="txtAddress" name="txtAddress" Style="text-transform: uppercase" required="required" maxlength="300" class="form-control" onkeyup="ValidateAddress(this)"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -126,14 +126,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Telephone/ Fax Number:</strong></label>
-                                                                <input  ID="txtTelephone" name="txtTelephone" type="number" required="required" class="form-control"></input>
+                                                                <input  ID="txtTelephone" name="txtTelephone" type="number" maxlength="20" required="required" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Email Address:</strong></label>
-                                                                <input  ID="txtEmail1" name="txtEmail1" type="email" class="form-control" required="required"></input>
+                                                                <input  ID="txtEmail1" name="txtEmail1" type="email" maxlength="45" class="form-control" required="required"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -142,7 +142,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>CDA Registration Number:</strong></label>
-                                                                <input  ID="txtCDA" name="txtCDA" required="required" class="form-control" type="number"></input>
+                                                                <input  ID="txtCDA" name="txtCDA" required="required" maxlength="45" class="form-control" type="number"></input>
                                                             </div>
                                                         </div>
 
@@ -156,7 +156,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>CIN:</strong></label>
-                                                                <input  ID="txtCIN" name="txtCIN" class="form-control" required="required" type="number"></input>
+                                                                <input  ID="txtCIN" name="txtCIN" maxlength="45" class="form-control" required="required" type="number"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -188,7 +188,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Affiliation:</strong></label>
-                                                                <input  ID="txtAffiliation" name="txtAffiliation" class="form-control" required="required" type="text" onkeyup="Validate(this)"></input>
+                                                                <input  ID="txtAffiliation" name="txtAffiliation" class="form-control" required="required" type="text" maxlength="45" onkeyup="Validate(this)"></input>
                                                             </div>
                                                         </div>
 
@@ -218,14 +218,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Board of Directors:</strong></label>
                                                                 <input  ID="txtNumberOfBoardOfDirectors" 
-                                                                name="txtNumberOfBoardOfDirectors" required="required" class="form-control" type="number"></input>
+                                                                name="txtNumberOfBoardOfDirectors" min="1" max="99" required="required" class="form-control" type="number"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Employees:</strong></label>
-                                                                <input  ID="txtNumberOfEmployees" name="txtNumberOfEmployees" required="required" class="form-control" type="number"></input>
+                                                                <input  ID="txtNumberOfEmployees" name="txtNumberOfEmployees" min="1" max="99" required="required" class="form-control" type="number"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -234,14 +234,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>BOD Chairman:</strong></label>
-                                                                <input  ID="txtBODChairman" name="txtBODChairman" required="required" class="form-control"></input>
+                                                                <input  ID="txtBODChairman" name="txtBODChairman" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Manager:</strong></label>
-                                                                <input  ID="txtManager" name="txtManager" required="required" class="form-control"></input>
+                                                                <input  ID="txtManager" name="txtManager" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -250,14 +250,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Educ.Com/ BOD Vice Chair:</strong></label>
-                                                                <input  ID="txtBODViceChair" name="txtBODViceChair" required="required" class="form-control"></input>
+                                                                <input  ID="txtBODViceChair" name="txtBODViceChair" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Secretary:</strong></label>
-                                                                <input  ID="txtSecretary" name="txtSecretary" required="required" class="form-control"></input>
+                                                                <input  ID="txtSecretary" name="txtSecretary" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -267,14 +267,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Audit Committee Chairman:</strong></label>
                                                                 <input  ID="txtAuditCommitteeChair" 
-                                                                name="txtAuditCommitteeChair" required="required" class="form-control"></input>
+                                                                name="txtAuditCommitteeChair" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Treasurer:</strong></label>
-                                                                <input  ID="txtTreasurer" name="txtTreasurer" required="required" class="form-control"></input>
+                                                                <input  ID="txtTreasurer" name="txtTreasurer" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -283,7 +283,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Election Committee Chairman:</strong></label>
-                                                                <input  ID="txtElectionCommitteeChairman" name="txtElectionCommitteeChairman" required="required" class="form-control"></input>
+                                                                <input  ID="txtElectionCommitteeChairman" name="txtElectionCommitteeChairman" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -291,7 +291,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Credit Committee Chairman:</strong></label>
                                                                 <input  ID="txtCreditCommitteeChairman" 
-                                                                name="txtCreditCommitteeChairman" required="required" class="form-control"></input>
+                                                                name="txtCreditCommitteeChairman" required="required" maxlength="45" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,14 +301,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Med. & Concilliation:</strong></label>
                                                                 <input  ID="txtMedAndConcilliation" 
-                                                                name="txtMedAndConcilliation" required="required" class="form-control"></input>
+                                                                name="txtMedAndConcilliation" required="required"  maxlength="200" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Other Committees:</strong></label>
-                                                                <input  ID="txtOtherCommittees" name="txtOtherCommittees" required="required" class="form-control"></input>
+                                                                <input  ID="txtOtherCommittees" name="txtOtherCommittees" required="required" maxlength="450" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -379,7 +379,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Cooperative Asset:</strong></label>
                                                                 <input  ID="txtTotalCooperativeAsset" 
-                                                                name="txtTotalCooperativeAsset" type="number" required="required" class="form-control"></input>
+                                                                name="txtTotalCooperativeAsset" type="number" required="required" class="form-control" min="1" max="9999999999"></input>
                                                             </div>
                                                         </div>
 
@@ -387,7 +387,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Paid-up Capital:</strong></label>
                                                                 <input  ID="txtTotalPaidUpCapital" 
-                                                                name="txtTotalPaidUpCapital" type="number" required="required" class="form-control"></input>
+                                                                name="txtTotalPaidUpCapital" type="number" required="required" min="1" max="9999999999" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -437,7 +437,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><strong>Total Volume of Sales based in Latest Financial Statement (with Members/Non-Members):</strong></label>
                                                                 <input  ID="txtTotalVolumeOfSales" 
-                                                                name="txtTotalVolumeOfSales" required="required" class="form-control"></input>
+                                                                name="txtTotalVolumeOfSales" required="required" type="number" min="1" max="9999999999" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -453,14 +453,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Updated BIR Registration Number:</strong></label>
-                                                                <input  ID="txtUpdatedBIRNumber" name="txtUpdatedBIRNumber" required="required" class="form-control"></input>
+                                                                <input  ID="txtUpdatedBIRNumber" name="txtUpdatedBIRNumber" required="required" maxlength="50" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Tax Identification Number (TIN):</strong></label>
-                                                                <input  ID="txtTIN" name="txtTIN" required="required" class="form-control"></input>
+                                                                <input  ID="txtTIN" name="txtTIN" required="required" class="form-control" placeholder="999-999-999-9999"></input>
                                                             </div>
                                                         </div>
 
@@ -472,14 +472,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Business Permit Number:</strong></label>
                                                                 <input  ID="txtBusinessPermitNumber" 
-                                                                name="txtBusinessPermitNumber" required="required" class="form-control"></input>
+                                                                name="txtBusinessPermitNumber" required="required" maxlength="50" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>COC Number (CDA):</strong></label>
-                                                                <input  ID="txtCOCNumber" name="txtCOCNumber" required="required" class="form-control"></input>
+                                                                <input  ID="txtCOCNumber" name="txtCOCNumber" required="required" maxlength="50" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -491,14 +491,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Certificate of Tax Exemption Number:</strong></label>
                                                                 <input  ID="txtCertificateOfTaxExemptionNumber" 
-                                                                name="txtCertificateOfTaxExemptionNumber" required="required" class="form-control"></input>
+                                                                name="txtCertificateOfTaxExemptionNumber" required="required" maxlength="50" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Date of Issue (COC):</strong></label>
-                                                                <input  ID="txtDateOfIssueCOC" name="txtDateOfIssueCOC" required="required" class="form-control"></input>
+                                                                <input  ID="txtDateOfIssueCOC" name="txtDateOfIssueCOC" required="required" class="form-control" placeholder="MM/DD/YYYY"></input>
                                                             </div>
                                                         </div>
 
@@ -515,21 +515,21 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Number of Membership:</strong></label>
                                                                 <input  ID="txtTotalNumberOfMembership" 
-                                                                name="txtTotalNumberOfMembership" required="required" class="form-control"></input>
+                                                                name="txtTotalNumberOfMembership" required="required" min="1" max="100" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Male:</strong></label>
-                                                                <input  ID="txtMale" name="txtMale" required="required" class="form-control"></input>
+                                                                <input  ID="txtMale" name="txtMale" required="required" min="1" max="100" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Female:</strong></label>
-                                                                <input  ID="txtFemale" name="txtFemale" required="required" class="form-control"></input>
+                                                                <input  ID="txtFemale" name="txtFemale" required="required" min="1" max="100" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -541,7 +541,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Regular Members:</strong></label>
                                                                 <input  ID="txtNumberOfRegularMembers" 
-                                                                name="txtNumberOfRegularMembers" required="required" class="form-control"></input>
+                                                                name="txtNumberOfRegularMembers" required="required" min="1" max="100" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -549,7 +549,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Associate Members:</strong></label>
                                                                 <input  ID="txtNumberOfAssociateMembers" 
-                                                                name="txtNumberOfAssociateMembers" required="required" class="form-control"></input>
+                                                                name="txtNumberOfAssociateMembers" required="required" min="1" max="100" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -606,14 +606,14 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Username:</strong></label>
-                                                                <input  ID="txtUsername" name="txtUsername" required="required" class="form-control" MaxLength="40" ></input>
+                                                                <input  ID="txtUsername" name="txtUsername" required="required" class="form-control" MinLength="6" MaxLength="20" ></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Password:</strong></label>
-                                                                <input  ID="txtPassword" name="txtPassword" type="password" required="required" class="form-control" MinLength="6" MaxLength="40"></input>
+                                                                <input  ID="txtPassword" name="txtPassword" type="password" required="required" class="form-control" MinLength="6" MaxLength="20"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -628,7 +628,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Re-enter Password:</strong></label>
-                                                                <input  ID="txtPassword1" type="password" required="required" class="form-control" MinLength="6" MaxLength="40" equalsTo="txtPassword"></input>
+                                                                <input  ID="txtPassword1" type="password" required="required" class="form-control" MinLength="6" MaxLength="20" equalsTo="txtPassword"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -653,7 +653,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type='button' onclick="checkUsername()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
+                                                <input type='submit' onclick="checkUsername()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
 
                                         </div>
@@ -712,6 +712,14 @@ include('../UI/header/header_admin.php');
 
             jQuery(function ($) {
                 $("#txtDateofMonthlyBoardMeeting").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
+            })
+
+            jQuery(function ($) {
+                $("#txtTIN").mask("999-999-999-9999", { placeholder: "999-999-999-9999" });
+            })
+
+            jQuery(function ($) {
+                $("#txtDateOfIssueCOC").mask("99/99/9999", { placeholder: "MM/DD/YYYY" });
             })
 
             function Validate(txt) {

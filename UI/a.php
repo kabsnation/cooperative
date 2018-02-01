@@ -24,14 +24,21 @@ include('../UI/header/header_user.php');
                     <div class="content-wrapper">
                         <div class="content">
 
-                            <div class="panel panel-white">
+                            <div class="panel panel-flat">
                                 <div class="panel-heading">
                                     <div class="panel-title">
-                                        <h3 class="panel-title">Send Document</h3>
+                                        <h3 class="panel-title"><strong>Add Document</strong></h3>
                                     </div>
 
                                     <div class="heading-elements">
                                         <div class="heading-btn-group">
+                                            <label class="control-label">Tracking Number:</label>
+                                            <div class="col-lg-12">
+                                                <label class="label" style="color: #000000; font-size: 15px;">TRACKING NUMBER:</label>
+                                                <label id="trackingNumber" class="label" style="color: #26A69A; font-size: 15px;">  <?php echo $trackingNumber;?></label>
+                                                    <input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -42,17 +49,7 @@ include('../UI/header/header_user.php');
                                         <div class="col-lg-12">
 
                                             <div class="row">
-                                                
-                                                <div class="col-lg-6">
-                                                    <label class="control-label text-bold">Tracking Number:</label>
-                                                    <br/>
-                                                    <label id="trackingNumber" class="label" style="color: #000; font-size: 15px;">  <?php echo $trackingNumber;?></label>
-                                                        <input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
-                                                    </label>
-                                                </div>
-
-
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label"><strong>From:</strong> </label>
                                                         <?php if($adminAccount){
@@ -68,21 +65,12 @@ include('../UI/header/header_user.php');
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label"> <span class="text-danger">* </span> <strong> Document Title:</strong></label>
-                                                        <textarea type="text" name="title" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
+                                                        <input type="text" name="title" id="txtDocumentName" class="form-control" required="required">
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Date Added:</label>
-                                                        <input type="text"  class="form-control" ID="dateTime" type="DateTime" readonly="true" value="<?php echo date("m/d/Y") ?>"></input>
-                                                        <input type="hidden" name="datetime" value="date('m/d/Y - h:m:s')">
-                                                    </div>
-                                                </div>
-
                                             </div>
 
                                             <div class="row">
@@ -112,7 +100,27 @@ include('../UI/header/header_user.php');
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="display-block text-semibold">Needs a Reply?</label>
+                                                    <label class="control-label">Date Added:</label>
+                                                    <input type="text"  class="form-control" ID="dateTime" type="DateTime" readonly="true" value="<?php echo date("m/d/Y") ?>"></input>
+                                                    <input type="hidden" name="datetime" value="date('m/d/Y - h:m:s')">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label><span class="text-danger">* </span><strong>Upload File:</strong></label>
+                                                    <input type="file" id="file" name="file" required="required" />
+                                                    <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="display-block text-semibold">Need a Reply:</label>
                                                     <label class="radio-inline radio-right">
                                                         <input type="radio" name="reply" value="1" class="styled" checked="checked">
                                                         Yes
@@ -125,19 +133,7 @@ include('../UI/header/header_user.php');
                                                 </div>
                                             </div>
 
-                                        </div>
-
                                         <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label><span class="text-danger">* </span><strong>Upload File:</strong></label>
-                                                    <input type="file" id="file" name="file" required="required" /><br/>
-                                                    <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
-                                                </div>
-                                            </div>
-
-                                        <div class="col-lg-12">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label><span class="text-danger">* </span><strong>Choose Recipients:</strong></label>
@@ -183,7 +179,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="submit" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -218,11 +214,6 @@ var table = $('#table').DataTable();
     ['height', ['height']]
   ]
 });
- $('#btnSend').submit(function(ev) {
-    ev.preventDefault(); // to stop the form from submitting
-    /* Validations go here */
-    confirm(); // If all the validations succeeded
-});
  var counter = 0;
  $('#select-all').click(function(event) {   
         if(counter ==0){
@@ -239,8 +230,13 @@ var table = $('#table').DataTable();
             }
 });
 table.columns.adjust().draw();
+
     function confirm(){
-        swal({
+
+        var a = notempty("txtDocumentName");
+        var b = notempty("documentType");
+        if (a == true && b == true){
+            swal({
                     title: "Are you sure?",
                     text: "",
                     type: "warning",
@@ -252,16 +248,36 @@ table.columns.adjust().draw();
                 },
             function(isConfirm){
                 if(isConfirm){
-                   document.getElementById('form1').submit();
-           }
-        });
+                    var form_data = $('#form1').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "documentFunction.php",
+                        data: form_data,
+                        success: function(data){
+                           success(data);
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            swal({
+                title: "Failed!",
+                text: "Please fill out all the required (*) fields.",
+                type: "error"
+            });
+        }
     }
+
     function success(){
         setTimeout(function(){
             swal({
                 title: "Success!",
                 text: "",
                 type: "success"
+                },
+                function(isConfirm){
+                    window.location='COOP_AddDocument.php';
                 });},500); 
     }
     function failed(){
@@ -274,25 +290,14 @@ table.columns.adjust().draw();
                 function(isConfirm){});},500);
     }
 
-    function validateForm(){
-        var fields = $(".panel-body")
-            .find("select, textarea, input").serializeArray();
-      
-    $.each(fields, function(i, field) {
-            swal({
-                title: "Failed!",
-                text: "Fill out all the required fields.",
-                confirmButtonColor: "#EF5350",
-                type: "error"
-            });
-       }); 
+    function notempty(id){
+        var value = $("#"+id).val();
+        var len = value.length;
+        if (len > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-    <?php
-
-    if(isset($_POST['success'])){
-        if($_POST['success']=='1'){?>
-            success();
-       <?php $_POST = array();}
-    }
-?>
 </script>

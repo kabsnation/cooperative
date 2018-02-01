@@ -45,7 +45,8 @@ else if(isset($_SESSION['idAccount']))
 </head>
 
 <body class="login-container" style="background-color:#009688;">
-    <form id="form1" method="POST" onsubmit="return validateForm()">
+    <form id="form1" method="POST" action="loginFunction.php">
+        
         <!-- Page container -->
         <div class="page-container">
 
@@ -69,17 +70,18 @@ else if(isset($_SESSION['idAccount']))
 		                            </div>
 	                                <br />
                             </div>
+
                             <div class="validata">
 
                                 <div class="form-group has-feedback has-feedback-left">
-                                    <input type="text" ID="username" name="username" class="form-control" Placeholder="Username" required="required">
+                                    <input type="text" ID="username" name="username" class="form-control" maxlength="20" Placeholder="Username" required="required">
                                     <div class="form-control-feedback">
                                         <i class="icon-user text-muted"></i>
                                     </div>
                                 </div>
 
                                 <div class="form-group has-feedback has-feedback-left">
-                                    <input type="password" ID="password" name="password" class="form-control" Placeholder="Password" required="required">
+                                    <input type="password" ID="password" name="password" class="form-control"  maxlength="20" Placeholder="Password" required="required">
                                     <div class="form-control-feedback">
                                         <i class="icon-lock2 text-muted"></i>
                                     </div>
@@ -152,17 +154,4 @@ else if(isset($_SESSION['idAccount']))
                     },
                     function(isConfirm){});},500);
         }
-    function validateForm(){
-        var fields = $(".validata")
-                .find("input").serializeArray();
-          
-        $.each(fields, function(i, field) {
-                swal({
-                    title: "Failed!",
-                    text: "Fill out all the required fields.",
-                    confirmButtonColor: "#EF5350",
-                    type: "error"
-                });
-           }); 
-    }
 </script>
