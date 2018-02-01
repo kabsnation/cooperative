@@ -89,7 +89,6 @@ if(isset($_POST['txtUsername'])){
 		if($respondentId!=""){
 			//insert org aspect
 			$orgAspectId = $handler->addOrganizationalAspect($numberOfBoardOfDirectors,$numberOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionChairman,$med,$otherCommittees,$dateOfgeneralMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting,$creditChairman);
-
 			if($orgAspectId!=""){
 				//regulatory requirements
 				$regulatoryId = $handler-> addRegulatoryRequirements($bir,$tin,$businessPermit,$coc,$dateIssueOfCoc,$certificate);
@@ -138,7 +137,7 @@ if(isset($_POST['txtUsername'])){
 					echo "<script>alert('error regulatoryId');</script>";
 			}
 			else
-				echo "<script>alert('error orgAspectId');</script> ";
+				echo "<script>alert('error orgAspectId $orgAspectId');</script> ";
 		}
 		else
 			echo "<script>alert('error respondent');</script> ";

@@ -742,15 +742,22 @@ include('../UI/header/header_admin.php');
                     },
                 function(isConfirm){
                     if(isConfirm){
-                        var form_data = $('#form1').serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "addCoopFunction.php",
-                            data: form_data,
-                            success: function(data){
-                               success();
+                        var status = validateForm();
+                            if(status==1){
+                                validate();
                             }
-                        });
+                            else{
+                                 var form_data = $('#form1').serialize();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "addCoopFunction.php",
+                                        data: form_data,
+                                        success: function(data){
+                                           success();
+                                        }
+                                    });
+                            }
+                       
                     }
                 });
             }
@@ -776,7 +783,8 @@ include('../UI/header/header_admin.php');
             }
             function checkUsername(){
                 var username = $('#txtUsername').val();
-                        $.ajax({
+                if(username !=''){
+                   $.ajax({
                             type: "POST",
                             url: "checkUsername.php",
                             data: "txtUsername="+username,
@@ -785,23 +793,43 @@ include('../UI/header/header_admin.php');
                                 alert("Username already exist");
                                }
                                else{
-                                    $('#form1').submit();
-                               }
+                                    confirm();
                             }
-                        });
+                        }
+                    });  
+               }          
             }
             function validateForm(){
-                var fields = $(".panel-body")
-                        .find("select, textarea, input").serializeArray();
-                  
-                $.each(fields, function(i, field) {
-                        swal({
-                            title: "Failed!",
-                            text: "Fill out all the required fields.",
-                            confirmButtonColor: "#EF5350",
-                            type: "error"
-                        });
-                   }); 
+                var inputs = document.getElementsByTagName('input');
+                var selects  = document.getElementsByTagName('select');
+                var textareas  = document.getElementsByTagName('textarea');
+                for(var i = 0; i<inputs.length; ++i){
+                    for(var o = 0; o<selects.length; ++o){
+                        if(!selects[o].checkValidity()){
+                            return 1;
+                            break;
+                        }
+                    }
+                    for(var p = 0; p<textareas.length; ++p){
+                        if(!textareas[p].checkValidity()){
+                            return 1;
+                            break;
+                        }
+                    }
+                    if(!inputs[i].checkValidity()){
+                        return 1;
+                        break;
+                    }
+                }
+            }
+             function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out all the required fields.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
             }
         </script>
         

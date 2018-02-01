@@ -9,7 +9,7 @@ $handler = new AccountHandler();
 $typeDepartment = $handler->getTypeOfDepartment();
 include('../UI/header/header_admin.php');
 ?>
-<form action="addDepartmentAccountFunction.php" method="POST" id="form1" class="form-validate-jquery" onsubmit="return validateForm()">
+<form action="addDepartmentAccountFunction.php" method="POST" id="form1" class="form-validate-jquery">
                         <!-- Page header -->
                         <div class="page-header page-header-default">
                             <div class="page-header-content">
@@ -50,7 +50,7 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-4">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Last Name:</strong></label>
-                                                                <input ID="txtLastname" name="txtLastname" class="form-control" required="required"></input>
+                                                                <input ID="txtLastname" name="txtLastname" class="form-control" required="required" ></input>
                                                             </div>
                                                         </div>
 
@@ -216,7 +216,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type='submit' onclick="confirm();" ID="btnSubmit" class="btn btn-primary" value="Submit" />
+                                                <input type='button' onclick="checkUsername()" ID="btnSubmit" class="btn btn-primary" value="Submit" required="required" />
                                             </div>
                                         </div>
                                     </div>
@@ -240,7 +240,24 @@ include('../UI/header/header_admin.php');
             jQuery(function ($) {
                 $("#txtCellphoneNumber").mask("(+63) 999-999-9999");
             });
-            
+            function checkUsername(){
+                var username = $('#txtUsername').val();
+                if(username !=''){
+                   $.ajax({
+                            type: "POST",
+                            url: "checkUsername.php",
+                            data: "txtUsername="+username,
+                            success: function(data){
+                               if(data =='1'){
+                                alert("Username already exist");
+                               }
+                               else{
+                                    confirm();
+                            }
+                        }
+                    });  
+               }          
+            }
              function confirm(){
                 swal({
                             title: "Are you sure?",
@@ -254,15 +271,26 @@ include('../UI/header/header_admin.php');
                     },
                 function(isConfirm){
                     if(isConfirm){
-                        var form_data = $('#form1').serialize();
-                        $.ajax({
-                            type: "POST",
-                            url: "addDepartmentAccountFunction.php",
-                            data: form_data,
-                            success: function(data){
-                               success();
-                            }
-                        });
+                         //$('#form1').submit();
+                         var status = validateForm();
+                         if(status==1){
+                            validate();
+                         }
+                         else{
+                              $.ajax({
+                                type: "POST",
+                                url: "addDepartmentAccountFunction.php",
+                                data: $('#form1').serialize(),
+                                success: function(data){
+                                    success();
+                                },
+                                error: function(data){
+                                    failed();
+                                }
+
+                            });
+                         }
+                        
                     }
                 });
             }
@@ -274,7 +302,7 @@ include('../UI/header/header_admin.php');
                         type: "success"
                         },
                         function(isConfirm){
-                            window.location='CCDO_AddCooperativeAccount.php';
+                            window.location='CCDO_AddDepartmentAccount.php';
                         });},500); 
             }
             function failed(){
@@ -287,17 +315,29 @@ include('../UI/header/header_admin.php');
                         function(isConfirm){});},500);
             }
             function validateForm(){
-                var fields = $(".panel-body")
-                        .find("select, textarea, input").serializeArray();
-                  
-                $.each(fields, function(i, field) {
-                        swal({
-                            title: "Failed!",
-                            text: "Fill out all the required fields.",
-                            confirmButtonColor: "#EF5350",
-                            type: "error"
-                        });
-                   }); 
+                var inputs = document.getElementsByTagName('input');
+                var selects  = document.getElementsByTagName('select');
+                for(var i = 0; i<inputs.length; ++i){
+                    for(var o = 0; o<selects.length; o++){
+                        if(!selects[o].checkValidity()){
+                            return 1;
+                            break;
+                        }
+                    }
+                    if(!inputs[i].checkValidity()){
+                        return 1;
+                        break;
+                    }
+                }
+            }
+            function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out all the required fields.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
             }
         </script>
 </body>
