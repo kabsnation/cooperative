@@ -6,8 +6,9 @@ $conn = new Connect();
 $con=$conn->connectDB();
 $doc = new DocumentHandler();
 $id = $_POST['id'];
-$idTracking =$_POST['idTracking'];
 if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id']) || isset($_POST['idReply'])){
+
+$idTracking =$_POST['idTracking'];
 	if($_POST['response']=='1'){
 		$response = $_POST['response'];
 		$result = $doc->changeInboxStatus($id,$idTracking);
@@ -41,6 +42,7 @@ if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id'])
 }
 else if(!empty($_POST['response']) && isset($_POST['idTracking']) && isset($_POST['id'])){
 	
+$idTracking =$_POST['idTracking'];
 	$response = $_POST['response'];
 	$result = $doc->changeInboxStatus($id,$idTracking);
 	if($result){
@@ -50,7 +52,14 @@ else if(!empty($_POST['response']) && isset($_POST['idTracking']) && isset($_POS
 		// </script>";
 	}
 }
+else if($_POST['type']=='events'){
+	$reply = $_POST['replyEvent'];
+	$idEvents = $_POST['idEvents'];
+	$result = $doc->replyEvent($idEvents,$id,$reply);
+}
 else{
+
+$idTracking =$_POST['idTracking'];
 	echo "<script>
 		window.location='CCDO_ViewMessage.php?id=".$idTracking."';
 		alert('Please add a message for a reply');

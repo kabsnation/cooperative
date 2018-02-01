@@ -35,6 +35,21 @@ else if(isset($_GET['idReply'])){
 	$locations = '';
 	$type = "reply";
 }
+else if(isset($_GET['idEvents'])){
+	$idEvents = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idEvents'])));
+	//check if read or not
+	$check = $doc->checkIfReadEvent($idEvents,$id);
+	$infos = $doc->getEventInfo($idEvents,$id);
+	$firstRowLocation = $doc->getEventLocationById($idEvents,$id);
+	$eventLocation = $doc->getEventLocation($idEvents);
+	$locations = '';
+	if($eventLocation){
+		foreach ($eventLocation as $location) {
+			$locations.= $location['name']." (".$location['email'].") <br>";
+		}
+	}
+	$type = "events";
+}
 ?>
 			<!-- Main content -->
 			<div class="content-wrapper">
@@ -103,15 +118,17 @@ else if(isset($_GET['idReply'])){
 							<?php
 								if($infos){
 									foreach($infos as $info){
-										$trackingNumber = $info['trackingNumber'];
+										if(isset($info['trackingNumber'])){
+										$trackingNumber = $info['trackingNumber'];}
 										$receiverId = $info['receiverId'];
 										$title = $info['title'];
 							?>
 							<h4 class="panel-title text-semibold"><?php echo $info['title']; ?></h6>
 							<div class="heading-elements">
 								<ul class="icons-list">
+									<?php if(isset($info['trackingNumber'])){?>
 									<li class="label" style="color: #000000; font-size: 12px;">TRACKING NO: <?php echo $info['trackingNumber'];?></li>
-									<?php if(isset($info['Document'])){?>
+									<?php } if(isset($info['Document'])){?>
 									<li class="label" style="color: #000000; font-size: 12px;">DOCUMENT TYPE: <?php echo $info['Document'];?></li>
 									<?php }?>
 									<li class="label" style="color: #000000; font-size: 12px;">DATE/TIME: <?php echo $info['DateTime'];?></li>
@@ -148,7 +165,16 @@ else if(isset($_GET['idReply'])){
 							</div>
 
 							<div class="col-lg-12">
-								<?php echo $info['message']; 
+
+								<?php 
+									if(isset($_GET['idEvents'])){?>
+									<h6><strong>Start Date and Time : </strong><?php echo $info['startDateTime'];?></h6>
+									<h6><strong>End Date and Time : </strong><?php echo $info['endDateTime'];?></h6>
+									<h6><strong>Event Location : </strong><?php echo $info['eventLocation'];?></h6>
+									<h6><strong>Event Details : </strong> <?php echo $info['message']?></h6>
+									<?php }else{
+
+									echo $info['message'];} 
 									if(isset($info['filePath']) && $info['filePath']!=NULL){
 								?>
 								<br>
@@ -195,7 +221,46 @@ else if(isset($_GET['idReply'])){
 				</form>
 				</div>
 				<!-- /content area -->
-<?php }}}?>
+<?php } else if($type == 'events'){?>
+	<form action="replyFunction.php" id='form1' method="POST">
+                    <!-- Summernote editor -->
+					<div class="panel panel-white">
+						<div class="panel-heading">
+							<h5 class="panel-title">Reply</h5>
+						</div>
+
+						<div class="panel-body">
+							<div>
+								
+								<div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="radio-inline radio-right">
+                                            <input type="radio" name="replyEvent" value="GOING" class="styled" checked="checked">
+                                            Going
+                                        </label>
+
+                                        <label class="radio-inline radio-right">
+                                            <input type="radio" name="replyEvent" value="NOT GOING" class="styled">
+                                            Not Going
+                                        </label>
+                                    </div>
+                                </div>
+								
+							</div>
+
+
+							<div class="text-right">
+									<input type="hidden" name="idEvents" value="<?php echo $idEvents;?>">
+									<input type="hidden" name="type" value="<?php echo $type?>">
+									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
+									<input type="hidden" name="id" value="<?php echo $id;?>">
+									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+					</div>
+					
+					<!-- /summernote editor -->
+				</form>
+				</div>
+<?php }}} ?>
 			</div>
 			<!-- /main content -->
 

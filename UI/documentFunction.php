@@ -47,6 +47,13 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	if($trackingId != ""){
 		foreach($_POST['checkbox'] as $recipient){
 			$result = $doc->addDocumentLocation($recipient,$trackingId);
+			if($result){?>
+				<form method='POST' id='form1' action='COOP_AddDocument.php'>
+						<input type='hidden' name='success' value='1'></form>
+						<script type="text/javascript">
+						document.getElementById('form1').submit();
+						</script>
+			<?php }
 		} 
 	}
 }

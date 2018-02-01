@@ -19,7 +19,7 @@ include('../UI/header/header_user.php');
 ?>
 
                   <div class="content-wrapper">
-                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <form id="form1" action="documentFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
 
                     <div class="content-wrapper">
                         <div class="content">
@@ -179,7 +179,7 @@ include('../UI/header/header_user.php');
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" onclick="confirm();" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                            <input type="submit" ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                         </div>
                                     </div>
                                 </div>
@@ -214,6 +214,11 @@ var table = $('#table').DataTable();
     ['height', ['height']]
   ]
 });
+ $('#btnSend').submit(function(ev) {
+    ev.preventDefault(); // to stop the form from submitting
+    /* Validations go here */
+    confirm(); // If all the validations succeeded
+});
  var counter = 0;
  $('#select-all').click(function(event) {   
         if(counter ==0){
@@ -243,15 +248,7 @@ table.columns.adjust().draw();
                 },
             function(isConfirm){
                 if(isConfirm){
-                    var form_data = $('#form1').serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "documentFunction.php",
-                        data: form_data,
-                        success: function(data){
-                           success(data);
-                        }
-                    });
+                   document.getElementById('form1').submit();
            }
         });
     }
@@ -261,9 +258,6 @@ table.columns.adjust().draw();
                 title: "Success!",
                 text: "",
                 type: "success"
-                },
-                function(isConfirm){
-                    window.location='COOP_AddDocument.php';
                 });},500); 
     }
     function failed(){
@@ -289,6 +283,12 @@ table.columns.adjust().draw();
             });
        }); 
     }
+    <?php
 
-
+    if(isset($_POST['success'])){
+        if($_POST['success']=='1'){?>
+            success();
+       <?php $_POST = array();}
+    }
+?>
 </script>

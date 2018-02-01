@@ -69,20 +69,6 @@ include('../UI/header/header_admin.php');
                                                         </div>
                                                     </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group has-feedback">
-                                                                <label><span class="text-danger">* </span><strong>Suffix:</strong></label>
-                                                                <select ID="ddlNameSuffix" name="ddlNameSuffix" class="form-control">
-                                                                    <option></option>
-                                                                    <option Value="Jr.">Jr.</option>
-                                                                    <option Value="Sr.">Sr.</option>
-                                                                    <option Value="III">III</option>
-                                                                    <option Value="IV">IV</option>
-                                                                    <option Value="V">V</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">

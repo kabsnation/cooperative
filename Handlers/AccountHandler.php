@@ -1,14 +1,32 @@
 <?php
 class AccountHandler{
+	public function delete($id){
+		$con = new Connect();
+		$query = "UPDATE accounts SET markasdeleted = 1 WHERE idAccounts = $id ";
+		$result = $con->update($query);
+		return $result;
+	}
 	public function getAccount($userName,$password){
 		$con = new Connect();
-		$query = "SELECT * FROM Accounts WHERE userName='".$userName."' AND password ='" .$password."'";
+		$query = "SELECT * FROM Accounts WHERE userName='".$userName."' AND password ='" .$password."' and markasdeleted = 0";
 		$result = $con->select($query);
+		return $result;
+	}
+	function updateInfo($id,$firstname,$lastname,$middlename,$number,$email){
+		$con = new Connect();
+		$query = "UPDATE account_info SET First_Name='$firstname', Last_Name='$lastname', Middle_Name='$middlename', Cellphone_Number='$number', Email_Address='$email' WHERE idAccount_Info=$id";
+		$result = $con->update($query);
+		return $result;
+	}
+	function updateAccount($id,$password,$dept){
+		$con = new Connect();
+		$query = "UPDATE accounts SET password ='$password', idDepartment='$dept' WHERE idAccounts = $id";
+		$result = $con->update($query);
 		return $result;
 	}
 	public function getAccountById($id){
 		$con = new Connect();
-		$query = "select *,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name from accounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info where idAccounts = $id";
+		$query = "SELECT *,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name from accounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info where idAccounts = $id and markasdeleted=0;";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -19,26 +37,32 @@ class AccountHandler{
 		return $result;
 	}
 	public function getDepartmentAccountById($id){
-		$query = "SELECT *,Department as name FROM Accounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN department on department.idDepartment = accounts.idDepartment where idAccounts =".$id;
+		$query = "SELECT *,Department as name FROM Accounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN department on department.idDepartment = accounts.idDepartment where markasdeleted = 0 and idAccounts =".$id;
 		$con = new Connect();
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getCoopAccountById($id){
-		$query = "SELECT *, coop.Email_Address as cEmail,Cooperative_Name as name, coop_asset.Beginning as beginningasset, coop_asset.To_Date as todateasset, paid_up_capital.Beginning as beginningcapital, paid_up_capital.To_Date as todatecapital FROM Accounts LEFT JOIN cooperative_profile as coop ON accounts.idCooperative_Profile = coop.idCooperative_Profile LEFT JOIN respondent ON respondent.idRespondent = coop.idRespondent LEFT JOIN organizational_aspect as oa ON oa.idOrganizational_Aspect = coop.idOrganizational_Aspect LEFT JOIN business_operation as b ON b.idBusiness_Operation = coop.idBusiness_Operation LEFT JOIN type_of_cooperative as typec ON typec.idType = coop.idType JOIN commonbond_of_membership as com ON com.idCommonBond_of_Membership = coop.idCommonBond_of_Membership LEFT JOIN area_of_operation as area ON area.idarea_of_operation = coop.idarea_of_operation LEFT JOIN membership_composition as mem ON mem.idMembership_composition = coop.idMembership_Profile JOIN regulatory_requirements as reg ON reg.idRegulatory_Requirements = coop.idRegulatory_Requirements JOIN coop_asset ON coop_asset.idCoop_Asset = b.idCoop_Asset JOIN paid_up_capital ON paid_up_capital.idPaid_up_Capital = b.idPaid_up_Capital JOIN membership_profile ON membership_profile.idMembership_Profile = coop.idMembership_Profile where accounts.idCooperative_Profile =$id";
+		$query = "SELECT *, coop.Email_Address as cEmail,Cooperative_Name as name, coop_asset.Beginning as beginningasset, coop_asset.To_Date as todateasset, paid_up_capital.Beginning as beginningcapital, paid_up_capital.To_Date as todatecapital FROM Accounts LEFT JOIN cooperative_profile as coop ON accounts.idCooperative_Profile = coop.idCooperative_Profile LEFT JOIN respondent ON respondent.idRespondent = coop.idRespondent LEFT JOIN organizational_aspect as oa ON oa.idOrganizational_Aspect = coop.idOrganizational_Aspect LEFT JOIN business_operation as b ON b.idBusiness_Operation = coop.idBusiness_Operation LEFT JOIN type_of_cooperative as typec ON typec.idType = coop.idType JOIN commonbond_of_membership as com ON com.idCommonBond_of_Membership = coop.idCommonBond_of_Membership LEFT JOIN area_of_operation as area ON area.idarea_of_operation = coop.idarea_of_operation LEFT JOIN membership_composition as mem ON mem.idMembership_composition = coop.idMembership_Profile JOIN regulatory_requirements as reg ON reg.idRegulatory_Requirements = coop.idRegulatory_Requirements JOIN coop_asset ON coop_asset.idCoop_Asset = b.idCoop_Asset JOIN paid_up_capital ON paid_up_capital.idPaid_up_Capital = b.idPaid_up_Capital JOIN membership_profile ON membership_profile.idMembership_Profile = coop.idMembership_Profile where accounts.markasdeleted = 0 and accounts.idCooperative_Profile =$id";
 		$con = new Connect();
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getDepartmentAccounts($id){
-		$query = "SELECT * FROM Accounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN department on department.idDepartment = accounts.idDepartment where idAccounts !=".$id;
+		$query = "SELECT * FROM Accounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN department on department.idDepartment = accounts.idDepartment where accounts.markasdeleted=0 and idAccounts !=".$id;
+		$con = new Connect();
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getDepartmentAccount($id){
+		$query = "SELECT *,concat(First_Name,' ',Middle_Name,' ',Last_Name) as name FROM Accounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN department on department.idDepartment = accounts.idDepartment where accounts.markasdeleted=0 and idAccounts =".$id;
 		$con = new Connect();
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getCoopAccounts($id){
 		$con = new Connect();
-		$query = "SELECT * FROM Accounts JOIN cooperative_profile as coop ON accounts.idCooperative_Profile = coop.idCooperative_Profile JOIN respondent ON respondent.idRespondent = coop.idRespondent JOIN organizational_aspect as oa ON oa.idOrganizational_Aspect = coop.idOrganizational_Aspect JOIN business_operation as b ON b.idBusiness_Operation = coop.idBusiness_Operation JOIN type_of_cooperative as typec ON typec.idType = coop.idType JOIN commonbond_of_membership as com ON com.idCommonBond_of_Membership = coop.idCommonBond_of_Membership JOIN area_of_operation as area ON area.idarea_of_operation = coop.idarea_of_operation JOIN membership_profile as mem ON mem.idMembership_Profile = coop.idMembership_Profile JOIN regulatory_requirements as reg ON reg.idRegulatory_Requirements = coop.idRegulatory_Requirements where idAccounts !=".$id;
+		$query = "SELECT * FROM Accounts JOIN cooperative_profile as coop ON accounts.idCooperative_Profile = coop.idCooperative_Profile JOIN respondent ON respondent.idRespondent = coop.idRespondent JOIN organizational_aspect as oa ON oa.idOrganizational_Aspect = coop.idOrganizational_Aspect JOIN business_operation as b ON b.idBusiness_Operation = coop.idBusiness_Operation JOIN type_of_cooperative as typec ON typec.idType = coop.idType JOIN commonbond_of_membership as com ON com.idCommonBond_of_Membership = coop.idCommonBond_of_Membership JOIN area_of_operation as area ON area.idarea_of_operation = coop.idarea_of_operation JOIN membership_profile as mem ON mem.idMembership_Profile = coop.idMembership_Profile JOIN regulatory_requirements as reg ON reg.idRegulatory_Requirements = coop.idRegulatory_Requirements where  accounts.markasdeleted=0 and idAccounts !=".$id;
 		$result = $con->select($query);
 		return $result;
 	}
@@ -130,9 +154,9 @@ class AccountHandler{
 		return $result;
 	}
 
-	public function addDepartmentAccountInfo($fisrtName,$lastName,$middleName,$nameSuffix,$cellnumber,$email){
+	public function addDepartmentAccountInfo($fisrtName,$lastName,$middleName,$cellnumber,$email){
 		$con = new Connect();
-		$query = "INSERT INTO Account_Info (First_Name, Last_Name, Middle_Name,Name_Suffix,Cellphone_number,Email_Address) VALUES ('" .$fisrtName."','".$lastName."','".$middleName."','".$nameSuffix."','".$cellnumber."','".$email."')";
+		$query = "INSERT INTO Account_Info (First_Name, Last_Name, Middle_Name,Cellphone_number,Email_Address) VALUES ('" .$fisrtName."','".$lastName."','".$middleName."','".$cellnumber."','".$email."')";
 		$lastId = $con->insertReturnLastId($query);
 		return $lastId;
 	}

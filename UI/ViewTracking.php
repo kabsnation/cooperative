@@ -12,7 +12,16 @@ $departmentProfile = $doc->getLocationDeptByTrackingNumber($trackingId);
 $cooperativeProfile = $doc->getLocationCoopByTrackingNumber($trackingId);
 if(empty($trackInfo))
     echo "<script>window.location='COOP_DocumentList.php'</script>";
-include('../UI/header/header_user.php');
+if(isset($_SESSION['idSuperAdmin'])){
+    include('../UI/header/header_sadmin.php');
+    $loc = 'SuperAdmin_DocumentTracker.php';
+    if(isset($_GET['dash']))
+        $loc='SuperAdmin_Dashboard.php';
+}
+else{
+    include('../UI/header/header_user.php');
+    $loc = 'COOP_DocumentList.php';
+}
 ?>
 <form action="downloadFunction.php" method="POST">
 <!--/ Main sidebar -->
@@ -29,7 +38,7 @@ include('../UI/header/header_user.php');
                                     <div class="panel panel-flat border-top-lg border-top-info" id="panelEventDetails">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h2><a href="COOP_DocumentList.php"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold">Document Details</span></h2>
+                                                <h2><a href="<?php echo $loc;?>"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold">Document Details</span></h2>
                                             </div>
 
 

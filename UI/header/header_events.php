@@ -46,6 +46,19 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
 	<script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
 	<script type="text/javascript" src="assets/js/core/app.js"></script>
 	<script type="text/javascript" src="assets/js/pages/components_notifications_other.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/jgrowl.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/anytime.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+
 	<!-- /theme JS files -->
 
     <script src="pnotify.custom.min.js" ></script>
@@ -77,7 +90,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
                         <i class="icon-cog5"></i>
                         <?php if($eventmanager){
                             foreach($eventmanager as $info){?>
-                        <span><?php echo $info['Username'];?></span>
+                        <span><?php echo $info['First_Name'];?></span>
                         <i class="caret"></i>
                     </a>
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
 $handler = new EventHandler();
@@ -19,7 +20,7 @@ if(isset($_POST['txtEventName'])){
 		$eventDetails = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventDetails'])));
 		$startDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtStartDateTime'])));
 		$endDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEndDateTime'])));
-		$idAccounts = 1; //SESSION
+		$idAccounts = $_SESSION['idEvent']; //SESSION
 
 		$uploadOk=0;
 		$doneUpload=0;

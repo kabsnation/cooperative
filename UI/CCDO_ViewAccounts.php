@@ -69,7 +69,7 @@ include('../UI/header/header_admin.php');
                                                                                     <ul class="dropdown-menu dropdown-menu-right">
                                                                                         <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?id=<?php echo $coop['idCooperative_Profile'];?>" onclick="viewCooperative()"><i class="icon-eye"></i> View</a></li>
                                                                                         <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?id=<?php echo $coop['idCooperative_Profile'];?>"><i class="icon-pencil7"></i> Update</a></li>
-                                                                                        <li><a href="#"><i class="icon-user-minus"></i> Delete</a></li>
+                                                                                          <li><a onclick="promptDelete(<?php echo $coop['idAccounts'];?>);"><i class="icon-user-minus"></i> Delete</a></li>
                                                                                     </ul>
                                                                                 </li>
                                                                             </ul>
@@ -108,9 +108,9 @@ include('../UI/header/header_admin.php');
                                                                                         </a>
 
                                                                                         <ul class="dropdown-menu dropdown-menu-right">
-                                                                                            <li><a href="CCDO_ViewAndUpdateCooperativeProfile.php?"><i class="icon-eye"></i> View</a></li>
-                                                                                            <li><a href="#"><i class="icon-pencil7"></i> Update</a></li>
-                                                                                            <li><a href="#"><i class="icon-user-minus"></i> Delete</a></li>
+                                                                                            <li><a href="CCDO_ViewAndUpdateDepartmentProfile.php?id=<?php echo $dept['idAccounts'];?>"><i class="icon-eye"></i> View</a></li>
+                                                                                            <li><a href="CCDO_ViewAndUpdateDepartmentProfile.php?id=<?php echo $dept['idAccounts'];?>"><i class="icon-pencil7"></i> Update</a></li>
+                                                                                            <li><a onclick="promptDelete(<?php echo $dept['idAccounts'];?>);"><i class="icon-user-minus"></i> Delete</a></li>
                                                                                         </ul>
                                                                                     </li>
                                                                                 </ul>
@@ -169,4 +169,52 @@ include('../UI/header/header_admin.php');
                     "orderable": false
                 }]
             } );
+     function promptDelete(val){
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this information!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#FF7043",
+                        confirmButtonText: "Delete",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            deletee(val);
+                        }
+                });
+            }
+
+            function deletee(val){
+                $.ajax({
+                type: "POST",
+                url: "deleteFunction.php",
+                data: 'id=' + val,
+                    success: function(data){
+                        success();
+                    }
+                });
+            }
+              function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location='CCDO_ViewAccounts.php';
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Some items has not yet been responded",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
 </script>

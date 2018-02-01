@@ -9,7 +9,6 @@ require("../config/config.php");
 include('../UI/header/header_user.php');
 $doc = new DocumentHandler();
 $id = $_SESSION['idAccount'];
-$trackings = $doc->getTransactionLogs($id);
 $history = $doc->getHistory($id);
 ?>
 
@@ -33,7 +32,7 @@ $history = $doc->getHistory($id);
                                             </div>
                                         </div>
 
-                                        <div class="panel-body" onload="load();">
+                                        <div class="panel-body">
 
                                             <div class="col-lg-12">
                                                 <div class="form-group">
@@ -88,31 +87,8 @@ $history = $doc->getHistory($id);
 </html>
 
 <script type="text/javascript">
- table = $('#my-table').DataTable({});
-         $.fn.dataTable.ext.search.push(
-                function( settings, data, dataIndex ) {
-                    var min  = $('#min-date').val();
-                    var max  = $('#max-date').val();
-                    var createdAt = data[4] || 0;
-
-                    if  ( 
-                            ( min == "" || max == "" )
-                            || 
-                            ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
-                        )
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-            );
-
-            $('.daterange-single').change( function() {
-                table.columns.adjust().draw();
-            } );
-    
-    // var table1 = $('#tableHistory').DataTable({
-    //  "order": [[ 0, "desc" ]]});
+     var table1 = $('#tableHistory').DataTable({
+    "order": [[ 0, "desc" ]]});
     // var tablee = $('#my-table').DataTable({});
     // tablee.column(0).visible(false);
 

@@ -1,157 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CCDO - Event List</title>
-
-        <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/uploaders/fileinput.min.js"></script>
-    <script type="text/javascript" src="assets/js/pages/uploader_bootstrap.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/editors/summernote/summernote.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
-    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-
-</head>
-
-<!-- Main navbar -->
-    <div id="header" class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/CCDO Logo.png" alt=""/></a>
-
-            <ul class="nav navbar-nav visible-xs-block">
-                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
-                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-        </div>
-
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <ul class="nav navbar-nav">
-                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-
-                <li class="dropdown dropdown-user">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="">
-                        <i class="icon-cog5"></i>
-                        <span><?php echo 'Name';?></span>
-                        <i class="caret"></i>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <script type="text/javascript">
-        function logOut(){
-            $.ajax({
-            type: "POST",
-            url: "/coop/UI/logout.php",
-            data: "type='admin'",
-            success: function(data){
-                 window.location ='index.php';
-            }
-        });
-        }
-    </script>
-    <!-- /main navbar -->
-
-        <!-- Page container -->
-    <div class="page-container">
-
-        <!-- Page content -->
-        <div class="page-content">
-
-            <!-- Main sidebar -->
-            <div class="sidebar sidebar-main sidebar-inverse">
-                <div class="sidebar-content">
-
-                    <!-- User menu -->
-                    <div class="sidebar-user">
-                        <div class="category-content">
-                            <div class="media">
-                                <div class="media-body">
-                                    <span class="media-heading text-semibold">Paolo Velasco</span>
-                                    <div class="text-size-mini text-muted">
-                                        Department Head - CCDO
-                                    </div>
-                                </div>
-
-                                <div class="media-right media-middle">
-                                    <ul class="icons-list">
-                                        <li>
-                                            <a href="#"><i class="icon-cog3"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /user menu -->
-
-                    <!-- Main navigation -->
-                    <div class="sidebar-category sidebar-category-visible">
-                        <div class="category-content no-padding">
-                            <ul class="navigation navigation-main navigation-accordion">
-
-                                <!-- Main -->
-                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                                <li ><a href="SuperAdmin_Dashboard.php"><i class="icon-home2"></i> <span>Dashboard</span></a></li>
-
-                                <li class="navigation-header"><span>Monitoring</span> <i class="icon-menu" title="Monitoring"></i></li>
-                                <li><a href="SuperAdmin_DocumentTracker.php"><i class="icon-file-eye2"></i> <span>Document Tracker</span></a></li>
-                                <li class="active"><a href="SuperAdmin_EventList.php"><i class="icon-calendar22"></i> <span>Event Viewer</span></a></li>
-
-                                <li class="navigation-header"><span>Accounts</span> <i class="icon-menu" title="Accounts"></i></li>
-
-                                <li><a href="SuperAdmin_AccountsList.php"><i class="icon-users4"></i> <span>Accounts List</span></a></li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /main navigation -->
-
-                </div>
-            </div>
-            <!-- /main sidebar -->
+<?php
+session_start();
+if(!isset($_SESSION['idSuperAdmin'])){
+    echo "<script>window.location='index.php';</script>";
+}
+require("../Handlers/DocumentHandler.php");
+require("../Handlers/EventHandler.php");
+require("../Handlers/AccountHandler.php");
+require("../config/config.php");
+$handler = new EventHandler();
+$eventLists = $handler->getEvents();
+$arrow ='';
+if (isset($_GET['Id'])){
+    $eventViewDetails = $handler->getEventDetails($_GET['Id']);
+    $getGoingEvent = $handler->getGoing($_GET['Id']);
+    $getNotGoingEvent = $handler->getNotGoing($_GET['Id']);
+    $getRecipient = $handler->getRecipient($_GET['Id']);
+    if(isset($_GET['dash']))
+        $arrow='<a href="SuperAdmin_Dashboard.php"><i class="icon-arrow-left52 position-left"></i></a>';
+    else
+        $arrow='<a href="SuperAdmin_EventList.php"><i class="icon-arrow-left52 position-left"></i></a>';
+}
+include('../UI/header/header_sadmin.php');
+?>
 
             <!-- Main content -->
             <div class="content-wrapper">
@@ -160,7 +30,7 @@
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
-                            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Administrator</span> - Event Viewer</h4>
+                            <h4> <?php echo $arrow?><span class="text-semibold">Administrator</span> - Event Viewer</h4>
                         </div>
 
                     </div>
@@ -199,12 +69,144 @@
                                                         <th class="text-center">Actions</th>
                                                     </tr>
                                                 </thead>
+                                                <tbody>
+                                                     <?php if($eventLists){
+                                                                foreach($eventLists as $event){?>
+                                                            <tr>
+                                                                <td><?php echo $event['eventName'];?></td>
+                                                                <td><?php echo $event['Username'];?></td>
+                                                                <td><?php echo $event['startDateTime']?></td>
+                                                                <td class="text-center">
+                                                                    <ul class="icons-list">
+                                                                        <li class="text-teal-600"><a href='SuperAdmin_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-eye" style="margin-right: 10px;"></i>View</a></li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                           <?php }} ?>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
+                            <div class="panel panel-flat border-top-lg border-top-info" id="panelEventDetails" hidden="true">
+                                        <div class="panel-heading">
+                                            <div class="panel-title">
+                                                <h2><a onclick="HideEventListPanel(this)"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold">Event Details</span></h2>
+                                            </div>
+
+                                            <div class="heading-elements">
+                                                <div id="editButton" style="display: block;">
+                                                    <button class="btn btn-info" onclick="editDetails()">Edit</button>
+                                                </div>
+                                                
+                                                <div id="saveButton" style="display: none;">
+                                                    <button class="btn btn-primary" onclick="updateEvent()">Save</button>
+                                                    <button class="btn btn-danger" onclick="cancel()">Cancel</button>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <form id="form1">
+                                            <input type="hidden" id="idevent" value="<?php echo $_GET['Id'];?>">
+                                        <div class="panel-body">
+                                            <?php if($eventViewDetails){
+                                                    foreach($eventViewDetails as $details){?>
+                                            <div class="col-lg-6">
+                                                <div class="col-lg-6">
+                                                    <p  ID="lblEventName" Font-Size="X-Large" style="font-size: 20px"><?php echo $details['eventName'];?></p>
+                                                </div>
+
+                                                <div id="viewLocation" class="col-lg-12" style="display: block;">
+                                                    <p  ID="lblLocation" Text=""  Style="color: darkgrey; font-size: 15px"><?php echo $details['eventLocation'];?></p>
+
+                                                    <div class="col-lg-6">
+                                                        <strong style="margin-right: 10px;">Start Time: </strong><p  ID="lblStartDateTime"><?php echo $details['startDateTime'];?></p>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <strong style="margin-right: 10px;">End Time: </strong><p  ID="lblStartDateTime"><?php echo $details['endDateTime'];?></p>
+                                                    </div>
+
+                                                </div>
+
+                                                <div id="editLocation" class="col-lg-12" style="display: none;">
+                                                    <label class="text-semibold">New Location:</label>
+                                                    <textarea id="txtNewLocation" type="text" name="location" class="form-control"><?php echo $details['eventLocation'];?></textarea>
+                                                
+
+                                                    <br/>
+                                                    <label class="text-semibold">New Start and End Time:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                        <input type="text" class="form-control daterange-time" id="date" name="date" value="01/01/2018 - 01/02/2018"> 
+                                                    </div>
+
+                                                    <br/>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <strong style="margin-right: 10px;">Other Event Details:</strong><p  ID="lblEventDetails" Text=""><?php echo $details['eventDetails'];?></p>
+                                                </div>
+
+                                                <div class="row">
+                                                </div>
+                                                <?php }} ?>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="text-right">
+                                                        <?php if($getGoingEvent){
+                                                    foreach($getGoingEvent as $going){?>
+                                                        <p  ID="lblNumberOfGoing" Text=""  Style="color: darkgrey">Total Number of Going: <?php echo $going['Going'];}}?></p>
+                                                    </div>
+                                                </div>
+
+                                               <div class="row">
+                                                    <div class="text-right">
+                                                        <?php if($getNotGoingEvent){
+                                                    foreach($getNotGoingEvent as $notGoing){?>
+                                                        <p  ID="lblNumberOfNotGoing" Text=""  Style="color: darkgrey">Total Number of Not Going: <?php echo $notGoing['Not Going'];}}?></p>
+                                                    </div>
+                                                </div>
+
+                                                <br />
+
+                                            </div>
+
+                                            <div class="col-lg-12" style="padding: 10px">
+                                                <div class="row">
+                                                    <table class="table datatable-html" id="tableInvited" style="font-size: 13px; width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 50%;">Cooperative Name</th>
+                                                                <th style="width: 50%;">Response</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <?php if($getRecipient){
+                                                                    foreach($getRecipient as $recipient){?>
+                                                            <tr>
+                                                                <td>
+                                                                    <?php echo $recipient['cooperative_name'];?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php echo $recipient['status'];?>
+                                                                </td>
+                                                            </tr>
+                                                            <?php }}?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                         </div>
 
                     </div>
@@ -226,6 +228,124 @@
 
     </div>
     <!-- /page container -->
+<script>
+     function HideEventListPanel() {
+        var x = document.getElementById("panelEventList");
+        var y = document.getElementById("panelEventDetails");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
 
+    function editDetails(){
+        var a = document.getElementById("viewLocation");
+        var b = document.getElementById("editLocation");
+        var c = document.getElementById("editButton");
+        var d = document.getElementById("saveButton");
+
+        a.style.display = "none";
+        b.style.display = "block";
+        c.style.display = "none";
+        d.style.display = "block";
+    }
+
+    function cancel(){
+        var a = document.getElementById("viewLocation");
+        var b = document.getElementById("editLocation");
+        var c = document.getElementById("editButton");
+        var d = document.getElementById("saveButton");
+
+        a.style.display = "block";
+        b.style.display = "none";
+        c.style.display = "block";
+        d.style.display = "none";
+    }
+    function updateEvent(){
+         var form_data = $('#form1').serialize();
+            var idevent = $('#idevent').val();
+                $.ajax({
+                    type: "POST",
+                    url: "updateEventFunction.php",
+                    data: form_data+"&idevent="+idevent,
+                    dataType: "json",
+                    success: function(data){
+                        success();
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+    }
+    function promptDelete(val){
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to recover this information!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#FF7043",
+                        confirmButtonText: "Delete",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            deletee(val);
+                        }
+                });
+            }
+
+            function deletee(val){
+                $.ajax({
+                type: "POST",
+                url: "deleteFunction.php",
+                data: 'idEvents=' + val,
+                    success: function(data){
+                        success();
+                    }
+                });
+            }
+              
+     function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location=window.location;
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
+    $('#table').dataTable( {
+              "columnDefs": [ {
+                "targets": 0,
+                "orderable": true
+                } ],
+                "columnDefs": [ {
+                "targets": 3,
+                "orderable": false
+                } ]
+            } );   
+    <?php
+    if (isset($_GET['Id'])){?>
+        HideEventListPanel();
+
+    <?php    
+    }
+    ?>
+</script>
 </body>
 </html>
