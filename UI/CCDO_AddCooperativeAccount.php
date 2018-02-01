@@ -350,15 +350,15 @@ include('../UI/header/header_admin.php');
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Business Enagaged In:</strong></label>
-                                                                <input  ID="txtBusinessEnagagedIn" 
-                                                                name="txtBusinessEnagagedIn" required="required" class="form-control"></input>
+                                                                <textarea  ID="txtBusinessEnagagedIn" 
+                                                                name="txtBusinessEnagagedIn" required="required" class="form-control"></textarea>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Other Business:</strong></label>
-                                                                <input  ID="txtOtherBusiness" name="txtOtherBusiness" class="form-control"></input>
+                                                                <textarea  ID="txtOtherBusiness" name="txtOtherBusiness" class="form-control"></textarea>
                                                             </div>
                                                         </div>
 
