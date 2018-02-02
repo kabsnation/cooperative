@@ -12,7 +12,7 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
-    $title = "CCDO - Add Document";
+    $title = "CCDO - Send Document";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
     $arrs[0]="";
@@ -228,7 +228,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                        <li>
                                             <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
                                             <ul>
-                                                <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Add Document</a></li>
+                                                <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Send Document</a></li>
                                                 <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
                                             </ul>
                                         </li>

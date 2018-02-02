@@ -14,7 +14,12 @@ $arrs = array();
 $arrs[0]=$pendingCount;
 $arrs[1]=$doneCount;
 $arrs[2] = $total;
-$arrs[3]=$event[0];
+if($event == 0){
+	$arrs[3] = "NONE";
+}
+else{
+	$arrs[3]=$event[0];
+}
 $arrs[4] ='<tr class="active border-double">
 			<td colspan="5">Ongoing Documents</td>
 			<td class="text-right">
@@ -32,7 +37,7 @@ if($ongoing){
 	else
 		$time= $interval->format('%h')."<small class='display-block text-size-small no-margin'> Hours ".$interval->format('%i')." Minutes </small>";
 	$arrs[4].='<tr>
-				<td><h6 class="no-margin">'.$time.'</h6></td>
+				<td><h6 style="font-size: 11px;">'.$time.'</h6></td>
 				<td>'.$ong['trackingNumber'].'</td>
 				<td>'.$ong['title'].'</td>
 				<td>'.$ong['username'].'</td>
@@ -57,7 +62,7 @@ if($finished){
 		else
 			$time= $interval->format('%h')."<small class='display-block text-size-small no-margin'> Hours ".$interval->format('%i')." Minutes </small>";
 		$arrs[4].='<tr>
-					<td><h6 class="no-margin">'.$time.'</h6></td>
+					<td><h6 style="font-size: 11px;">'.$time.'</h6></td>
 					<td>'.$done['trackingNumber'].'</td>
 					<td>'.$done['title'].'</td>
 					<td>'.$done['username'].'</td>
