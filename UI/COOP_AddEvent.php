@@ -73,6 +73,9 @@ include('../UI/header/header_events.php');
                                                     <div class="form-group">
                                                         <label><strong>Upload File:</strong></label>
                                                         <input  class="file-input-extensions" AllowMultiple="true" multiple="multiple" type="file" id="fileUploaded" name="fileUploaded" required="required" />
+                                                        <div class="col-xs-12" style="margin-top: 10px;">
+                                                            <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -93,6 +96,7 @@ include('../UI/header/header_events.php');
                                             </div>
 
                                             <hr/>
+                                            
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">

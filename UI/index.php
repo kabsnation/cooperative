@@ -92,7 +92,7 @@ else if(isset($_SESSION['idAccount']))
                             <br />
 
                             <div class="form-group">
-                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" value="Log In">
+                            	<input type="button" onclick="submitLogin()"  class="btn bg-teal btn-block" id="btnLog" name="btnLog" value="Log In">
                             </div>
 
                         </div>
@@ -114,6 +114,7 @@ else if(isset($_SESSION['idAccount']))
 </html>
 
 <script type="text/javascript">
+    
 	function submitLogin(){
         var username = $('#username').val();
         var password = $('#password').val();

@@ -116,6 +116,9 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery_ui/touch.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_navs.js"></script>
 
     <!-- /theme JS files -->
 

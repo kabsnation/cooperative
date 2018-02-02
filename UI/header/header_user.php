@@ -83,7 +83,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
-    $arrs[5]="active";
+    $arrs[5]="";
     $title = "CCDO - Edit Account";
 }
 ?>
@@ -177,7 +177,6 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a onclick="newMessageNotification()"><i class="icon-switch2"></i> Sample</a></li>
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
