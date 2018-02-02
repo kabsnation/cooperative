@@ -117,7 +117,7 @@ $history = $doc->getHistory($id);
                 function( settings, data, dataIndex ) {
                     var min  = $('#min-date').val();
                     var max  = $('#max-date').val();
-                    var createdAt = data[4] || 0;
+                    var createdAt = data[3] || 0;
 
                     if  ( 
                             ( min == "" || max == "" )

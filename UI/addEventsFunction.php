@@ -19,8 +19,8 @@ if(isset($_POST['txtEventName'])){
 	if($checkEventName==NULL){
 		$eventLocation = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventLocation'])));
 		$eventDetails = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventDetails'])));
-		$startDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtStartDateTime'])));
-		$endDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEndDateTime'])));
+		$datetime = explode(' - ', $_POST['datetime']);
+		
 		$idAccounts = $_SESSION['idEvent']; //SESSION
 
 		$uploadOk=0;
@@ -47,10 +47,10 @@ if(isset($_POST['txtEventName'])){
 		       	$doneUpload=0;
 		    }
 
-		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$startDateTime,$endDateTime,$target_file,$idAccounts);
+		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$datetime[0],$datetime[1],$target_file,$idAccounts);
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
-					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);
+					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$datetime[0],$datetime[1]);
 				} 
 			}
 		}

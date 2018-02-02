@@ -653,7 +653,7 @@ include('../UI/header/header_admin.php');
 
                                             <div class="text-right">
                                                 <button type="reset" class="btn btn-default" id="reset">Reset <i class="icon-reload-alt position-right"></i></button>
-                                                <input type='submit' onclick="checkUsername()" ID="btnSubmit" class="btn btn-primary" value="Submit" />
+                                                <input type='submit'  ID="btnSubmit" class="btn btn-primary" value="Submit" />
                                             </div>
 
                                         </div>

@@ -3,11 +3,12 @@ session_start();
 if(!isset($_SESSION['idSuperAdmin'])){
     echo "<script>window.location='index.php';</script>";
 }
+require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
-$handler = new AccountHandler();
-$cooperativeProfile = $handler->getCoopAccounts($_SESSION['idSuperAdmin']);
-$departmentProfile = $handler-> getDepartmentAccounts($_SESSION['idSuperAdmin']);
+$doc = new DocumentHandler();
+$id = $_SESSION['idSuperAdmin'];
+$trackings = $doc->getTransactionLogsAdmin();
 include('../UI/header/header_sadmin.php');
 ?>
 
@@ -31,7 +32,7 @@ include('../UI/header/header_sadmin.php');
                                             </div>
                                         </div>
 
-                                        <div class="panel-body" onload="load();">
+                                        <div class="panel-body" >
 
                                             <div class="row">
 
@@ -115,7 +116,7 @@ include('../UI/header/header_sadmin.php');
                 function( settings, data, dataIndex ) {
                     var min  = $('#min-date').val();
                     var max  = $('#max-date').val();
-                    var createdAt = data[4] || 0;
+                    var createdAt = data[3] || 0;
 
                     if  ( 
                             ( min == "" || max == "" )

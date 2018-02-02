@@ -64,7 +64,7 @@ include('../UI/header/header_events.php');
                                                         <label><span class="text-danger">* </span><strong>Start and End Date Time:</strong></label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                                            <input type="text" class="form-control daterange-time" required="required"> 
+                                                            <input type="text" class="form-control daterange-time" name="datetime" required="required"> 
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,6 +107,7 @@ include('../UI/header/header_events.php');
 
                                                 <div class="col-lg-12">
                                                     <div class="form-group">
+                                                        <input type="text" id="checker" class="label" disabled="true" required="required" >
                                                         <table class="table datatable-html" id="table" style="font-size: 13px; width: 100%;">
                                                             <thead>
                                                                 <tr>
@@ -119,7 +120,7 @@ include('../UI/header/header_events.php');
                                                                 <?php if($cooperativeProfile){
                                                                     foreach($cooperativeProfile as $coop){?>
                                                                 <tr>
-                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $coop['idAccounts'];?>"></td>
+                                                                    <td><input type="checkbox" name="checkbox[]" value="<?php echo $coop['idAccounts'];?>" onchange="addToHidden(this)"></td>
                                                                      <td><?php echo $coop['Cooperative_Name'];?></td>
                                                                      <td><?php echo $coop['Email_Address'];?></td>
                                                                 </tr>
@@ -137,7 +138,7 @@ include('../UI/header/header_events.php');
                                     <div class="heading-elements">
                                         <div class="text-right">
                                             <button type="reset" class="btn btn-link">Reset</button>
-                                            <input type="submit" ID="btnSend" text="Submit" class="btn bg-info" />
+                                            <input type="button" onclick="confirm()" ID="btnSend" value="Submit" class="btn bg-info" />
                                         </div>
                                     </div>
                                 </div>
@@ -163,4 +164,96 @@ include('../UI/header/header_events.php');
                 "orderable": true
                 } ]
             } );
+     function addToHidden(checkbox){
+        if(checkbox.checked == true){
+            document.getElementById('checker').value='true';
+        }
+        else{
+            document.getElementById('checker').value=null;
+        }
+    }
+     function confirm(){
+        swal({
+                    title: "Are you sure?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF7043",
+                    confirmButtonText: "Submit",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+            function(isConfirm){
+                if(isConfirm){
+                    var status = validateForm();
+                         if(status==1){
+                            validate();
+                         }
+                         else{
+                             $.ajax({
+                                type: "POST",
+                                url: "addEventsFunction.php",
+                                data: $('#form1').serialize(),
+                                success: function(data){
+                                    success();
+                                },
+                                error: function(data){
+                                    failed();
+                                }
+
+                            });
+                        }
+           }
+        });
+    }
+    function validateForm(){
+                var inputs = document.getElementsByTagName('input');
+                var checker = document.getElementById('checker');
+                if(checker.value==''){
+                    return 1;
+                }
+                for(var i = 0; i<inputs.length; ++i){
+                    for(var o = 0; o<selects.length; ++o){
+                        if(!selects[o].checkValidity()){
+                            //console.log(selects[o].value);
+                            return 1;
+                            break;
+                        }
+                    }
+                    if(!inputs[i].checkValidity()){
+                        //console.log(inputs[o].value);
+                        return 1;
+                        break;
+                    }
+                }
+            }
+            function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out all the required fields.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
+            }
+   function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location=window.location;
+                        });},500); 
+            }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
 </script>
