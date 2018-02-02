@@ -107,9 +107,7 @@ include('../UI/header/header_sadmin.php');
 								<div class="panel-heading">
 									<h6 class="panel-title text-semibold">Document Tracker</h6>
 
-									<div class="heading-elements">
-										
-									</div>
+
 								</div>
 
 								<div class="table-responsive">
@@ -163,7 +161,7 @@ include('../UI/header/header_sadmin.php');
 						
 						<!-- /Document TRacker -->
 					</div>
-					
+					<input type="hidden" name="">
 
 					<!-- Footer -->
 					<div class="footer text-muted">
@@ -184,11 +182,11 @@ include('../UI/header/header_sadmin.php');
 	<!-- /page container -->
 <script type="text/javascript">
 	setInterval(realtime,1000);
-	function realtime(){
+	function realtime(date='<?php echo date('m/d/y');?>'){
 		$.ajax({
 			type: "POST",
             url: "realtimeDashboard.php",
-            data: "",
+            data: "date="+date,
             dataType: "json",
             success:function(data){
             	$('#pending').html(data[0]);
