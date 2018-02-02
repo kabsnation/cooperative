@@ -331,9 +331,11 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
             (new PNotify({
                 title: 'New message from '+sender,
                 type: 'success',
-                text: title,
+                text: title + ' (Click this to open the message)',
+                hide: false,
                 desktop: {
                     desktop: true,
+                    addclass: 'bg-green',
                     icon: 'assets/images/pnotify/info.png'
                 }
             })

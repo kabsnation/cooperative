@@ -16,7 +16,7 @@ else if(isset($_SESSION['idAccount']))
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IRIS - Log In</title>
+    <title>CCDO - Log In</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -86,7 +86,7 @@ else if(isset($_SESSION['idAccount']))
                             </div>
 
                             <div class="form-group">
-                                <button type="button" class="btn btn-info btn-block" onclick="submitLogin()">Sign in <i class="icon-circle-right2 position-right" ></i></button>
+                                <button id="btnSubmit" type="button" class="btn btn-info btn-block" onclick="submitLogin()">Sign in <i class="icon-circle-right2 position-right" ></i></button>
                             </div>
 
                         </div>
@@ -160,4 +160,17 @@ else if(isset($_SESSION['idAccount']))
                     },
                     function(isConfirm){});},500);
         }
+
+        $("#password").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#btnSubmit").click();
+            }
+        });
+
+        $("#username").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $("#btnSubmit").click();
+            }
+        });
+
 </script>
