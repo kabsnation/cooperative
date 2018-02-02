@@ -13,7 +13,7 @@ include('../UI/header/header_sadmin.php');
 			<div class="content-wrapper">
 
 				<!-- Page header -->
-				<div class="page-header page-header-default">
+				<div class="page-header page-header-default  has-cover" style="background-image: url('assets/images/backgrounds/round.png');">
 					<div class="page-header-content">
 						<div class="page-title">
 							<h4> <span class="text-semibold">Welcome!</span> - Administrator </h4>
