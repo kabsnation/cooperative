@@ -86,6 +86,10 @@ $result = $doc->inboxCoopById($id,1);
                     </div>
                     <!-- /media library -->
 
+                    <!-- Footer -->
+                                <?php include '../UI/copyright_footer.php' ?>
+                            <!-- /footer -->
+
                 </div>
                 <!-- /content area -->
 

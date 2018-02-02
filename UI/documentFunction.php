@@ -1,8 +1,10 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 require("../Handlers/DocumentHandler.php");
+require("../Handlers/AuditTrail.php");
 require("../config/config.php");
 $doc = new DocumentHandler();
+$audit = new AuditTrail();
 $connect = new Connect();
 $con = $connect->connectDB();
 $target_dir = "files/";
@@ -47,13 +49,17 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	if($trackingId != ""){
 		foreach($_POST['checkbox'] as $recipient){
 			$result = $doc->addDocumentLocation($recipient,$trackingId);
-			if($result){?>
+			if($result){
+				$audit->trail('ADD DOCUMENT; ID: '. $trackingId,'SUCCESSFUL',$id);
+				?>
 				<form method='POST' id='form1' action='COOP_AddDocument.php'>
 						<input type='hidden' name='success' value='1'></form>
 						<script type="text/javascript">
 						document.getElementById('form1').submit();
 						</script>
 			<?php }
+			else
+				$audit->trail('ADD DOCUMENT;','FAILED',$id);
 		} 
 	}
 }

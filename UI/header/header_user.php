@@ -329,7 +329,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
         function newMessageNotification(title,sender){
             PNotify.desktop.permission();
             (new PNotify({
-                title: 'You have new message from '+sender,
+                title: 'New message from '+sender,
                 type: 'success',
                 text: title,
                 desktop: {

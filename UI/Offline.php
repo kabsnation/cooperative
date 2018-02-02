@@ -244,7 +244,9 @@
 
 
     <script>
-      var colors = ["#F44336", "#FF9800", "#FFEB3B", "#4CAF50", "#2196F3", "#673AB7"];
+      
+      /*var colors = ["#F44336", "#FF9800", "#FFEB3B", "#4CAF50", "#2196F3", "#673AB7"];*/
+      var colors = ["#4A148C", "#B71C1C", "#E65100", "#F57F17", "#1B5E20", "#0D47A1"];
       var currentIndex = 0;
 
       setInterval(function() {

@@ -12,7 +12,7 @@ $trackings = $doc->getTransactionLogsAdmin();
 include('../UI/header/header_sadmin.php');
 ?>
 
-<!-- Main content -->    
+<!-- Main content -->
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
@@ -28,7 +28,7 @@ include('../UI/header/header_sadmin.php');
 
                                             <div class="heading-elements">
                                                 <div class="heading-btn-group">
-                                                    <button class="btn btn-primary">Print <i class="icon-printer"></i></button>
+                                                    <button class="btn btn-primary" onclick="printt()" >Print <i class="icon-printer"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -43,12 +43,12 @@ include('../UI/header/header_sadmin.php');
                                                             <div class="row">
                                                                 <label class="col-lg-1 control-label">From:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="min-date" name="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
 
                                                                 <label class="col-lg-1 control-label">To:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="max-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="max-date" name='max-date' class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -141,7 +141,44 @@ include('../UI/header/header_sadmin.php');
             $('.daterange-single').change( function() {
                 table.columns.adjust().draw();
             } );
-    
+    function printt(){
+        var mindate = $('#min-date').val();
+        var maxdate = $('#max-date').val();
+
+        var tablee = $('#my-table').DataTable();
+        var info = tablee.page.info();
+        if(info.recordsDisplay!=0){
+            $.ajax({
+                type: "POST",
+                url: "print.php",
+                data: "mindate="+mindate+"&maxdate="+maxdate,
+                success: function(data){
+                    if(data=='error')
+                        failed();
+                    console.log(data);
+                }
+            });
+        }
+        else{
+             $.ajax({
+                type: "POST",
+                url: "",
+                data: "",
+                success: function(data){
+                    failed();
+                }
+            });
+        }
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "No data available in table",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
     // var table1 = $('#tableHistory').DataTable({
     //  "order": [[ 0, "desc" ]]});
     // var tablee = $('#my-table').DataTable({});

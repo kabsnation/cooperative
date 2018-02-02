@@ -22,7 +22,7 @@ class SMSHandler{
 		}
 
 		else if ($result == 0){
-			echo "<script>window.location='COOP_AddEvent.php';alert('Success!');</script>";
+			//echo "<script>window.location='COOP_AddEvent.php';alert('Success!');</script>";
 		}
 
 		else{	

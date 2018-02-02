@@ -10,15 +10,20 @@ require("../config/config.php");
 $handler = new EventHandler();
 $eventLists = $handler->getEvents();
 $arrow ='';
-if (isset($_GET['Id'])){
+if(isset($_GET['Id'])){
     $eventViewDetails = $handler->getEventDetails($_GET['Id']);
-    $getGoingEvent = $handler->getGoing($_GET['Id']);
-    $getNotGoingEvent = $handler->getNotGoing($_GET['Id']);
-    $getRecipient = $handler->getRecipient($_GET['Id']);
-    if(isset($_GET['dash']))
-        $arrow='<a href="SuperAdmin_Dashboard.php"><i class="icon-arrow-left52 position-left"></i></a>';
+    if($eventViewDetails){
+        $getGoingEvent = $handler->getGoing($_GET['Id']);
+        $getNotGoingEvent = $handler->getNotGoing($_GET['Id']);
+        $getRecipient = $handler->getRecipient($_GET['Id']);
+        if(isset($_GET['dash']))
+            $arrow='<a href="SuperAdmin_Dashboard.php"><i class="icon-arrow-left52 position-left"></i></a>';
+        else
+            $arrow='<a href="SuperAdmin_EventList.php"><i class="icon-arrow-left52 position-left"></i></a>';
+    }
     else
-        $arrow='<a href="SuperAdmin_EventList.php"><i class="icon-arrow-left52 position-left"></i></a>';
+        echo "<script>window.location='SuperAdmin_EventList.php';</script>";
+   
 }
 include('../UI/header/header_sadmin.php');
 ?>
@@ -79,6 +84,8 @@ include('../UI/header/header_sadmin.php');
                                                                 <td class="text-center">
                                                                     <ul class="icons-list">
                                                                         <li class="text-teal-600"><a href='SuperAdmin_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-eye" style="margin-right: 10px;"></i>View</a></li>
+                                                                         <li class="text-teal-600"><a href='SuperAdmin_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-eye" style="margin-right: 10px;"></i>Update</a></li>
+                                                                          <li class="text-teal-600"><a  onclick="promptDelete(<?php echo $event['idEvents']?>)"><i class="icon-eye" style="margin-right: 10px;"></i>Delete</a></li>
                                                                     </ul>
                                                                 </td>
                                                             </tr>
@@ -280,7 +287,7 @@ include('../UI/header/header_sadmin.php');
                     }
                 });
     }
-    function promptDelete(val){
+  function promptDelete(val){
                 swal({
                         title: "Are you sure?",
                         text: "You will not be able to recover this information!",
@@ -307,8 +314,7 @@ include('../UI/header/header_sadmin.php');
                         success();
                     }
                 });
-            }
-              
+            }  
      function success(){
                 setTimeout(function(){
                     swal({

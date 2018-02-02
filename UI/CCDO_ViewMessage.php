@@ -206,10 +206,10 @@ else if(isset($_GET['idEvents'])){
 
 							<div class="text-right">
 									<input type="hidden" name="response" id="response" value="0">
-									<input type="hidden" name="idTracking" value="<?php echo $idTracking;?>">
+									<input type="hidden" name="idTracking" value="<?php if(isset($idTracking)) echo $idTracking;else echo 'null';?>">
 									<input type="hidden" name="idReply" value="<?php echo $idReply;?>">
 									<input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
-									<input type="hidden" name="type" value="<?php echo $type?>">
+									<input type="hidden" name="type" value="reply">
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">

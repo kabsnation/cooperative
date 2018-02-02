@@ -72,7 +72,7 @@ include('../UI/header/header_events.php');
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label><strong>Upload File:</strong></label>
-                                                        <input  class="file-input-extensions" AllowMultiple="true" multiple="multiple" type="file" id="fileUploaded" name="fileUploaded" required="required" />
+                                                        <input  AllowMultiple="true" multiple="multiple" type="file" id="fileUploaded" name="fileUploaded" />
                                                         <div class="col-xs-12" style="margin-top: 10px;">
                                                             <label class="text-muted">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</label>
                                                         </div>
@@ -172,6 +172,21 @@ include('../UI/header/header_events.php');
             document.getElementById('checker').value=null;
         }
     }
+    var counter = 0;
+ $('#select-all').click(function(event) {   
+        if(counter ==0){
+            $(':checkbox').each(function() {
+                this.checked = true;                        
+            });
+            counter = 1;
+            }
+        else{
+            $(':checkbox').each(function() {
+                    this.checked = false;                        
+                });
+            counter = 0;
+            }
+});
      function confirm(){
         swal({
                     title: "Are you sure?",
@@ -190,18 +205,26 @@ include('../UI/header/header_events.php');
                             validate();
                          }
                          else{
-                             $.ajax({
-                                type: "POST",
-                                url: "addEventsFunction.php",
-                                data: $('#form1').serialize(),
-                                success: function(data){
-                                    success();
-                                },
-                                error: function(data){
-                                    failed();
-                                }
+                            $("#form1").submit(function(e) {
+                                e.preventDefault();    
+                                var formData = new FormData(this);
 
+                                $.ajax({
+                                    url: "addEventsFunction.php",
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (data) {
+                                        success();
+                                    },
+                                    error: function(data){
+                                        failed();
+                                    },
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false
+                                });
                             });
+                            $('#form1').submit();
                         }
            }
         });
@@ -213,13 +236,6 @@ include('../UI/header/header_events.php');
                     return 1;
                 }
                 for(var i = 0; i<inputs.length; ++i){
-                    for(var o = 0; o<selects.length; ++o){
-                        if(!selects[o].checkValidity()){
-                            //console.log(selects[o].value);
-                            return 1;
-                            break;
-                        }
-                    }
                     if(!inputs[i].checkValidity()){
                         //console.log(inputs[o].value);
                         return 1;

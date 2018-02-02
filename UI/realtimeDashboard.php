@@ -2,13 +2,15 @@
 require("../Handlers/DocumentHandler.php");
 require("../config/config.php");
 $doc = new DocumentHandler();
-$pendingCount = $doc->getCountPendingDoc();
-$doneCount = $doc->getCountDoneDoc();
+$pendingCount = $doc->getCountPendingDoc($_POST['date']);
+$doneCount = $doc->getCountDoneDoc($_POST['date']);
 $accCount = $doc->getCountAccounts();
-$total = $doc->getTotalDoc();
+$doneCountDate= $doc->getCountPendingDocDate($_POST['date']);
+$pendingCountDate=$doc->getCountPendingDoc($_POST['date']);
+$total = $doc->getTotalDoc($_POST['date']);
 $event = $doc->getUpcomingEvent();
-$ongoing = $doc->getOngoingTracking();
-$finished = $doc->getFinishedTracking();
+$ongoing = $doc->getOngoingTracking($_POST['date']);
+$finished = $doc->getFinishedTracking($_POST['date']);
 $eventDetails = $doc->getEventDetails();
 $arrs = array();
 $arrs[0]=$pendingCount;
@@ -29,13 +31,21 @@ $arrs[5]='';
 $arrs[6]=$event[1];
 if($ongoing){
 	foreach($ongoing as $ong){
-	$datetime1 = new DateTime(date("h:i:s a"));// to
-	$datetime2 = new DateTime($ong['timeadded']);// from
+	$datetime1 = new DateTime(date("m/d/Y h:i:s a"));// to
+	$datetime2 = new DateTime($ong['dateadded'].' '.$ong['timeadded']);// from
 	$interval = $datetime1->diff($datetime2);
-	if($interval->format('%h')==0)
-		$time= $interval->format('%i')."<small class='display-block text-size-small no-margin'> Minutes ";
-	else
-		$time= $interval->format('%h')."<small class='display-block text-size-small no-margin'> Hours ".$interval->format('%i')." Minutes </small>";
+	if($interval->format('%a')==0){
+		if($interval->format('%h')==0)
+			$time= $interval->format('%i')."<small class='display-block text-size-small no-margin'> Minutes ";
+		else
+			$time= $interval->format('%h')." Hours ".$interval->format('%i')." Minutes </small>";
+	}
+	else{
+		if($interval->format('%h')==0)
+			$time= $interval->format('%a')."<small class='display-block text-size-small no-margin'> Days ".$interval->format('%i')." Minutes ";
+		else
+			$time= $interval->format('%a')."<small class='display-block text-size-small no-margin'> Days ".$interval->format('%h')." Hours ".$interval->format('%i')." Minutes </small>";
+	}
 	$arrs[4].='<tr>
 				<td><h6 style="font-size: 11px;">'.$time.'</h6></td>
 				<td>'.$ong['trackingNumber'].'</td>
@@ -54,13 +64,21 @@ $arrs[4].= '<tr class="active border-double">
 			</td></tr>';
 if($finished){
 	foreach ($finished as $done) {
-		$datetime1 = new DateTime(date("h:i:s a"));// to
-		$datetime2 = new DateTime($done['timeadded']);// from
+		$datetime1 = new DateTime(date("m/d/y h:i:s a"));// to
+		$datetime2 = new DateTime($done['dateadded'].' '.$done['timeadded']);// from
 		$interval = $datetime1->diff($datetime2);
-		if($interval->format('%h')==0)
-			$time= $interval->format('%i')."<small class='display-block text-size-small no-margin'> Minutes ";
-		else
-			$time= $interval->format('%h')."<small class='display-block text-size-small no-margin'> Hours ".$interval->format('%i')." Minutes </small>";
+		if($interval->format('%a')==0){
+			if($interval->format('%h')==0)
+				$time= $interval->format('%i')."<small class='display-block text-size-small no-margin'> Minutes ";
+			else
+				$time= $interval->format('%h')." Hours ".$interval->format('%i')." Minutes </small>";
+		}
+		else{
+			if($interval->format('%h')==0)
+				$time= $interval->format('%a')."<small class='display-block text-size-small no-margin'> Days ".$interval->format('%i')." Minutes ";
+			else
+				$time= $interval->format('%a')."<small class='display-block text-size-small no-margin'> Days ".$interval->format('%h')." Hours ".$interval->format('%i')." Minutes </small>";
+		}
 		$arrs[4].='<tr>
 					<td><h6 style="font-size: 11px;">'.$time.'</h6></td>
 					<td>'.$done['trackingNumber'].'</td>
@@ -82,6 +100,14 @@ if($eventDetails){
 				            </ul>';
 	}
 }
+else
+	$arrs[5]='<h5 class="text-semibold"> <small class="display-block"></small></h5>
+				        <p class="content-group"> </p>
+				            <ul class="list content-group">
+				             	<li><span class="text-semibold">Administered by: -----</span> </li>
+				            	<li><span class="text-semibold">Start Date and Time: -----</span></li>
+				           		<li><span class="text-semibold">Start Date and Time: -----</span> </li>
+				            </ul>';
 
 echo json_encode($arrs);
 ?>

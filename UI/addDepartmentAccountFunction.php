@@ -1,6 +1,10 @@
 <?php
+session_start();
+$id = $_SESSION['idAccountAdmin'];
 require("../config/config.php");
 require("../Handlers/AccountHandler.php");
+require("../Handlers/AuditTrail.php");
+$audit = new AuditTrail();
 $handler = new AccountHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
@@ -24,6 +28,11 @@ if(isset($_POST['txtUsername'])){
 		$accountId=$handler->addDepartmentAccountInfo($firstName,$lastName,$middleName,$cellnumber,$email);
 		if($accountId!=""){
 			$result=$handler->addDepartmentAccount($userName,$password,$accountId,$departmentId,$accountType);
+			if($result){
+				$audit->trail('ADD DEPARTMENT ACCOUNT; ID: '.$result,'SUCCESSFUL',$id);
+			}
+			else
+				$audit->trail('ADD DEPARTMENT ACCOUNT;'.$result,'FAILED',$id);
 		}
 
 	}
