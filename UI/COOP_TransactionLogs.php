@@ -28,7 +28,10 @@ $history = $doc->getHistory($id);
 
 
                                             <div class="heading-elements">
-                                                <div class="heading-btn-group">
+                                                <div class="heading-elements">
+                                                    <div class="heading-btn-group">
+                                                        <button class="btn btn-primary">Print <i class="icon-printer"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,6 +55,13 @@ $history = $doc->getHistory($id);
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
+                                                        <div class="col-lg-3">
+                                                            <div class="row">
+                                                                <label class="text-muted">Please take note that the selection of From and To Date will sort the table based on the column of Date Added.</label>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
 
