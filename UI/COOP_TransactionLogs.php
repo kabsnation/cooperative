@@ -55,10 +55,10 @@ $history = $doc->getHistory($id);
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="col-lg-3">
                                                             <div class="row">
-                                                                <label class="text-muted">Please take note that the selection of From and To Date will sort the table based on the column of Date Added.</label>
+                                                                <label class="text-muted">Note: Please take note that the selection of From and To Date will sort the table based on the column of Date Added.</label>
                                                             </div>
                                                         </div>
 
