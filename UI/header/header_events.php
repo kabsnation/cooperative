@@ -42,15 +42,28 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
 	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
 	<!-- /core JS files -->
 
-	<!-- Theme JS files -->
-	<script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/notifications/noty.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/notifications/jgrowl.min.js"></script>
+    <!-- Theme JS files -->
     <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-	<script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
-	<script type="text/javascript" src="assets/js/core/app.js"></script>
-	<script type="text/javascript" src="assets/js/pages/components_notifications_other.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
+    <script type="text/javascript" src="assets/js/pages/datatables_data_sources.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/uploaders/fileinput.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/uploader_bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jasny_bootstrap.min"></script>
+    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/notifications/jgrowl.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
     <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
@@ -59,12 +72,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
     <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
-
-	<!-- /theme JS files -->
+    <!-- /theme JS files -->
 
     <script src="pnotify.custom.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="pnotify.custom.min.css" />
@@ -159,7 +168,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                             <div class="category-content no-padding">
                                 <ul class="navigation navigation-main navigation-accordion">
 
-                                    <li class="active">
+                                    <li>
                                         <a href="#"><i class="icon-calendar"></i><span> Events</span></a>
                                         <ul>
                                             <li class="<?php echo $arrs[0];?>"><a href="COOP_AddEvent.php">Add Events</a></li>
