@@ -172,7 +172,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                 <div class="category-content no-padding">
                                     <ul class="navigation navigation-main navigation-accordion">
 
-                                        <li class="active">
+                                        <li>
                                             <a href="#"><i class="icon-profile"></i><span>Manage Accounts</span></a>
                                             <ul>
                                                 <li class="<?php echo $arrs[0];?>"><a href="CCDO_AddCooperativeAccount.php">Add Cooperative Account</a></li>
