@@ -340,7 +340,7 @@ class DocumentHandler{
 	}
 	public function getUpcomingEvent(){
 		$con = new Connect();
-		$query = "SELECT idEvents,eventName FROM events WHERE status='ON GOING' ORDER BY idEvents DESC LIMIT 1";
+		$query = "SELECT idEvents,eventName FROM events WHERE markasdeleted=0 and status='ON GOING' ORDER BY idEvents DESC LIMIT 1";
 		$result = $con->select($query);
 		$event = array();
 		if($row=$result->fetch_assoc()){
