@@ -1,19 +1,17 @@
 <?php
 session_start();
-if(!isset($_SESSION['idAccount'])){
+if(!isset($_SESSION['idSuperAdmin'])){
     echo "<script>window.location='index.php';</script>";
 }
-require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
-include('../UI/header/header_user.php');
-$doc = new DocumentHandler();
-$id = $_SESSION['idAccount'];
-$trackings = $doc->getTransactionLogs($id);
-$history = $doc->getHistory($id);
+$handler = new AccountHandler();
+$cooperativeProfile = $handler->getCoopAccounts($_SESSION['idSuperAdmin']);
+$departmentProfile = $handler-> getDepartmentAccounts($_SESSION['idSuperAdmin']);
+include('../UI/header/header_sadmin.php');
 ?>
 
-                    <!-- Main content -->    
+<!-- Main content -->    
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
@@ -141,3 +139,4 @@ $history = $doc->getHistory($id);
     // tablee.column(0).visible(false);
 
 </script>
+_

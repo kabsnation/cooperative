@@ -94,19 +94,29 @@ include('../UI/header/header_sadmin.php');
 						<div class="col-lg-9">
 							<div class="panel panel-white">
 								<div class="panel-heading">
-									<h6 class="panel-title">Document Tracker</h6>
+									<h6 class="panel-title text-semibold">Document Tracker</h6>
+
+									<div class="heading-elements">
+										<div class="content-group-lg">
+											<h6 style="float: left; margin-right: 10px; font-size: 12px;">Select Date:</h6>
+											<div class="input-group">
+												<span class="input-group-addon"><i class="icon-calendar"></i></span>
+												<input id="date_picker" type="text" class="form-control pickadate">
+											</div>
+										</div>
+									</div>
 								</div>
 
 								<div class="table-responsive">
-									<table class="table text-nowrap">
+									<table class="table" style="font-size: 12px">
 										<thead>
 											<tr>
-												<th style="width: 10px">Due</th>
-												<th style="width: 50px">Tracking Number</th>
-												<th style="width: 50px">Title</th>
-												<th style="width: 300px;">Sender</th>
-												<th class="text-center" style="width: 20px;">Date and Time</th>
-												<th class="text-center" style="width: 20px;">Action</th>
+												<th style="width: 10%">Due</th>
+												<th style="width: 18%">Tracking No.</th>
+												<th style="width: 20%">Title</th>
+												<th style="width: 20%;">Sender</th>
+												<th style="width: 30%">Date and Time</th>
+												<th class="text-center" style="width: 5%;">Action</th>
 											</tr>
 										</thead>
 										<tbody id="bod">
@@ -183,9 +193,26 @@ include('../UI/header/header_sadmin.php');
             	$('#bod').html(data[4]);
             	$('#upcoming').html(data[5]);
             	document.getElementById("link").href="SuperAdmin_EventList.php?Id="+data[6]+"&dash=true"; 
-            }
+            	console.log(data);
+            },
+           	error:function(data){
+           		console.log(data);
+           	}
 		});
 	}
+
+	function getDate(){
+		var currentDate = new Date();
+
+		var date = currentDate.getDate();
+		var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+		var year = currentDate.getFullYear();
+		var dateString = date + " " +(month + 1) + "," + year;
+
+		document.getElementById("date_picker").value = currentDate;
+	}
+
+	window.onload = getDate;
 </script>
 </body>
 </html>

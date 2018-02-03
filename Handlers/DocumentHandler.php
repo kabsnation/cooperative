@@ -343,11 +343,17 @@ class DocumentHandler{
 		$query = "SELECT idEvents,eventName FROM events WHERE markasdeleted=0 and status='ON GOING' ORDER BY idEvents DESC LIMIT 1";
 		$result = $con->select($query);
 		$event = array();
-		if($row=$result->fetch_assoc()){
+		if ($result) {
+			if($row=$result->fetch_assoc()){
 			$event[0] = $row['eventName'];
 			$event[1] = $row['idEvents'];
 		}
 		return $event;
+		}
+		else{
+			return 0;
+		}
+		
 	}
 	public function replyEvent($idEvents,$id,$reply){
 		$con = new Connect();

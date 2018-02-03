@@ -91,78 +91,78 @@ $account = $handler->getDepartmentAccount($id);
 	                                        </div>
 	                                    </div>
 
-                                    </div>
-                                </fieldset>
+                                        <legend>
+                                            <h5 class="text-bold"><i class=" icon-user-plus" style="margin-right: 10px"></i>Account Information
+                                                <button id="btnEditAccount" type="button" class="btn btn-primary" style="float: right" onclick="editAccount()">Edit</button>
+                                            </h5>
+                                        </legend>
+                                        <div class="col-lg-12">
 
-                                <fieldset class="content-group">
-                                    <legend>
-                                        <h5 class="text-bold"><i class=" icon-user-plus" style="margin-right: 10px"></i>Account Information
-                                        	<button id="btnEditAccount" type="button" class="btn btn-primary" style="float: right" onclick="editAccount()">Edit</button>
-                                        </h5>
-                                    </legend>
-                                    <div class="col-lg-12">
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group has-feedback">
-                                                    <label><span class="text-danger">* </span><strong>Username:</strong></label>
-                                                    <input ID="txtUsername" name="username" class="form-control" MinLength="6" readonly="true" value="<?php echo $acc['Username'];?>"></input>
-                                                    <div class="form-control-feedback">
-                                                        <i class=" icon-user text-muted"></i>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group has-feedback">
+                                                        <label><span class="text-danger">* </span><strong>Username:</strong></label>
+                                                        <input ID="txtUsername" name="username" class="form-control" MinLength="6" readonly="true" value="<?php echo $acc['Username'];?>"></input>
+                                                        <div class="form-control-feedback">
+                                                            <i class=" icon-user text-muted"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group has-feedback">
-                                                    <label><span class="text-danger">* </span><strong>Password:</strong></label>
-                                                    <input ID="txtPassword" name="password" class="form-control" type="password" required="required" MinLength="6" readonly="true" value="<?php echo $acc['Password'];?>"></input>
-                                                    <div class="form-control-feedback">
-                                                        <i class=" icon-lock text-muted"></i>
+                                                <div class="col-md-6">
+                                                    <div class="form-group has-feedback">
+                                                        <label><span class="text-danger">* </span><strong>Password:</strong></label>
+                                                        <input ID="txtPassword" name="password" class="form-control" type="password" required="required" MinLength="6" readonly="true" value="<?php echo $acc['Password'];?>"></input>
+                                                        <div class="form-control-feedback">
+                                                            <i class=" icon-lock text-muted"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group has-feedback">
+                                                        <label><span class="text-danger">* </span><strong>Department:</strong></label>
+                                                        <select  ID="ddlDepartment" name="ddlDepartment" required="required" class="form-control" disabled="true">
+                                                           <?php foreach($typeDepartment as $type){
+                                                            if($type['idDepartment']==$acc['idDepartment']){?>
+                                                           <option value="<?php echo $type['idDepartment'];?>" selected><?php echo $type['Department'];?></option>
+                                                           <?php }
+                                                           else{?>
+                                                           <option value="<?php echo $type['idDepartment'];?>"><?php echo $type['Department'];?></option>
+                                                           <?php }} ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group has-feedback" id="reenter" hidden="hidden">
+                                                        <label><span class="text-danger">* </span><strong>Re-enter Password:</strong></label>
+                                                        <input ID="txtRepeatPassword" name="txtRepeatPassword" class="form-control" type="password" MinLength="6" required="required" equalTo="#txtPassword" readonly="true"></input>
+                                                        <div class="form-control-feedback">
+                                                            <i class="icon-lock text-muted"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-12" id="optionAccount" style="display: none;">
+                                                <hr/>
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-info" id="btnSaveRespondent" onclick="updateAccount()">Save</button>
+                                                    <button type="button" class="btn btn-danger" id="btnCancelRespondent" onclick="cancelAccount()">Cancel</button>
+                                                </div>
+                                            </div>
+    <?php }}?>
                                         </div>
 
-                                        <div class="row">
-                                            
-                                            <div class="col-md-6">
-                                                <div class="form-group has-feedback">
-                                                    <label><span class="text-danger">* </span><strong>Department:</strong></label>
-                                                    <select  ID="ddlDepartment" name="ddlDepartment" required="required" class="form-control" disabled="true">
-                                                       <?php foreach($typeDepartment as $type){
-                                                        if($type['idDepartment']==$acc['idDepartment']){?>
-                                                       <option value="<?php echo $type['idDepartment'];?>" selected><?php echo $type['Department'];?></option>
-                                                       <?php }
-                                                       else{?>
-                                                       <option value="<?php echo $type['idDepartment'];?>"><?php echo $type['Department'];?></option>
-                                                       <?php }} ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group has-feedback" id="reenter" hidden="hidden">
-                                                    <label><span class="text-danger">* </span><strong>Re-enter Password:</strong></label>
-                                                    <input ID="txtRepeatPassword" name="txtRepeatPassword" class="form-control" type="password" MinLength="6" required="required" equalTo="#txtPassword" readonly="true"></input>
-                                                    <div class="form-control-feedback">
-                                                        <i class="icon-lock text-muted"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-lg-12" id="optionAccount" style="display: none;">
-	                                        <hr/>
-	                                        <div class="text-right">
-	                                            <button type="button" class="btn btn-info" id="btnSaveRespondent" onclick="updateAccount()">Save</button>
-	                                            <button type="button" class="btn btn-danger" id="btnCancelRespondent" onclick="cancelAccount()">Cancel</button>
-	                                        </div>
-	                                    </div>
-<?php }}?>
                                     </div>
+
+
                                 </fieldset>
                             </div>
 
