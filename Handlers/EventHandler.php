@@ -18,14 +18,16 @@ class EventHandler{
 	public function addRecipient($idEvents,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
 		$con = new Connect();
 		$SMS = new SMSHandler();
+		$mail = new MailHandler();
 		$query = "INSERT INTO location(idEvents,idAccounts,status) VALUES('".$idEvents."','".$idAccounts."','WAITING FOR CONFIRMATION')";
 		$result = $con->insert($query);
-		$number = $this->getMobileNo($idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);
-		$message = $SMS->sendSMS($number,$eventName,$eventLocation,$startDateTime,$endDateTime); 
-		return $result;
+		$number = $this->getMobileNo($idAccounts);
+		$email = $this->getEmail($idAccounts);
+		$SMSmessage = $SMS->sendSMS($number,$eventName,$eventLocation,$startDateTime,$endDateTime); 
+		return $email;
 	}
 
-	public function getMobileNo($idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
+	public function getMobileNo($idAccounts){
 		$con = new Connect();
 		$query = "SELECT Telephone_Number FROM cooperative_profile c INNER JOIN accounts a on a.idCooperative_Profile = c.idCooperative_Profile WHERE a.idaccounts = ".$idAccounts;
 		$result = $con->select($query);
@@ -34,6 +36,14 @@ class EventHandler{
 		return $row['Telephone_Number'];
 	}
 
+	public function getEmail($idAccounts){
+		$con = new Connect();
+		$query = "SELECT Email_Address FROM cooperative_profile c INNER JOIN accounts a on a.idCooperative_Profile = c.idCooperative_Profile WHERE a.idaccounts = ".$idAccounts;
+		$result = $con->select($query);
+		$row = $result->fetch_assoc();
+		
+		return $row['Email_Address'];
+	}
 
 	public function getEvents(){
 		$query = "SELECT * FROM Events";

@@ -2,6 +2,8 @@
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/SMSHandler.php");
+require("../Mailer/PHPMailerAutoload.php");
+
 $handler = new EventHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
