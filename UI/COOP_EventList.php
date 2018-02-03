@@ -11,9 +11,14 @@ $handler = new EventHandler();
 $eventLists = $handler->getEvents();
 if (isset($_GET['Id'])){
     $eventViewDetails = $handler->getEventDetails($_GET['Id']);
-    $getGoingEvent = $handler->getGoing($_GET['Id']);
-    $getNotGoingEvent = $handler->getNotGoing($_GET['Id']);
-    $getRecipient = $handler->getRecipient($_GET['Id']);
+    if($eventViewDetails){
+        $getGoingEvent = $handler->getGoing($_GET['Id']);
+        $getNotGoingEvent = $handler->getNotGoing($_GET['Id']);
+        $getRecipient = $handler->getRecipient($_GET['Id']);
+    }
+    else{
+        echo "<script>window.location='COOP_EventList.php'</script>";
+    }
 }
 include('../UI/header/header_events.php');
 ?>
@@ -286,12 +291,12 @@ include('../UI/header/header_events.php');
                 url: "deleteFunction.php",
                 data: 'idEvents=' + val,
                     success: function(data){
-                        success();
+                        success('COOP_EventList.php');
                     }
                 });
             }
               
-     function success(){
+     function success(location ='window.location'){
                 setTimeout(function(){
                     swal({
                         title: "Success!",
@@ -299,7 +304,7 @@ include('../UI/header/header_events.php');
                         type: "success"
                         },
                         function(isConfirm){
-                            window.location=window.location;
+                            window.location=location;
                         });},500); 
             }
             function failed(){

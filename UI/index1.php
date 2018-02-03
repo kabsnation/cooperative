@@ -27,16 +27,22 @@ else if(isset($_SESSION['idAccount']))
 	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
 
-	<!-- Core JS files -->
-	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-	<!-- /core JS files -->
+	  <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_modals.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/components_notifications_pnotify.js"></script>
+    <!-- /core JS files -->
 
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
 
-	<!-- Theme JS files -->
-	<script type="text/javascript" src="assets/js/core/app.js"></script>
+    <script type="text/javascript" src="assets/js/core/app.js"></script>
+    <!-- /theme JS files -->
 	<!-- /theme JS files -->
 
 </head>
@@ -125,9 +131,11 @@ else if(isset($_SESSION['idAccount']))
                 }
                 else
                     failed();
+                console.log(data);
 			},
             error:function(data){
                 failed();
+                console.log(data);
             },
             dataType: "json"
 		});

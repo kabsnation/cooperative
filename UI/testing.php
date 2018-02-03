@@ -1,7 +1,13 @@
 <?php
-$number = "(+63) 111-111-1111";
-$number = explode("(+63) ", $number);
-$number = explode("-", $number[1]);
-$number = "0".$number[0].$number[1].$number[2];
-echo $number;
+require_once('../UI/pdf.php');
+$pdf = new pdfMaker();
+$arrs = array();
+$arrs[0] ='wqeqwe';
+$arrs[1] ='qweqwe';
+$arrs[2] ='qweqwe';
+$arrs[3] ='qweasd';
+$arrs[5] ='qwewq';
+$pdf->AddPage();
+$pdf->FancyTable($arrs);
+$pdf->Output();
 ?>

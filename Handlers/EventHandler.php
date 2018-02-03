@@ -43,7 +43,7 @@ class EventHandler{
 	}
 
 	public function getEventDetails($idEvents){
-		$query = "SELECT * FROM Events where idEvents = '" .$idEvents."'";
+		$query = "SELECT * FROM Events where markasdeleted = 0 and idEvents = '" .$idEvents."'";
 		$con = new Connect();
 		$result = $con->select($query);
 		return $result;

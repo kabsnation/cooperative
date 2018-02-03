@@ -290,12 +290,19 @@ class DocumentHandler{
 		$query = "UPDATE location SET isnotified = 1 WHERE idlocation =$idlocation";
 		$result = $con->update($query);
 	}
+	public function getTransactionLogsAdmin(){
+		$con = new Connect();
+		$query = "SELECT trackingNumber,dateadded,datecompleted,Document,Status,title FROM tracking,document_type,inbox_info WHERE Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info ORDER BY idTracking DESC";
+		$result = $con->select($query);
+		return $result;
+	}
 	public function getTransactionLogs($id){
 		$con = new Connect();
 		$query = "SELECT trackingNumber,dateadded,datecompleted,Document,Status,title FROM tracking,document_type,inbox_info WHERE Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and idAccounts=$id ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}
+	
 	public function getHistory($id){
 		$con = new Connect();
 		$query="SELECT ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber, history.status,history.datetime,location.idlocation,title,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM history JOIN location ON history.idlocation = location.idlocation LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON location.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE tracking.idAccounts = $id ORDER BY idhistory DESC";
@@ -375,7 +382,7 @@ class DocumentHandler{
 	}
 	public function getEventDetails(){
 		$con = new Connect();
-		$query = "SELECT *,concat(first_name,' ', last_name) as name FROM events JOIN accounts ON accounts.idAccounts = events.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE status='ON GOING' ORDER BY idEvents DESC LIMIT 1 ";
+		$query = "SELECT *,concat(first_name,' ', last_name) as name FROM events JOIN accounts ON accounts.idAccounts = events.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE status='ON GOING' and events.markasdeleted =0 ORDER BY idEvents DESC LIMIT 1 ";
 		$result = $con->select($query);
 		return $result;
 	}

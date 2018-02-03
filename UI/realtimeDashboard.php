@@ -15,7 +15,7 @@ $arrs[0]=$pendingCount;
 $arrs[1]=$doneCount;
 $arrs[2] = $total;
 if($event == 0){
-	$arrs[3] = "NONE";
+	$arrs[3] = "None";
 }
 else{
 	$arrs[3]=$event[0];

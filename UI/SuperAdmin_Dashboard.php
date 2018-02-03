@@ -101,7 +101,7 @@ include('../UI/header/header_sadmin.php');
 											<h6 style="float: left; margin-right: 10px; font-size: 12px;">Select Date:</h6>
 											<div class="input-group">
 												<span class="input-group-addon"><i class="icon-calendar"></i></span>
-												<input id="date_picker" type="text" class="form-control pickadate">
+												<input id="date_picker" type="text" name="date" value="<?php echo date('m/d/y');?>" class="form-control daterange-single">
 											</div>
 										</div>
 									</div>
@@ -201,18 +201,7 @@ include('../UI/header/header_sadmin.php');
 		});
 	}
 
-	function getDate(){
-		var currentDate = new Date();
-
-		var date = currentDate.getDate();
-		var month = currentDate.getMonth(); //Be careful! January is 0 not 1
-		var year = currentDate.getFullYear();
-		var dateString = date + " " +(month + 1) + "," + year;
-
-		document.getElementById("date_picker").value = currentDate;
-	}
-
-	window.onload = getDate;
+	
 </script>
 </body>
 </html>
