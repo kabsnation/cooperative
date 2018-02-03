@@ -97,7 +97,7 @@ else if(isset($_SESSION['idAccount']))
 
 					<!-- Footer -->
 					<div class="footer text-muted text-center">
-						&copy; 2018. <a href="#">Document Traking and Event Management System</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Polytechnic University of the Philippines - Santa Rosa Campus</a>
+						&copy; 2018. <a href="#">Document Traking and Event Management System</a> by <a href="#">Polytechnic University of the Philippines - Santa Rosa Campus</a>
 					</div>
 					<!-- /footer -->
 
