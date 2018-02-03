@@ -1,9 +1,15 @@
 <?php
+session_start();
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/SMSHandler.php");
+<<<<<<< HEAD
 require("../Mailer/PHPMailerAutoload.php");
 
+=======
+require("../AuditTrail.php");
+$audit = new AuditTrail();
+>>>>>>> 5fe964f428069c9bb93455a443573bb52cc5f8d4
 $handler = new EventHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
@@ -11,7 +17,6 @@ $target_dir = "files/";
 $target_file = "";
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 date_default_timezone_set('Asia/Manila');
-
 if(isset($_POST['txtEventName'])){
 	$eventName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventName'])));
 
@@ -20,9 +25,9 @@ if(isset($_POST['txtEventName'])){
 	if($checkEventName==NULL){
 		$eventLocation = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventLocation'])));
 		$eventDetails = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventDetails'])));
-		$startDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtStartDateTime'])));
-		$endDateTime = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEndDateTime'])));
-		$idAccounts = 1; //SESSION
+		$datetime = explode(' - ', $_POST['datetime']);
+		
+		$idAccounts = $_SESSION['idEvent']; //SESSION
 
 		$uploadOk=0;
 		$doneUpload=0;
@@ -48,12 +53,19 @@ if(isset($_POST['txtEventName'])){
 		       	$doneUpload=0;
 		    }
 
-		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$startDateTime,$endDateTime,$target_file,$idAccounts);
+
+		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$datetime[0],$datetime[1],$target_file,$idAccounts);
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
-					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime);
+					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$datetime[0],$datetime[1]);
 				} 
+
+				$audit->trail('ADD EVENT; ID: '.$EventId,'SUCCESSFUL',$idAccounts);
 			}
+			else{
+				$audit->trail('ADD EVENT; ID: '.$EventId,'FAILED',$idAccounts);
+			}
+
 		}
 
 		else{

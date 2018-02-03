@@ -22,6 +22,12 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
     $arrs[2]="active";
     $title = "CCDO - View Accounts";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $title = "CCDO - Edit Account";
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -106,7 +112,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                        <li><a href="EditAccount.php"><i class="icon-cog5"></i> Account settings</a></li>
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
@@ -151,7 +157,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
                                         <div class="media-right media-middle">
                                             <ul class="icons-list">
                                                 <li>
-                                                    <a href="#"><i class="icon-cog3"></i></a>
+                                                    <a  href="EditAccount.php"><i class="icon-cog3"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -166,7 +172,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAccounts.php')) {
                                 <div class="category-content no-padding">
                                     <ul class="navigation navigation-main navigation-accordion">
 
-                                        <li class="active">
+                                        <li>
                                             <a href="#"><i class="icon-profile"></i><span>Manage Accounts</span></a>
                                             <ul>
                                                 <li class="<?php echo $arrs[0];?>"><a href="CCDO_AddCooperativeAccount.php">Add Cooperative Account</a></li>

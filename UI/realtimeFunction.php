@@ -11,6 +11,7 @@ $id = $_POST['id'];
 	            $myArray[0][] = $row['trackingNumber'];
 	            $myArray[1][] = $row['DateTime'];
 	            $myArray[2][] = $row ['Document'];
+	            $myArray[3][] = $row['title'];
 	    }
 	    $_SESSION['default'] = 0;
 	    echo json_encode($myArray);

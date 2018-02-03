@@ -12,7 +12,7 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
-    $title = "CCDO - Add Document";
+    $title = "CCDO - Send Document";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_DocumentList.php')){
     $arrs[0]="";
@@ -76,6 +76,15 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
     $arrs[4]="";
     $arrs[5]="active";
     $title = "CCDO - History";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $title = "CCDO - Edit Account";
 }
 ?>
 <!DOCTYPE html>
@@ -168,7 +177,6 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a onclick="newMessageNotification()"><i class="icon-switch2"></i> Sample</a></li>
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
@@ -202,7 +210,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
                                         <div class="media-right media-middle">
                                             <ul class="icons-list">
                                                 <li>
-                                                    <a href="#"><i class="icon-cog3"></i></a>
+                                                    <a  href="EditAccount.php"><i class="icon-cog3"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -220,7 +228,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
                                        <li>
                                             <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
                                             <ul>
-                                                <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Add Document</a></li>
+                                                <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Send Document</a></li>
                                                 <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
                                             </ul>
                                         </li>
@@ -321,7 +329,7 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_History.php')){
         function newMessageNotification(title,sender){
             PNotify.desktop.permission();
             (new PNotify({
-                title: 'You have new message from '+sender,
+                title: 'New message from '+sender,
                 type: 'success',
                 text: title,
                 desktop: {

@@ -13,7 +13,7 @@ $trackings = $doc->getTransactionLogs($id);
 $history = $doc->getHistory($id);
 ?>
 
-<!-- Main content -->    
+                    <!-- Main content -->    
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
@@ -28,7 +28,10 @@ $history = $doc->getHistory($id);
 
 
                                             <div class="heading-elements">
-                                                <div class="heading-btn-group">
+                                                <div class="heading-elements">
+                                                    <div class="heading-btn-group">
+                                                        <button class="btn btn-primary" onclick="printt()">Print <i class="icon-printer"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,6 +55,13 @@ $history = $doc->getHistory($id);
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <div class="col-lg-3">
+                                                            <div class="row">
+                                                                <label class="text-muted">Note: Please take note that the selection of From and To Date will sort the table based on the column of Date Added.</label>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
 
@@ -117,7 +127,7 @@ $history = $doc->getHistory($id);
                 function( settings, data, dataIndex ) {
                     var min  = $('#min-date').val();
                     var max  = $('#max-date').val();
-                    var createdAt = data[4] || 0;
+                    var createdAt = data[3] || 0;
 
                     if  ( 
                             ( min == "" || max == "" )
@@ -134,7 +144,44 @@ $history = $doc->getHistory($id);
             $('.daterange-single').change( function() {
                 table.columns.adjust().draw();
             } );
-    
+     function printt(){
+        var mindate = $('#min-date').val();
+        var maxdate = $('#max-date').val();
+
+        var tablee = $('#my-table').DataTable();
+        var info = tablee.page.info();
+        if(info.recordsDisplay!=0){
+            $.ajax({
+                type: "POST",
+                url: "print.php",
+                data: "mindate="+mindate+"&maxdate="+maxdate,
+                success: function(data){
+                    if(data=='error')
+                        failed();
+                    console.log(data);
+                }
+            });
+        }
+        else{
+             $.ajax({
+                type: "POST",
+                url: "",
+                data: "",
+                success: function(data){
+                    failed();
+                }
+            });
+        }
+    }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "No data available in table",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
+    }
     // var table1 = $('#tableHistory').DataTable({
     //  "order": [[ 0, "desc" ]]});
     // var tablee = $('#my-table').DataTable({});

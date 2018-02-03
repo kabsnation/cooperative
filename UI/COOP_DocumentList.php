@@ -39,6 +39,7 @@ include('../UI/header/header_user.php');
                                                         <thead>
                                                             <tr>
                                                                 <th>Tracking No.</th>
+                                                                <th>Title</th>
                                                                 <th>Type</th>
                                                                 <th>Date Added</th>
                                                                 <th class="text-center">Actions</th>
@@ -100,9 +101,10 @@ include('../UI/header/header_user.php');
                     var table = $('#tableCoopeartiveAccount').DataTable();
                     var trackingNumber ="<td>"+data[0][i]+"</td>";
                     var type = "<td>"+data[2][i]+"</td>";
+                    var title = "<td>"+data[3][i]+"</td>";
                     var date = "<td>"+data[1][i]+"</td>";
                     var action = "<a href='ViewTracking.php?trackingId="+data[0][i]+"'>View</a>";
-                    table.row.add([trackingNumber,type,date, action]).draw(false);
+                    table.row.add([trackingNumber,title,type,date, action]).draw(false);
                 }
                 realTime();
             },

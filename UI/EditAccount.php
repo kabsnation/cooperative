@@ -1,85 +1,26 @@
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>CCDO -  Edit Account</title>
-
-    <link rel="icon" href="../assets/images/CCDO Logo.png" />
-
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript" src="assets/js/sweetalert-dev.js"></script>
-    <link rel="stylesheet" href="assets/css/sweetalert.css" />
-
-    <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
-    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/colors.css" rel="stylesheet" type="text/css" />
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script type="text/javascript" src="assets/js/plugins/forms/validation/validate.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/inputs/touchspin.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="assets/js/core/app.js"></script>
-    <script type="text/javascript" src="assets/js/pages/form_validation.js"></script>
-    <script src="assets/jquery.maskedinput.js" type="text/javascript"></script>
-    <!-- /theme JS files -->
-</head>
-<body>
-
-   	<!-- Main navbar -->
-	<div class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/images/CCDO Logo.png" alt=""/></a>
-
-            <ul class="nav navbar-nav visible-xs-block">
-                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
-                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-        </div>
-
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <ul class="nav navbar-nav">
-                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-
-                <li class="dropdown dropdown-user">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="">
-                        <i class="icon-cog5"></i>
-                        <span>Username</span>
-                        <i class="caret"></i>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a href="#"><i class="icon-switch2"></i> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- /main navbar -->
-
+<?php
+session_start();
+require("../Handlers/AccountHandler.php");
+require("../config/config.php");
+if(isset($_SESSION['idSuperAdmin'])){
+    include('../UI/header/header_sadmin.php');
+    $id=$_SESSION['idSuperAdmin'];
+}
+else if(isset($_SESSION['idAccountAdmin'])){
+    include('../UI/header/header_admin.php');
+    $id=$_SESSION['idAccountAdmin'];
+}
+else if(isset($_SESSION['idAccount'])){
+    include('../UI/header/header_user.php');
+    $id=$_SESSION['idAccount'];
+}
+else if(isset($_SESSION['idEvent'])){
+    include('../UI/header/header_events.php');
+    $id=$_SESSION['idEvent'];
+}
+else
+    echo "<script>window.location='index.php';</script>";
+?>
     <!-- Page container -->
     <div class="page-container">
 
@@ -128,13 +69,13 @@
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="activity">
-
+                                          <?php if($admin){foreach($admin as $info){?>
                                         <div class="row">
                                             <div class="col-lg-4 col-sm-7">
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Name</h6>
-                                                        Juan Dela Cruz
+                                                        <?php echo $info['name'];?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -143,25 +84,7 @@
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Username</h6>
-                                                        juandelacruz01
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-sm-7">
-                                                <div class="thumbnail">
-                                                    <div class="caption">
-                                                        <h6 class="no-margin-top text-semibold">Email Address</h6>
-                                                        juandelacruz01@gmail.com
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-sm-7">
-                                                <div class="thumbnail">
-                                                    <div class="caption">
-                                                        <h6 class="no-margin-top text-semibold">Phone Number</h6>
-                                                        (+63)99-999-9999
+                                                        <?php echo $info['Username'];?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,7 +96,7 @@
                                     <div class="tab-pane" id="settings">
 
                                         <div class="row" id="changePass" style="display: block;">
-                                            <div class="col-lg-4 col-sm-7">
+                                            <div class="col-lg-6 col-sm-7">
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Change Password <a onclick="editPassword()" class="text-muted"><i class="icon-pencil4 pull-right"></i></a></h6>
@@ -184,34 +107,36 @@
                                         </div>
 
                                         <div class="row" id="updatePass" style="display: none;">
-                                            <div class="col-lg-4 col-sm-7">
+                                            <div class="col-lg-6 col-sm-7">
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Update Password <a onclick="updatePassword()" class="text-muted"><i class="icon-cross3 pull-right" title="Cancel"></i></a></h6>
 
                                                         <div class="form-group">
                                                             <label>Old Password:</label>
-                                                            <input type="password" class="form-control" />
+                                                            <input type="password" id="oldpass" class="form-control" minlength="6" maxlength="20" />
+                                                            <input type="hidden" name="oldpassword" id="oldpassword" value="<?php echo $info['Password'];?>" class="form-control" />
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>New Password:</label>
-                                                            <input type="password" id="txtPassword" class="form-control" />
+                                                            <input type="password" id="txtPassword" minlength="6" maxlength="20" name="newpassword" class="form-control" required="required" />
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>Re-enter New Password:</label>
-                                                            <input type="password" equalTo="#txtPassword" class="form-control" />
+                                                            <input type="password" equalTo="#txtPassword" minlength="6" maxlength="20" class="form-control" />
                                                         </div>
 
                                                         <div class="text-right">
                                                             <div class="form-group">
-                                                                <input type="button" value="Save" class="btn btn-primary">
+                                                                <input type="button" value="Save" onclick="updatePass();" class="btn btn-primary" required="required">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php }}?>
                                         </div>
 
                                     </div>
@@ -244,6 +169,26 @@
             var y = document.getElementById("updatePass");
             x.style.display = "block";
             y.style.display = "none";
+        }
+        function updatePass(){
+            var oldpass = $('#oldpass').val();
+            var oldpassword = $('#oldpassword').val();
+            var newpassword = $('#txtPassword').val();
+            if(oldpass==oldpassword){
+                 $.ajax({
+                    type: "POST",
+                    url: "updatePassword.php",
+                    data: "id=<?php echo $id?>&password="+newpassword,
+                    success: function(data){
+                        alert("Success");
+                        window.location= window.location;
+                    }
+                });
+            }
+            else{
+                alert('Old Password is incorrect');
+            }
+           
         }
     </script>
 

@@ -1,8 +1,12 @@
 <?php
+session_start();
 require("../Handlers/AccountHandler.php");
+require("../Handlers/AuditTrial.php");
 require("../config/config.php");
 $handler = new AccountHandler();
+$audit = new AuditTrail();
 $connect = new Connect();
+$id = $_SESSION['idAccountAdmin'];
 $con = $connect-> connectDB();
 if(isset($_POST['txtUsername'])){
 	$userName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtUsername'])));
@@ -16,7 +20,9 @@ if(isset($_POST['txtUsername'])){
 		$contactNumber = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPhone'])));
 		$respondentEmailAddress= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEmail'])));
 		//cooperative profile
-
+		$number = explode("(+63) ", $contactNumber);
+		$number = explode("-", $number[1]);
+		$number = "0".$number[0].$number[1].$number[2];
 		$coopName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtCoopName'])));
 		$address= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtAddress'])));
 		$telephoneNumber= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtTelephone'])));
@@ -83,11 +89,10 @@ if(isset($_POST['txtUsername'])){
 		$password= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtPassword'])));
 
 		//insert respondent and return id
-		$respondentId = $handler->addRespondent($firstName,$lastName,$middleName,$contactNumber,$position,$respondentEmailAddress);
+		$respondentId = $handler->addRespondent($firstName,$lastName,$middleName,$number,$position,$respondentEmailAddress);
 		if($respondentId!=""){
 			//insert org aspect
 			$orgAspectId = $handler->addOrganizationalAspect($numberOfBoardOfDirectors,$numberOfEmployees,$chairman,$viceChairman,$manager,$secretary,$audit,$treasurer,$electionChairman,$med,$otherCommittees,$dateOfgeneralMeeting,$dateOfMonthlyMeeting,$dateOfCommitteeMeeting,$creditChairman);
-
 			if($orgAspectId!=""){
 				//regulatory requirements
 				$regulatoryId = $handler-> addRegulatoryRequirements($bir,$tin,$businessPermit,$coc,$dateIssueOfCoc,$certificate);
@@ -108,6 +113,7 @@ if(isset($_POST['txtUsername'])){
 									if($cooperativeId!=""){
 										$result = $handler->addCoopAccount($username,$password,$cooperativeId);
 										if($result){
+											$audit->trail('ADD COOPERATIVE ACCOUNT; ID: '.$result,'SUCCESSFUL',$id);
 											echo "<script>
 												window.location = 'CCDO_AddCooperativeAccount.php';
 												alert('Success');
@@ -115,6 +121,7 @@ if(isset($_POST['txtUsername'])){
 										}
 										else{
 											"<script>alert('error coopaccount');</script>";
+											$audit->trail('ADD COOPERATIVE ACCOUNT;'.$result,'FAILED',$id);
 										}
 									}
 									else
@@ -136,12 +143,12 @@ if(isset($_POST['txtUsername'])){
 					echo "<script>alert('error regulatoryId');</script>";
 			}
 			else
-				echo "<script>alert('error orgAspectId');</script> ";
+				echo "<script>alert('error orgAspectId $orgAspectId');</script> ";
 		}
 		else
 			echo "<script>alert('error respondent');</script> ";
 	}
 	else
-		echo "<script>window.location='CCDO_AddDepartmentAccount.php';alert('Username Already Exist!');</script>";
+		echo "<script>window.location='CCDO_AddCooperativeAccount.php';alert('Username Already Exist!');</script>";
 }
 ?>

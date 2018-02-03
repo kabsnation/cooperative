@@ -1,11 +1,16 @@
 <?php
 session_start();
-if(!isset($_SESSION['idAccountAdmin'])){
-    echo "<script>window.location='index.php';</script>";
-}
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
-include('../UI/header/header_admin.php');
+if(isset($_SESSION['idAccountAdmin'])){
+    include('../UI/header/header_admin.php');
+}
+else if(isset($_SESSION['idSuperAdmin'])){
+    include('../UI/header/header_sadmin.php');
+}
+else 
+{ echo "<script>window.location='index.php';</script>";
+}
 $handler = new AccountHandler();
 $typeCooperative = $handler->getTypeOfCooperative();
 $membership = $handler->getMembership();
