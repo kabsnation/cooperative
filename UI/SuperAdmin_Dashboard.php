@@ -101,7 +101,7 @@ include('../UI/header/header_sadmin.php');
 											<h6 style="float: left; margin-right: 10px; font-size: 12px;">Select Date:</h6>
 											<div class="input-group">
 												<span class="input-group-addon"><i class="icon-calendar"></i></span>
-												<input id="date_picker" type="text" name="date" value="<?php echo date('m/d/y');?>" class="form-control daterange-single">
+												<input id="date_picker" type="text" name="date" onchange="realtime(this.value)" value="<?php echo date('m/d/y');?>" class="form-control daterange-single">
 											</div>
 										</div>
 									</div>
@@ -158,7 +158,7 @@ include('../UI/header/header_sadmin.php');
 						
 						<!-- /Document TRacker -->
 					</div>
-					
+					<input type="hidden" name="">
 
 					<!-- Footer -->
 					<div class="footer text-muted">
@@ -179,11 +179,11 @@ include('../UI/header/header_sadmin.php');
 	<!-- /page container -->
 <script type="text/javascript">
 	setInterval(realtime,1000);
-	function realtime(){
+	function realtime(date='<?php echo date('m/d/y');?>'){
 		$.ajax({
 			type: "POST",
             url: "realtimeDashboard.php",
-            data: "",
+            data: "date="+date,
             dataType: "json",
             success:function(data){
             	$('#pending').html(data[0]);
