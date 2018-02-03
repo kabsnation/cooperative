@@ -3,7 +3,7 @@ require("../fpdf181/fpdf.php");
 require_once('../config/config.php');
 class pdfMaker extends FPDF{
 
-function FancyTable($data)
+function FancyTable($data,$mindate,$maxdate,$name)
 {
     // Colors, line width and bold font
     $this->SetFillColor(1,10,100);
@@ -15,8 +15,14 @@ function FancyTable($data)
     // date to and from
     $this->Image("../UI/Letterhead.jpg", 15,5,180); 
     $this->SetFont('arial','B',10);
-	$this->SetY(9.5);
-	$this->Cell(0,80, 'Transaction Logs FROM 01/01/2018 TO 01/01/2018',0,0,'C');
+	$this->SetY(8);
+	$this->Cell(0,80, 'Transaction Logs FROM '.$mindate.' TO '.$maxdate,0,0,'C');
+
+    $this->SetFont('arial','',10);
+    $this->SetY(50);
+    $this->Cell(0,10, 'Date Printed: '.date('m/d/y'),0,0,'R');
+    $this->SetY(55);
+    $this->Cell(0,10, 'Prepared by: '.$name,0,0,'R');
 	$header = array('Tracking No.', 'Title', 'Type', 'Date Added','Date Completed');
     $wt = array(190);
     $counter = 1;
@@ -50,6 +56,15 @@ function FancyTable($data)
     // Closing line
     $this->Cell(array_sum($w),0,'','T');
 }
+function Footer()
+    {
+    // Position at 1.5 cm from bottom
+    $this->SetY(-15);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+    // Page number
+    $this->Cell(0,10,'Page '.$this->PageNo(),0,0,'C');
+    }
 
 }
 ?>
