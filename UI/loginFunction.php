@@ -1,7 +1,9 @@
 <?php
 require("../Handlers/AccountHandler.php");
+require("../Handlers/AuditTrail.php");
 require("../config/config.php");
 $handler = new AccountHandler();
+$audit = new AuditTrail();
 $conn = new Connect();
 $con=$conn->connectDB();
 if(isset($_POST["username"])&&isset($_POST["password"])){
@@ -30,11 +32,14 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 				$arrs[1] ="COOP_AddEvent.php";
 			}
 			$arrs[0]= 1;
+			$audit->trail('LOGIN ACCCOUNT; ID: '. $result["idAccounts"],'SUCCESSFUL',$username);
 			echo json_encode($arrs);
 		}
 	}
 	else{
 		$arrs[0]= 0;
+
+			$audit->trail('LOGIN ACCCOUNT;','FAILED',$username);
 		echo json_encode($arrs);
 	}
 	

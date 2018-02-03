@@ -75,7 +75,7 @@ class AccountHandler{
 	public function addCoopAccount($username,$password,$cooperativeId){
 		$con = new Connect();
 		$query = "INSERT INTO accounts (Username, Password, idCooperative_Profile, idaccount_type) VALUES('".$username."','".$password."','".$cooperativeId."',3)";
-		$result = $con->insert($query);
+		$result = $con->insertReturnLastId($query);
 		return $result;
 	}
 	public function addCooperative($cooperativeName,$address,$telephoneNumber,$emailAddress,$CDA_Reg_No,$Date_of_Reg,$CIN,$orgAspectId,$respondentId,$businessOperationId,$commonBondOfMembershipId,$memberProfileId,$affiliation,$regulatoryId,$coopertaiveType,$areaId){
@@ -170,7 +170,7 @@ class AccountHandler{
 	public function addDepartmentAccount($userName,$password,$accountId,$departmentId,$accountType){
 		$con = new Connect();
 		$query = "INSERT INTO accounts (Username, Password, idAccount_Info, idDepartment, idaccount_type) VALUES ('" .$userName. "','" .$password. "'," .$accountId. "," .$departmentId. "," .$accountType. ")";
-		$result = $con->insert($query);
+		$result = $con->insertReturnLastId($query);
 		return $result;
 	}
 

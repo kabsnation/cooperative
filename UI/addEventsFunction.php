@@ -3,6 +3,8 @@ session_start();
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/SMSHandler.php");
+require("../AuditTrail.php");
+$audit = new AuditTrail();
 $handler = new EventHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
@@ -10,7 +12,6 @@ $target_dir = "files/";
 $target_file = "";
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 date_default_timezone_set('Asia/Manila');
-
 if(isset($_POST['txtEventName'])){
 	$eventName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEventName'])));
 
@@ -47,12 +48,19 @@ if(isset($_POST['txtEventName'])){
 		       	$doneUpload=0;
 		    }
 
+
 		    $EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$datetime[0],$datetime[1],$target_file,$idAccounts);
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
 					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$datetime[0],$datetime[1]);
 				} 
+
+				$audit->trail('ADD EVENT; ID: '.$EventId,'SUCCESSFUL',$idAccounts);
 			}
+			else{
+				$audit->trail('ADD EVENT; ID: '.$EventId,'FAILED',$idAccounts);
+			}
+
 		}
 
 		else{

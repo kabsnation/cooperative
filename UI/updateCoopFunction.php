@@ -1,7 +1,9 @@
 <?php
 require("../Handlers/AccountHandler.php");
+require ("../Handler/AuditTrail.php");
 require("../config/config.php");
 $handler = new AccountHandler();
+$audit = new AuditTrail();
 $connect = new Connect();
 $con = $connect-> connectDB();
 if(isset($_POST['id'])){
@@ -18,7 +20,8 @@ if(isset($_POST['id'])){
 		$number = "0".$number[0].$number[1].$number[2];
 		$position = mysqli_real_escape_string($con,stripcslashes(trim($_POST['position'])));
 		$rEmail = mysqli_real_escape_string($con,stripcslashes(trim($_POST['rEmail'])));
-		$handler->updateRespondent($firstname,$lastname,$middlename,$position,$number,$rEmail,$id);
+		$handler->updateRespondent($firstname,$lastname,$middlename,$position,$number,$rEmail,$idres);
+		$audit->trail('UPDATE RESPONDENT; ID: '. $idres,'SUCCESSFUL',$id);
 	}
 	if(isset($_POST['idcoop'])){
 		$idcoop = $_POST['idcoop'];
@@ -34,6 +37,7 @@ if(isset($_POST['id'])){
 		$area = mysqli_real_escape_string($con,stripcslashes(trim($_POST['ddlAreaOfOperation'])));
 		$affiliation = mysqli_real_escape_string($con,stripcslashes(trim($_POST['coopname'])));
 		$handler->updateCoopProfile($coopname,$cAddress,$cNumber,$cEmail,$cda,$dor,$cin,$bond,$affiliation,$type,$area,$idcoop);
+		$audit->trail('UPDATE COOPERATIVE PROFILE; ID: '. $idcoop,'SUCCESSFUL',$id);
 	}
 	if(isset($_POST['idorg'])){
 		$idorg=$_POST['idorg'];
@@ -53,6 +57,7 @@ if(isset($_POST['id'])){
 		$domboard = mysqli_real_escape_string($con,stripcslashes(trim($_POST['domboard'])));
 		$doc = mysqli_real_escape_string($con,stripcslashes(trim($_POST['domboard'])));
 		$handler->updateOrgAspect($boardnumber,$employeenumber,$chairman,$manager,$vice,$secretary,$audit,$treasurer,$echairman,$cchairman,$med,$ocommittee,$dorgen,$domboard,$doc,$idorg);
+		$audit->trail('UPDATE ORGANIZATIONAL ASPECT; ID: '. $idorg,'SUCCESSFUL',$id);
 	}
 	if(isset($_POST['idbus'])){
 		$idbus=$_POST['idbus'];
@@ -68,6 +73,7 @@ if(isset($_POST['id'])){
 		$beginningcapital = mysqli_real_escape_string($con,stripcslashes(trim($_POST['beginningcapital'])));
 		$tocapital = mysqli_real_escape_string($con,stripcslashes(trim($_POST['tocapital'])));
 		$handler->updateBusinessOperation($engaged,$otherbus,$benefits,$assisting,$sales,$totalasset,$beginningasset,$toasset,$totalcapital,$beginningcapital,$tocapital,$idbus);
+		$audit->trail('UPDATE BUSINESS OPERATION; ID: '. $idbus,'SUCCESSFUL',$id);
 	}
 	if(isset($_POST['idreg'])){
 		$idreg = $_POST['idreg'];
@@ -78,6 +84,7 @@ if(isset($_POST['id'])){
 		$certtax = mysqli_real_escape_string($con,stripcslashes(trim($_POST['certtax'])));
 		$doicoc = mysqli_real_escape_string($con,stripcslashes(trim($_POST['doicoc'])));
 		$handler->updateRegulatoryRequirements($bir,$tin,$permit,$coc,$certtax,$doicoc,$idreg);
+		$audit->trail('UPDATE REGULATORY REQUIREMENTS; ID: '. $idreg,'SUCCESSFUL',$id);
 	}
 	if(isset($_POST['idmember'])){
 		$idmember = $_POST['idmember'];
@@ -91,6 +98,8 @@ if(isset($_POST['id'])){
 		$stafftrainings = mysqli_real_escape_string($con,stripcslashes(trim($_POST['stafftrainings'])));
 		$composition = $_POST['ddlMembershipComposition'];
 		$handler->updateMembershipProfile($membernumber,$male,$female,$regularmember,$associatemember,$membertrainings,$officertrainings,$stafftrainings,$composition,$idmember);
+
+		$audit->trail('UPDATE MEMBERSHIP PROFILE; ID: '. $idmember,'SUCCESSFUL',$id);
 	}
 }
 ?>

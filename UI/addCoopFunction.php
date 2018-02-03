@@ -1,8 +1,12 @@
 <?php
+session_start();
 require("../Handlers/AccountHandler.php");
+require("../Handlers/AuditTrial.php");
 require("../config/config.php");
 $handler = new AccountHandler();
+$audit = new AuditTrail();
 $connect = new Connect();
+$id = $_SESSION['idAccountAdmin'];
 $con = $connect-> connectDB();
 if(isset($_POST['txtUsername'])){
 	$userName= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtUsername'])));
@@ -109,6 +113,7 @@ if(isset($_POST['txtUsername'])){
 									if($cooperativeId!=""){
 										$result = $handler->addCoopAccount($username,$password,$cooperativeId);
 										if($result){
+											$audit->trail('ADD COOPERATIVE ACCOUNT; ID: '.$result,'SUCCESSFUL',$id);
 											echo "<script>
 												window.location = 'CCDO_AddCooperativeAccount.php';
 												alert('Success');
@@ -116,6 +121,7 @@ if(isset($_POST['txtUsername'])){
 										}
 										else{
 											"<script>alert('error coopaccount');</script>";
+											$audit->trail('ADD COOPERATIVE ACCOUNT;'.$result,'FAILED',$id);
 										}
 									}
 									else

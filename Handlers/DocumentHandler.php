@@ -71,7 +71,7 @@ class DocumentHandler{
 	}
 	public function getTrackingInfo($trackingNumber){
 		$con = new Connect();
-		$query ="SELECT trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts where trackingNumber = '$trackingNumber'";
+		$query ="SELECT title,trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info where trackingNumber = '$trackingNumber'";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -182,7 +182,7 @@ class DocumentHandler{
 		}
 		
 	}
-	 public function replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message,$idTracking){
+	 public function replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message,$idTracking=''){
 	 	$con = new Connect();
 	 	$query = "INSERT INTO inbox_info(title,message) VALUES('$title','$message')";
 	 	$result = $con->insertReturnLastId($query);
@@ -296,6 +296,12 @@ class DocumentHandler{
 		$result = $con->select($query);
 		return $result;
 	}
+	public function getTransactionLogsAdminByDate($mindate,$maxdate){
+		$con = new Connect();
+		$query = "SELECT trackingNumber,title,Document,dateadded,datecompleted FROM tracking,document_type,inbox_info WHERE (dateadded BETWEEN '$mindate' AND '$maxdate') and Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info ORDER BY idTracking DESC";
+		$result = $con->select($query);
+		return $result;
+	}
 	public function getTransactionLogs($id){
 		$con = new Connect();
 		$query = "SELECT trackingNumber,dateadded,datecompleted,Document,Status,title FROM tracking,document_type,inbox_info WHERE Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and idAccounts=$id ORDER BY idTracking DESC";
@@ -309,27 +315,49 @@ class DocumentHandler{
 		$result = $con->select($query);
 		return $result;
 	}
-	public function getCountPendingDoc(){
+	public function getCountPendingDoc($date){
 		$con = new Connect();
-		$query="SELECT count(*) as count FROM tracking WHERE tracking.Status='ONGOING'";
+		$query="SELECT count(*) as count FROM tracking WHERE dateadded ='$date' and tracking.Status='ONGOING'";
+		$result = $con->select($query);
+		$count=0;
+		if($result){
+			if($row=$result->fetch_assoc())
+				$count = $row['count'];
+		}
+		return $count;
+	}
+	public function getCountPendingDocDate($date){
+		$con = new Connect();
+		$query="SELECT count(*) as count FROM tracking WHERE dateadded='$date' and tracking.Status='ONGOING'";
 		$result = $con->select($query);
 		$count='';
 		if($row=$result->fetch_assoc())
 			$count = $row['count'];
 		return $count;
 	}
-	public function getCountDoneDoc(){
+	public function getCountDoneDocDate($date){
 		$con = new Connect();
-		$query="SELECT count(*) as count FROM tracking WHERE tracking.Status='DONE' ";
+		$query="SELECT count(*) as count FROM tracking WHERE dateadded='$date' and tracking.Status='DONE' ";
 		$result = $con->select($query);
 		$count='';
 		if($row=$result->fetch_assoc())
 			$count = $row['count'];
 		return $count;
 	}
-	public function getTotalDoc(){
+	public function getCountDoneDoc($date){
 		$con = new Connect();
-		$query="SELECT count(*) as count FROM tracking";
+		$query="SELECT count(*) as count FROM tracking WHERE dateadded ='$date' and tracking.Status='DONE' ";
+		$result = $con->select($query);
+		$count=0;
+		if($result){
+			if($row=$result->fetch_assoc())
+				$count = $row['count'];
+		}
+		return $count;
+	}
+	public function getTotalDoc($date){
+		$con = new Connect();
+		$query="SELECT count(*) as count FROM tracking WHERE dateadded ='$date'";
 		$result = $con->select($query);
 		$count='';
 		if($row=$result->fetch_assoc())
@@ -368,15 +396,15 @@ class DocumentHandler{
 		$result = $con->update($query);
 		return $result;
 	}
-	public function getOngoingTracking(){
+	public function getOngoingTracking($date){
 		$con = new Connect();
-		$query = "SELECT idTracking,timeadded, trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status,username FROM tracking,document_type,inbox_info,accounts WHERE Status='ONGOING' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and accounts.idaccounts = tracking.idaccounts ORDER BY idTracking DESC";
+		$query = "SELECT idTracking,dateadded,timeadded, trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status,username FROM tracking,document_type,inbox_info,accounts WHERE Status='ONGOING' and dateadded='$date' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and accounts.idaccounts = tracking.idaccounts ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}
-	public function getFinishedTracking(){
+	public function getFinishedTracking($date){
 		$con = new Connect();
-		$query = "SELECT idTracking,timeadded, trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status,username FROM tracking,document_type,inbox_info,accounts WHERE Status='DONE' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and accounts.idaccounts = tracking.idaccounts ORDER BY idTracking DESC";
+		$query = "SELECT idTracking,dateadded,timeadded, trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status,username FROM tracking,document_type,inbox_info,accounts WHERE Status='DONE' and dateadded='$date' and tracking.idDocument_Type= document_type.idDocument_Type and inbox_info.idinbox_info = tracking.idinbox_info and accounts.idaccounts = tracking.idaccounts ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}

@@ -24,7 +24,7 @@ include('../UI/header/header_sadmin.php');
 							<div class="content-group-lg">
 								<h6 style="float: left; margin-right: 10px;">Select Date:</h6>
 								<div class="input-group">
-									<input id="date_picker" type="text" class="form-control pickadate">
+									<input id="date_picker" type="text" onchange="realtime()" class="form-control daterange-single" value="">
 								</div>
 							</div>
 							
@@ -182,7 +182,8 @@ include('../UI/header/header_sadmin.php');
 	<!-- /page container -->
 <script type="text/javascript">
 	setInterval(realtime,1000);
-	function realtime(date='<?php echo date('m/d/y');?>'){
+	function realtime(){
+		var date = $('#date_picker').val();
 		$.ajax({
 			type: "POST",
             url: "realtimeDashboard.php",
@@ -204,18 +205,6 @@ include('../UI/header/header_sadmin.php');
 		});
 	}
 
-	function getDate(){
-		var currentDate = new Date();
-
-		var date = currentDate.getDate();
-		var month = currentDate.getMonth(); //Be careful! January is 0 not 1
-		var year = currentDate.getFullYear();
-		var dateString = date + " " +(month + 1) + "," + year;
-
-		document.getElementById("date_picker").value = currentDate;
-	}
-
-	window.onload = getDate;
 </script>
 </body>
 </html>

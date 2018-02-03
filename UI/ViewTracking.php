@@ -39,7 +39,7 @@ else{
                                     <div class="panel panel-white border-top-lg border-top-info">
                                         <div class="panel-heading">
                                             <div class="panel-title">
-                                                <h4><a href="<?php echo $loc;?>"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold">Document Name</span></h4>
+                                                <h4><a href="<?php echo $loc;?>"><i class="icon-arrow-left52 position-left"></i></a> <span class="text-semibold"><?php echo $info['title'];?></span></h4>
                                             </div>
                                         </div>
 

@@ -266,18 +266,26 @@ table.columns.adjust().draw();
                             validate();
                          }
                          else{
-                             $.ajax({
-                                type: "POST",
-                                url: "documentFunction.php",
-                                data: $('#form1').serialize(),
-                                success: function(data){
-                                    success();
-                                },
-                                error: function(data){
-                                    failed();
-                                }
+                             $("#form1").submit(function(e) {
+                                e.preventDefault();    
+                                var formData = new FormData(this);
 
+                                $.ajax({
+                                    url: "documentFunction.php",
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (data) {
+                                        success();
+                                    },
+                                    error: function(data){
+                                        failed();
+                                    },
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false
+                                });
                             });
+                            $('#form1').submit();
                         }
            }
         });

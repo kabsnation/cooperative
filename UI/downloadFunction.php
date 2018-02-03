@@ -1,4 +1,12 @@
 <?php
+session_start();
+if(isset($_SESSION['idAccount']))
+    $id = $_SESSION['idAccount'];
+else
+    $id = $_SESSION['idSuperAdmin'];
+require("../config/config.php");
+require("../Handlers/AuditTrail.php");
+$audit = new AuditTrail();
 if(isset($_POST['link'])&&isset($_POST['trackingId']))
 {
     $var_1 = $_POST['link'];
@@ -7,6 +15,7 @@ if(isset($_POST['link'])&&isset($_POST['trackingId']))
 
 if (file_exists($file))
     {
+         $audit->trail('DOWNLOAD FILE; FILE: '. $file,'SUCCESSFUL',$id);
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename='.basename($file));
