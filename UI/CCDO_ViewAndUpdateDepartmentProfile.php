@@ -183,7 +183,6 @@ $account = $handler->getDepartmentAccount($id);
     </form>
 
     <script type="text/javascript">
-
     	jQuery(function ($) {
             $("#txtCellphoneNumber").mask("(+63) 999-999-9999");
         });
