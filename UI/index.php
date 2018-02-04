@@ -130,7 +130,7 @@ else if(isset($_SESSION['idAccount']))
                     success(data[1]);
                 }
                 else
-                    failed();
+                 failed();
                 console.log(data);
             },
             error:function(data){

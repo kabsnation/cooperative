@@ -1,7 +1,7 @@
 <?php
 require 'phpmailerautoload.php';
 class MailHandler{
-    public function sendMail(){
+    public function sendMail($email,$eventName,$eventLocation,$startDateTime,$endDateTime){
         $mail = new PHPMailer;                             
         try {
             //SMTP
@@ -17,13 +17,13 @@ class MailHandler{
 
             //Recipients
             $mail->setFrom('reddaniellance@gmail.com', 'Mailer');
-            $mail->addAddress('reddjockey15@gmail.com', 'Joe User');     
+            $mail->addAddress($email, '');     
 
             //Content
             $mail->isHTML(true);                                 
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->Subject = $eventName;
+            $mail->Body    = "You are invited to " .$eventName. " " .$eventLocation. " " .$startDateTime. " " .$endDateTime.;
+            $mail->AltBody = '';
 
             $mail->send();
             echo "<script>window.location='COOP_AddEvent.php';alert('Success!');</script>";

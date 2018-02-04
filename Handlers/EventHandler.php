@@ -24,7 +24,8 @@ class EventHandler{
 		$number = $this->getMobileNo($idAccounts);
 		$email = $this->getEmail($idAccounts);
 		$SMSmessage = $SMS->sendSMS($number,$eventName,$eventLocation,$startDateTime,$endDateTime); 
-		return $email;
+		$Mailmessage = $mail->sendMail($email,$eventName,$eventLocation,$startDateTime,$endDateTime);
+		return $result;
 	}
 
 	public function getMobileNo($idAccounts){

@@ -3,13 +3,10 @@ session_start();
 require("../config/config.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/SMSHandler.php");
-<<<<<<< HEAD
 require("../Mailer/PHPMailerAutoload.php");
 
-=======
 require("../AuditTrail.php");
 $audit = new AuditTrail();
->>>>>>> 5fe964f428069c9bb93455a443573bb52cc5f8d4
 $handler = new EventHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
