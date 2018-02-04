@@ -2,7 +2,7 @@
 class EventHandler{
 	public function addEvent($eventName,$eventLocation,$eventDetails,$startDateTime,$endDateTime,$fileUpload,$idAccounts){
 		$con = new Connect();
-		$query = "INSERT INTO Events (eventName,eventLocation,eventDetails,startDateTime,endDateTime,fileUpload,idAccounts,status,datetime) VALUES ('" .$eventName."','".$eventLocation."','".$eventDetails."','".$startDateTime."','".$endDateTime."','".$fileUpload."','".$idAccounts."','ON GOING','".date("m/d/Y-h:i A")."')";
+		$query = "INSERT INTO Events (eventName,eventLocation,eventDetails,startDateTime,endDateTime,fileUpload,idAccounts,status,datetime,markasdeleted) VALUES ('" .$eventName."','".$eventLocation."','".$eventDetails."','".$startDateTime."','".$endDateTime."','".$fileUpload."','".$idAccounts."','ON GOING','".date("m/d/Y-h:i A")."',0)";
 		$lastId = $con->insertReturnLastId($query);
 		return $lastId;
 	}
@@ -11,7 +11,6 @@ class EventHandler{
 		$con = new Connect();
 		$query = "SELECT * FROM Events where markasdeleted=0 and eventName = '" .$eventName."'";
 		$result = $con->select($query);
-
 		return $result;
 	}
 

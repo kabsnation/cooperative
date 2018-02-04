@@ -1,5 +1,4 @@
 <?php
-require 'phpmailerautoload.php';
 class MailHandler{
     public function sendMail($email,$eventName,$eventLocation,$startDateTime,$endDateTime){
         $mail = new PHPMailer;                             
@@ -16,13 +15,13 @@ class MailHandler{
             $mail->SMTPOptions = array('ssl' => array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));
 
             //Recipients
-            $mail->setFrom('reddaniellance@gmail.com', 'Mailer');
+            $mail->setFrom('reddaniellance@gmail.com', 'COOP');
             $mail->addAddress($email, '');     
 
             //Content
             $mail->isHTML(true);                                 
             $mail->Subject = $eventName;
-            $mail->Body    = "You are invited to " .$eventName. " " .$eventLocation. " " .$startDateTime. " " .$endDateTime.;
+            $mail->Body    = "You are invited to " .$eventName. " " .$eventLocation. " " .$startDateTime. " " .$endDateTime;
             $mail->AltBody = '';
 
             $mail->send();
