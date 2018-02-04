@@ -73,45 +73,6 @@ else if(isset($_GET['idEvents'])){
 				<!-- Content area -->
 				<div class="content">
 
-					<!-- Bottom right menu -->
-					<ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="hover">
-						<li>
-							<a class="fab-menu-btn btn bg-teal-400 btn-float btn-rounded btn-icon">
-								<i class="fab-icon-open icon-grid3"></i>
-								<i class="fab-icon-close icon-cross2"></i>
-							</a>
-
-							<ul class="fab-menu-inner">
-
-								<li>
-									<div data-fab-label="Sent Messages">
-										<a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
-											<i class="icon-paperplane"></i>
-										</a>
-									</div>
-								</li>
-
-								<li>
-									<div data-fab-label="Inbox">
-										<a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
-											<i class="icon-inbox"></i>
-										</a>
-										<span class="badge bg-info-400">1</span>
-									</div>
-								</li>
-
-								<!-- <li>
-									<div data-fab-label="Compose a Message">
-										<a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
-											<i class="icon-pencil"></i>
-										</a>
-									</div>
-								</li>-->
-							</ul>
-						</li>
-					</ul>
-					<!-- /bottom right menu -->
-
 					<!-- Media library -->
 					<div class="panel panel-white">
 						<div class="panel-heading">
@@ -126,29 +87,22 @@ else if(isset($_GET['idEvents'])){
 							<h4 class="panel-title text-semibold"><?php echo $info['title']; ?></h6>
 							<div class="heading-elements">
 								<ul class="icons-list">
-									<?php if(isset($info['trackingNumber'])){?>
-									<li class="label" style="color: #000000; font-size: 12px;">TRACKING NO: <?php echo $info['trackingNumber'];?></li>
-									<?php } if(isset($info['Document'])){?>
-									<li class="label" style="color: #000000; font-size: 12px;">DOCUMENT TYPE: <?php echo $info['Document'];?></li>
-									<?php }?>
 									<li class="label" style="color: #000000; font-size: 12px;">DATE/TIME: <?php echo $info['DateTime'];?></li>
-
-			                	</ul>
+									
+								</ul>
 		                	</div>
 						</div>
 						<div class="panel-body">
 
-							<div class="col-lg-12">
+							<div class="col-lg-6">
 								<ul class="media-list media-list-bordered">
 
 									<li class="media">
 										<div class="media-left">
-											<a href="#"><img src="assets/images/placeholder.jpg" class="img-circle" alt=""><label></label></a>
+											<a href="#"><label></label></a>
 										</div>
 										<div class="media-body">
 											<h6 class="media-heading text-semibold"><?php echo $info['name'];?> (<?php echo $info['email'];?>)</h6>
-
-
 											<?php if($firstRowLocation){
 												$counter = 0;
 												foreach ($firstRowLocation as $location) {
@@ -159,9 +113,37 @@ else if(isset($_GET['idEvents'])){
 											</a>
 										</div>
 									</li>
-
-									<li class="media-header"></li>
 								</ul>
+							</div>
+
+							<div class="col-lg-6">
+								<ul class="media-list media-list-bordered">
+
+									<li class="media">
+										<div class="media-body">
+											<div class="text-right">
+												<ul class="icons-list">
+													<?php if(isset($info['trackingNumber'])){?>
+													<li class="label" style="color: #000000; font-size: 12px;">TRACKING NO: <?php echo $info['trackingNumber'];?></li>
+													<br/>
+													<?php } if(isset($info['Document'])){?>
+													<li class="label" style="color: #000000; font-size: 12px;">DOCUMENT TYPE: <?php echo $info['Document'];?></li>
+													<?php }?>
+							                	</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-12">
+									<ul class="media-list media-list-bordered">
+										<li class="media"></li>
+										<li class="media-header"></li>
+									</ul>
+								</div>
+								
 							</div>
 
 							<div class="col-lg-12">

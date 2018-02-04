@@ -68,8 +68,8 @@ include('../UI/header/header_events.php');
                                                                 <td class="text-center">
                                                                     <ul class="icons-list">
                                                                         <li class="text-teal-600"><a href='COOP_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-eye" style="margin-right: 10px;"></i>View</a></li>
-                                                                         <li class="text-teal-600"><a href='COOP_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-eye" style="margin-right: 10px;"></i>Update</a></li>
-                                                                          <li class="text-teal-600"><a  onclick="promptDelete(<?php echo $event['idEvents']?>)"><i class="icon-eye" style="margin-right: 10px;"></i>Delete</a></li>
+                                                                         <li style="color: #FFC107"><a href='COOP_EventList.php?Id=<?php echo $event['idEvents']?>' onclick="HideEventListPanel1(this)"><i class="icon-pencil7" style="margin-right: 10px;"></i>Update</a></li>
+                                                                          <li class="text-danger"><a  onclick="promptDelete(<?php echo $event['idEvents']?>)"><i class="icon-user-minus" style="margin-right: 10px;"></i>Delete</a></li>
                                                                     </ul>
                                                                 </td>
                                                             </tr>

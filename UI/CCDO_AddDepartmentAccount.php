@@ -166,6 +166,11 @@ include('../UI/header/header_admin.php');
                                 </div>
 
                             </div>
+
+                            <!-- Footer -->
+                                <?php include '../UI/copyright_footer.php' ?>
+                            <!-- /footer -->
+                            
                         </div>
                         <!-- /Content area -->
 

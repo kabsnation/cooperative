@@ -180,13 +180,13 @@ else
                     url: "updatePassword.php",
                     data: "id=<?php echo $id?>&password="+newpassword,
                     success: function(data){
-                        alert("Success");
+                        alert("Password has been updated!");
                         window.location= window.location;
                     }
                 });
             }
             else{
-                alert('Old Password is incorrect');
+                alert('The old password is incorrect.');
             }
            
         }

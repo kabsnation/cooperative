@@ -76,7 +76,7 @@ include('../UI/header/header_sadmin.php');
                                                             <td><?php echo $track['Document'];?></td>
                                                             <td><?php echo $track['Status'];?></td>
                                                             <td><?php echo $track['DateTime'];?></td>
-                                                            <td><a href="ViewTracking.php?trackingId=<?php echo $track['trackingNumber'];?>">View</a></td>
+                                                            <td class="text-center"><a href="ViewTracking.php?trackingId=<?php echo $track['trackingNumber'];?>"><i class="icon-eye"></i> View</a></td>
                                                         </tr>
                                                         <?php }} ?>
                                                 </tbody>
@@ -91,9 +91,7 @@ include('../UI/header/header_sadmin.php');
                     </div>
 
                     <!-- Footer -->
-                    <div class="footer text-muted">
-                        &copy; 2018. <a href="#">Document Tracking System</a> by <a> Polytechnic University of the Philippines - Santa Rosa Campus</a>
-                    </div>
+                    <?php include '../UI/copyright_footer.php' ?>
                     <!-- /footer -->
 
                 </div>

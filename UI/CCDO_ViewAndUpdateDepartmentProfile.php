@@ -83,13 +83,15 @@ $account = $handler->getDepartmentAccount($id);
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12" id="optionPersonal" style="display: none;">
+                                        <div class="col-lg-12" id="optionPersonal" style="display: none; margin-bottom: 20px;">
 	                                        <hr/>
 	                                        <div class="text-right">
 	                                            <button type="button" class="btn btn-info" id="btnSaveRespondent" onclick="updateInfo()">Save</button>
 	                                            <button type="button" class="btn btn-danger" id="btnCancelRespondent" onclick="cancelPersonal()">Cancel</button>
 	                                        </div>
 	                                    </div>
+
+                                        <br/><br/>
 
                                         <legend>
                                             <h5 class="text-bold"><i class=" icon-user-plus" style="margin-right: 10px"></i>Account Information
@@ -181,7 +183,6 @@ $account = $handler->getDepartmentAccount($id);
     </form>
 
     <script type="text/javascript">
-
     	jQuery(function ($) {
             $("#txtCellphoneNumber").mask("(+63) 999-999-9999");
         });
