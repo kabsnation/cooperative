@@ -26,7 +26,6 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 				$_SESSION["idAccount"]= $result["idAccounts"];
 				$arrs[1] ="COOP_AddDocument.php";
 			}
-
 			else if($result['idaccount_type']==4){
 				$_SESSION["idEvent"]= $result["idAccounts"];
 				$arrs[1] ="COOP_AddEvent.php";
@@ -38,8 +37,7 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 	}
 	else{
 		$arrs[0]= 0;
-
-			$audit->trail('LOGIN ACCCOUNT;','FAILED',$username);
+		$audit->trail('LOGIN ACCCOUNT;','FAILED',$username);
 		echo json_encode($arrs);
 	}
 	
