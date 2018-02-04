@@ -214,6 +214,7 @@ include('../UI/header/header_events.php');
                                     type: 'POST',
                                     data: formData,
                                     success: function (data) {
+                                        console.log(data);
                                         success();
                                     },
                                     error: function(data){

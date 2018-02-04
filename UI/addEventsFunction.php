@@ -4,7 +4,7 @@ require("../config/config.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/SMSHandler.php");
 require("../Mailer/PHPMailerAutoload.php");
-require("../AuditTrail.php");
+require("../Handlers/AuditTrail.php");
 $audit = new AuditTrail();
 $handler = new EventHandler();
 $connect = new Connect();
@@ -54,6 +54,7 @@ if(isset($_POST['txtEventName'])){
 			if($EventId != ""){
 				foreach($_POST['checkbox'] as $idAccounts){
 					$result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$datetime[0],$datetime[1]);
+					echo $result;
 				} 
 
 				$audit->trail('ADD EVENT; ID: '.$EventId,'SUCCESSFUL',$idAccounts);
