@@ -122,7 +122,7 @@ include('../UI/header/header_events.php');
                                                                 <tr>
                                                                     <td><input type="checkbox" name="checkbox[]" value="<?php echo $coop['idAccounts'];?>" onchange="addToHidden(this)"></td>
                                                                      <td><?php echo $coop['Cooperative_Name'];?></td>
-                                                                     <td><?php echo $coop['Email_Address'];?></td>
+                                                                     <td><?php echo $coop['email'];?></td>
                                                                 </tr>
                                                                 <?php }}?>
                                                             </tbody>

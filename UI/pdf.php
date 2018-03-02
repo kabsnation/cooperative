@@ -16,7 +16,9 @@ function FancyTable($data,$mindate,$maxdate,$name)
     $this->Image("../UI/Letterhead.jpg", 15,5,180); 
     $this->SetFont('arial','B',10);
 	$this->SetY(8);
-	$this->Cell(0,80, 'Transaction Logs FROM '.$mindate.' TO '.$maxdate,0,0,'C');
+	$this->Cell(0,80, 'Transaction Logs',0,0,'C');
+	$this->SetY(15);
+	$this->Cell(0,80, 'FROM '.$mindate.' TO '.$maxdate,0,0,'C');
 
     $this->SetFont('arial','',10);
     $this->SetY(50);

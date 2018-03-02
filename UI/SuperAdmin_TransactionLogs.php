@@ -12,6 +12,7 @@ $trackings = $doc->getTransactionLogsAdmin();
 include('../UI/header/header_sadmin.php');
 ?>
 
+<form action="print.php" id="form1" method="POST">
 <!-- Main content -->
                     <div class="content-wrapper">
                         <div class="content">
@@ -43,12 +44,12 @@ include('../UI/header/header_sadmin.php');
                                                             <div class="row">
                                                                 <label class="col-lg-1 control-label">From:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="min-date" name="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="min-date" name="mindate" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
 
                                                                 <label class="col-lg-1 control-label">To:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="max-date" name='max-date' class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="max-date" name='maxdate' class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -141,23 +142,14 @@ include('../UI/header/header_sadmin.php');
             $('.daterange-single').change( function() {
                 table.columns.adjust().draw();
             } );
-    function printt(){
+     function printt(){
         var mindate = $('#min-date').val();
         var maxdate = $('#max-date').val();
 
         var tablee = $('#my-table').DataTable();
         var info = tablee.page.info();
         if(info.recordsDisplay!=0){
-            $.ajax({
-                type: "POST",
-                url: "print.php",
-                data: "mindate="+mindate+"&maxdate="+maxdate,
-                success: function(data){
-                    if(data=='error')
-                        failed();
-                    console.log(data);
-                }
-            });
+           $('#form1').submit();
         }
         else{
              $.ajax({

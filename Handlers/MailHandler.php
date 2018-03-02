@@ -8,14 +8,14 @@ class MailHandler{
             $mail->isSMTP();                                      
             $mail->Host = 'smtp.gmail.com';  
             $mail->SMTPAuth = true;                               
-            $mail->Username = 'reddaniellance@gmail.com';    
-            $mail->Password = 'akoclancered15';                           
+            $mail->Username = 'erativecoop@gmail.com';    
+            $mail->Password = '1q2w3e4r5t6y7u8i';                           
             $mail->SMTPSecure = 'tls';                          
             $mail->Port = 587;                                    
             $mail->SMTPOptions = array('ssl' => array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));
 
             //Recipients
-            $mail->setFrom('reddaniellance@gmail.com', 'COOP');
+            $mail->setFrom('erativecoop@gmail.com', 'COOP');
             $mail->addAddress($email, '');     
 
             //Content

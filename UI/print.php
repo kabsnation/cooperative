@@ -32,7 +32,6 @@ if($trackings){
 		}
 	}
 }
-
 $audit->trail('DOWNLOAD PDF;','SUCCESSFUL',$id);
 $pdf = new pdfMaker();
 $pdf->AddPage();

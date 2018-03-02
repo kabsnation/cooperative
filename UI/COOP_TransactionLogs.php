@@ -12,6 +12,7 @@ $id = $_SESSION['idAccount'];
 $trackings = $doc->getTransactionLogs($id);
 $history = $doc->getHistory($id);
 ?>
+<form action="print.php" id="form1" method="POST">
 
                     <!-- Main content -->    
                     <div class="content-wrapper">
@@ -30,7 +31,7 @@ $history = $doc->getHistory($id);
                                             <div class="heading-elements">
                                                 <div class="heading-elements">
                                                     <div class="heading-btn-group">
-                                                        <button class="btn btn-primary" onclick="printt()">Print <i class="icon-printer"></i></button>
+                                                        <button class="btn btn-primary" >Print <i class="icon-printer"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -46,12 +47,12 @@ $history = $doc->getHistory($id);
                                                             <div class="row">
                                                                 <label class="col-lg-1 control-label">From:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="min-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="min-date" name="mindate" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
 
                                                                 <label class="col-lg-1 control-label">To:</label>
                                                                 <div class="col-md-4">
-                                                                    <input type="text" id="max-date" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
+                                                                    <input type="text" id="max-date" name="maxdate" class="form-control daterange-single" value="<?php echo date('m/d/Y');?>"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -151,16 +152,7 @@ $history = $doc->getHistory($id);
         var tablee = $('#my-table').DataTable();
         var info = tablee.page.info();
         if(info.recordsDisplay!=0){
-            $.ajax({
-                type: "POST",
-                url: "print.php",
-                data: "mindate="+mindate+"&maxdate="+maxdate,
-                success: function(data){
-                    if(data=='error')
-                        failed();
-                    console.log(data);
-                }
-            });
+           $('#form1').submit();
         }
         else{
              $.ajax({

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require("../Handlers/AccountHandler.php");
-require("../Handlers/AuditTrial.php");
+require("../Handlers/AuditTrail.php");
 require("../config/config.php");
 $handler = new AccountHandler();
 $audit = new AuditTrail();
