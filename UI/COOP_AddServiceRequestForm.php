@@ -150,7 +150,7 @@
                                                                     <option>Project Proposal Development / Business Plan</option>
                                                                 </optgroup>
                                                                 <optgroup label="Others:">
-                                                                    <option value="7">Other/s</option>
+                                                                    <option value="7">Please Specify...</option>
                                                                 </optgroup>
                                                             </select>
                                                         </div>
