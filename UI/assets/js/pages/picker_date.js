@@ -382,8 +382,8 @@ $(function() {
 
     // Time limits
     $('.pickatime-limits').pickatime({
-        min: [7,30],
-        max: [14,0]
+        min: [7,0],
+        max: [16,0]
     });
 
 
