@@ -173,7 +173,6 @@
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <button type="reset" class="btn btn-link">Reset</button>
                                             <input type="button" ID="btnSend" value="Submit" class="btn bg-info" />
                                         </div>
                                     </div>
