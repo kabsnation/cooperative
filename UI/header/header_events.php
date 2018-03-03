@@ -24,6 +24,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
     $arrs[2]="active";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Inbox";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
@@ -32,6 +34,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
     $arrs[2]="";
     $arrs[3]="active";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Trash";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
@@ -40,7 +44,39 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="active";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Service Request List";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="active";
+    $arrs[5]="";
+    $arrs[6]="";
+    $title = "CCDO - Service Request Details";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'Event_TransactionLogs.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
+    $arrs[6]="";
+    $title = "CCDO - Transaction Logs";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'Event_History.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="active";
+    $title = "CCDO - History";
 }
 ?>
 <!DOCTYPE html>
@@ -201,13 +237,22 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
                                         </ul>
                                     </li>
 
-                                     <li>
-                                            <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
-                                            <ul>
-                                                <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
-                                                <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
-                                            </ul>
+                                    <li>
+                                        <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
+                                        <ul>
+                                            <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
+                                            <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
+                                        </ul>
                                     </li>
+
+                                    <li>
+                                        <a href="#"><i class="icon-stack-text"></i><span>Logs</span></a>
+                                        <ul>
+                                            <li class="<?php echo $arrs[5]?>"><a href="Event_TransactionLogs.php">Transaction Logs</a></li>
+                                            <li class="<?php echo $arrs[6]?>"><a href="Event_History.php">History</a></li>
+                                        </ul>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
