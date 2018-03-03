@@ -23,6 +23,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
     $arrs[1]="";
     $arrs[2]="active";
     $arrs[3]="";
+    $arrs[4]="";
     $title = "CCDO - Inbox";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
@@ -30,7 +31,16 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
     $arrs[1]="";
     $arrs[2]="";
     $arrs[3]="active";
+    $arrs[4]="";
     $title = "CCDO - Trash";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="active";
+    $title = "CCDO - Service Request List";
 }
 ?>
 <!DOCTYPE html>
@@ -185,8 +195,9 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
                                     <li>
                                         <a href="#"><i class="icon-calendar"></i><span> Events</span></a>
                                         <ul>
-                                            <li class="<?php echo $arrs[0];?>"><a href="COOP_AddServiceRequestForm.php">Service Request</a></li>
+                                            <li class="<?php echo $arrs[0];?>"><a href="COOP_AddServiceRequestForm.php">Add Service Request</a></li>
                                             <li class="<?php echo $arrs[1];?>"><a href="COOP_EventList.php">Event List</a></li>
+                                            <li class="<?php echo $arrs[4];?>"><a href="CCDO_ServiceRequestList.php">Service Request List</a></li>
                                         </ul>
                                     </li>
 
