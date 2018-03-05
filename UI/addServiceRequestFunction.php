@@ -7,7 +7,7 @@ $audit = new AuditTrail();
 $handler = new ServiceRequestHandler();
 $connect = new Connect();
 $con = $connect-> connectDB();
-
+date_default_timezone_set('Asia/Manila');
 
 if(isset($_POST['txtContactPerson'])){
 	$contactperson= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtContactPerson'])));
@@ -19,13 +19,33 @@ if(isset($_POST['txtContactPerson'])){
 	$organization= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOrganization'])));
 	$participants= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtExpected'])));
 	$requestedservice= mysqli_real_escape_string($con,stripcslashes(trim($_POST['selectRequestedService'])));
-	$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
 	$datecreated = date("m/d/Y");
 	$timecreated = date("h:i:sa");
+	$serviceID = null;
+	$idAccounts = 0;
+	$others = " ";
 
-	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$requestedservice,$others,$datecreated,$timecreated);
+	if(isset($_SESSION['idEvent'])){
+		$idAccounts = $_SESSION['idEvent']; 
+	}
 
+	if(isset($_POST['txtOthers'])){
+		$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
+	}
 
+	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts);
+
+	if($requestedservice!=7){
+		$serviceID=$handler->getServiceId($requestedservice);
+		$result = $handler->addserviceId($serviceID,$RequestId);
+	}
+
+	if($RequestId!= ""){
+			$audit->trail('ADD REQUEST; ID: '.$RequestId,'SUCCESSFUL',$idAccounts);
+	}
+	else{
+		$audit->trail('ADD EVENT; ID: '.$RequestId,'FAILED',$idAccounts);
+	}
 }
 else
 echo "asdasdasda";

@@ -8,6 +8,8 @@ else if(isset($_SESSION['idAccountAdmin']))
     echo "<script> window.location='CCDO_AddCooperativeAccount.php'</script>";
 else if(isset($_SESSION['idAccount']))
     echo "<script> window.location='COOP_AddDocument.php'</script>";
+else if(isset($_SESSION['idEvent']))
+    echo "<script> window.location='COOP_AddServiceRequestForm.php'</script>";
 ?>
 
 <!DOCTYPE html>
