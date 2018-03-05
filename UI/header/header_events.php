@@ -11,6 +11,8 @@ if(strpos($_SERVER['REQUEST_URI'],'COOP_AddServiceRequestForm.php')){
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="";
     $title = "COOP - Service Request";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
@@ -20,6 +22,8 @@ else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="";
     $title = "COOP - Event Lists";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
@@ -29,7 +33,20 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="";
     $title = "COOP - Edit Account";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="active";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="";
+    $title = "CCDO - Inbox";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
     $arrs[0]="";
@@ -38,10 +55,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
     $arrs[3]="";
     $arrs[4]="";
     $arrs[5]="";
-<<<<<<< HEAD
-=======
     $arrs[6]="";
->>>>>>> ee2ab655152973a64bb59c9fbe1cb2f6f7927922
+    $arrs[7]="";
     $title = "CCDO - Inbox";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
@@ -51,10 +66,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
     $arrs[3]="active";
     $arrs[4]="";
     $arrs[5]="";
-<<<<<<< HEAD
-=======
     $arrs[6]="";
->>>>>>> ee2ab655152973a64bb59c9fbe1cb2f6f7927922
+    $arrs[7]="";
     $title = "CCDO - Trash";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
@@ -64,13 +77,20 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
     $arrs[3]="";
     $arrs[4]="active";
     $arrs[5]="";
-<<<<<<< HEAD
+    $arrs[6]="";
+    $arrs[7]="";
     $title = "CCDO - Service Request List";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'COOP_AddEvent.php')) {
-=======
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
     $arrs[6]="";
-    $title = "CCDO - Service Request List";
+    $arrs[7]="";
+    $title = "CCDO - Add Event";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
     $arrs[0]="";
@@ -80,23 +100,10 @@ else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
     $arrs[4]="active";
     $arrs[5]="";
     $arrs[6]="";
+    $arrs[7]="";
     $title = "CCDO - Service Request Details";
 }
-else if (strpos($_SERVER['REQUEST_URI'],'Event_TransactionLogs.php')) {
->>>>>>> ee2ab655152973a64bb59c9fbe1cb2f6f7927922
-    $arrs[0]="";
-    $arrs[1]="";
-    $arrs[2]="";
-    $arrs[3]="";
-    $arrs[4]="";
-    $arrs[5]="active";
-<<<<<<< HEAD
-    $title = "CCDO - Add Event";
-=======
-    $arrs[6]="";
-    $title = "CCDO - Transaction Logs";
-}
-else if (strpos($_SERVER['REQUEST_URI'],'Event_History.php')) {
+else if (strpos($_SERVER['REQUEST_URI'],'COOP_TransactionLogs.php')) {
     $arrs[0]="";
     $arrs[1]="";
     $arrs[2]="";
@@ -104,8 +111,19 @@ else if (strpos($_SERVER['REQUEST_URI'],'Event_History.php')) {
     $arrs[4]="";
     $arrs[5]="";
     $arrs[6]="active";
+    $arrs[7]="";
+    $title = "CCDO - Transaction Logs";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'COOP_History.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="active";
     $title = "CCDO - History";
->>>>>>> ee2ab655152973a64bb59c9fbe1cb2f6f7927922
 }
 ?>
 <!DOCTYPE html>
@@ -251,7 +269,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'Event_History.php')) {
                                     <li>
                                         <a href="#"><i class="icon-calendar"></i><span> Events</span></a>
                                         <ul>
-                                            <li class="<?php echo $arrs[5];?>"><a href="COOP_AddServiceRequestForm.php">Add Event</a></li>
+                                            <li class="<?php echo $arrs[5];?>"><a href="COOP_AddEvent.php">Add Event</a></li>
                                             <li class="<?php echo $arrs[0];?>"><a href="COOP_AddServiceRequestForm.php">Add Service Request</a></li>
                                             <li class="<?php echo $arrs[1];?>"><a href="COOP_EventList.php">Event List</a></li>
                                             <li class="<?php echo $arrs[4];?>"><a href="CCDO_ServiceRequestList.php">Service Request List</a></li>
@@ -269,8 +287,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'Event_History.php')) {
                                     <li>
                                         <a href="#"><i class="icon-stack-text"></i><span>Logs</span></a>
                                         <ul>
-                                            <li class="<?php echo $arrs[5]?>"><a href="Event_TransactionLogs.php">Transaction Logs</a></li>
-                                            <li class="<?php echo $arrs[6]?>"><a href="Event_History.php">History</a></li>
+                                            <li class="<?php echo $arrs[6]?>"><a href="COOP_TransactionLogs.php">Transaction Logs</a></li>
+                                            <li class="<?php echo $arrs[7]?>"><a href="COOP_History.php">History</a></li>
                                         </ul>
                                     </li>
 

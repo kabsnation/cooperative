@@ -1,14 +1,21 @@
 <?php
 session_start();
-if(!isset($_SESSION['idAccount'])){
-    echo "<script>window.location='index.php';</script>";
-}
+
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
-include('../UI/header/header_user.php');
+if(isset($_SESSION['idAccount'])){
+    include('../UI/header/header_user.php');
+    $id = $_SESSION['idAccount'];
+}
+else if(isset($_SESSION['idEvent'])){
+    include('../UI/header/header_events.php');
+    $id = $_SESSION['idEvent'];
+}
+else{
+    echo "<script>window.location='index.php';</script>";
+}
 $doc = new DocumentHandler();
-$id = $_SESSION['idAccount'];
 $history = $doc->getHistory($id);
 ?>
 
