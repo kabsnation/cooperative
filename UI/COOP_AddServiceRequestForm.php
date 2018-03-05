@@ -203,7 +203,7 @@ else {
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="submit" ID="btnSend"  value="Submit" class="btn bg-info" />
+                                            <input type="button" onclick="confirm()" ID="btnSend"  value="Submit" class="btn bg-info" />
                                         </div>
                                     </div>
                                 </div>
