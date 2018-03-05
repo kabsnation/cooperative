@@ -85,10 +85,11 @@ else {
     $servicelist = $eventhandler->getServiceList();
 }
 ?>
+
             <!-- Main Content -->
                     <div class="content-wrapper">
                         <div class="content">
-
+<form id="form1" action="addServiceRequestFunction.php" method="POST" class="form-validate-jquery" >
                             <div class="panel panel-white">
                                 <div class="panel-heading">
                                     <div class="panel-title">
@@ -103,7 +104,7 @@ else {
 
                                 <div class="panel-body">
 
-                                    <form id="form1" action="addServiceRequestFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
+                                    
                                         <fieldset class="content-group">
                                             <div class="col-lg-12">
 
@@ -188,7 +189,7 @@ else {
                                                     <div id="Others" class="col-md-4" style="display: none">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Others:</strong></label>
-                                                            <input type="text" id="txtOthers" name="txtOthers" class="form-control" required="required">
+                                                            <input type="text" id="txtOthers" name="txtOthers" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -202,7 +203,7 @@ else {
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" ID="btnSend" onclick="confirm()" value="Submit" class="btn bg-info" />
+                                            <input type="submit" ID="btnSend"  value="Submit" class="btn bg-info" />
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +219,7 @@ else {
     </div>
     <!-- Page container -->
 </body>
-
+</form>
 <script type="text/javascript">
 
     function checkForOthers() {
@@ -277,16 +278,21 @@ else {
     }
     function validateForm(){
                 var inputs = document.getElementsByTagName('input');
-                var checker = document.getElementById('checker');
-                if(checker.value==''){
-                    return 1;
-                }
+                var textarea = document.getElementsByTagName('textarea');
                 for(var i = 0; i<inputs.length; ++i){
                     if(!inputs[i].checkValidity()){
-                        //console.log(inputs[o].value);
+                        console.log(inputs[i].value);
                         return 1;
                         break;
                     }
+                    console.log(inputs[i].value);
+                }
+                for(var j =0; j<textarea.length; j++){
+                    if(!textarea[j].checkValidity()){
+                        return 1;
+                        break;
+                    }
+                    console.log(textarea[j]);
                 }
             }
             function validate(){
