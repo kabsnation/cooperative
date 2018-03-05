@@ -130,43 +130,65 @@ else {
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <hr/>
+
                                                 <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label><span class="text-danger">* </span><strong>Organization / Cooperative:</strong></label>
+                                                            <textarea  ID="txtOrganization" name="txtOrganization" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
+                                                        </div>
+                                                    </div>
                                                    
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">* </span><strong>Address:</strong></label>
                                                             <textarea  ID="txtAddress" name="txtAddress" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    
+                                                </div>
+
+                                                <hr/>
+
+                                                <div class="row">
+
+                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Activity Date:</strong></label>
                                                             <input id="txtActivityDate" name="txtActivityDate" type="text" class="form-control daterange-single" required="required">
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Time:</strong></label>
                                                             <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                     <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label><span class="text-danger">* </span><strong>Organization / Cooperative:</strong></label>
-                                                            <textarea  ID="txtOrganization" name="txtOrganization" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Expected Number of Participants:</strong></label>
                                                             <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label><span class="text-danger">* </span><strong>Venue:</strong></label>
+                                                            <textarea  ID="txtVenue" name="txtVenue" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <hr/>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Requested Service:</strong></label>
                                                             <select class="form-control" id="selectRequestedService" name="selectRequestedService" onchange="checkForOthers()" value="">
@@ -187,7 +209,7 @@ else {
                                                         </div>
                                                     </div>
 
-                                                    <div id="Others" class="col-md-4" style="display: none">
+                                                    <div id="Others" class="col-md-6" style="display: none">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Others:</strong></label>
                                                             <input type="text" id="txtOthers" name="txtOthers" class="form-control">

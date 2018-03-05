@@ -1,27 +1,17 @@
 <?php
 session_start();
-
-require("../Handlers/DocumentHandler.php");
-require("../Handlers/AccountHandler.php");
-require("../config/config.php");
-if(isset($_SESSION['idAccount'])){
-    include('../UI/header/header_user.php');
-    $id = $_SESSION['idAccount'];
-}
-else if(isset($_SESSION['idEvent'])){
-    include('../UI/header/header_events.php');
-    $id = $_SESSION['idEvent'];
-}
-else{
+if(!isset($_SESSION['idEvent'])){
     echo "<script>window.location='index.php';</script>";
 }
-$doc = new DocumentHandler();
-$trackings = $doc->getTransactionLogs($id);
-$history = $doc->getHistory($id);
+$id = $_SESSION['idEvent'];
+require("../config/config.php");
+require("../Handlers/AccountHandler.php");
+$handler = new AccountHandler();
+$cooperativeProfile = $handler->getCoopAccounts($id);
+$departmentProfile = $handler-> getDepartmentAccounts($id);
+include('../UI/header/header_events.php');
 ?>
-<form action="print.php" id="form1" method="POST">
-
-                    <!-- Main content -->    
+					<!-- Main content -->    
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
@@ -81,9 +71,9 @@ $history = $doc->getHistory($id);
                                                             <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Tracking No.</th>
-                                                                        <th>Title</th>
-                                                                        <th>Type</th>
+                                                                        <th>No.</th>
+                                                                        <th>Contact Person</th>
+                                                                        <th>Organization/Cooperative</th>
                                                                         <th>Date Added</th>
                                                                         <th>Date Completed</th>
                                                                     </tr>
@@ -128,62 +118,3 @@ $history = $doc->getHistory($id);
     </form>
 </body>
 </html>
-
-<script type="text/javascript">
- table = $('#my-table').DataTable({});
-         $.fn.dataTable.ext.search.push(
-                function( settings, data, dataIndex ) {
-                    var min  = $('#min-date').val();
-                    var max  = $('#max-date').val();
-                    var createdAt = data[3] || 0;
-
-                    if  ( 
-                            ( min == "" || max == "" )
-                            || 
-                            ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
-                        )
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-            );
-
-            $('.daterange-single').change( function() {
-                table.columns.adjust().draw();
-            } );
-     function printt(){
-        var mindate = $('#min-date').val();
-        var maxdate = $('#max-date').val();
-
-        var tablee = $('#my-table').DataTable();
-        var info = tablee.page.info();
-        if(info.recordsDisplay!=0){
-           $('#form1').submit();
-        }
-        else{
-             $.ajax({
-                type: "POST",
-                url: "",
-                data: "",
-                success: function(data){
-                    failed();
-                }
-            });
-        }
-    }
-    function failed(){
-        setTimeout(function(){
-            swal({
-                title: "Failed!",
-                text: "No data available in table",
-                type: "warning"
-                },
-                function(isConfirm){});},500);
-    }
-    // var table1 = $('#tableHistory').DataTable({
-    //  "order": [[ 0, "desc" ]]});
-    // var tablee = $('#my-table').DataTable({});
-    // tablee.column(0).visible(false);
-
-</script>

@@ -1,25 +1,17 @@
 <?php
 session_start();
-
-require("../Handlers/DocumentHandler.php");
-require("../Handlers/AccountHandler.php");
-require("../config/config.php");
-if(isset($_SESSION['idAccount'])){
-    include('../UI/header/header_user.php');
-    $id = $_SESSION['idAccount'];
-}
-else if(isset($_SESSION['idEvent'])){
-    include('../UI/header/header_events.php');
-    $id = $_SESSION['idEvent'];
-}
-else{
+if(!isset($_SESSION['idEvent'])){
     echo "<script>window.location='index.php';</script>";
 }
-$doc = new DocumentHandler();
-$history = $doc->getHistory($id);
+$id = $_SESSION['idEvent'];
+require("../config/config.php");
+require("../Handlers/AccountHandler.php");
+$handler = new AccountHandler();
+$cooperativeProfile = $handler->getCoopAccounts($id);
+$departmentProfile = $handler-> getDepartmentAccounts($id);
+include('../UI/header/header_events.php');
 ?>
-
-                    <!-- Main content -->    
+<!-- Main content -->    
                     <div class="content-wrapper">
                         <div class="content">
                             <div class="row">
@@ -92,11 +84,3 @@ $history = $doc->getHistory($id);
     </form>
 </body>
 </html>
-
-<script type="text/javascript">
-     var table1 = $('#tableHistory').DataTable({
-    "order": [[ 0, "desc" ]]});
-    // var tablee = $('#my-table').DataTable({});
-    // tablee.column(0).visible(false);
-
-</script>

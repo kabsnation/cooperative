@@ -278,9 +278,9 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
 
                                 <li class="<?php echo $arrs[3];?>"><a href="SuperAdmin_AccountsList.php"><i class="icon-users4"></i> <span>Accounts List</span></a></li>
 
-                                <li class="navigation-header"><span>Monitoring</span> <i class="icon-menu" title="Monitoring"></i></li>
-                                 <li class="<?php echo $arrs[5]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
-                                <li class="<?php echo $arrs[6]?>"><a href="CCDO_Trash.php">Trash</a></li>
+                                <li class="navigation-header"><span>Messages</span> <i class="icon-menu" title="Monitoring"></i></li>
+                                <li class="<?php echo $arrs[5]?>"><a href="CCDO_Inbox.php"><span>Inbox</span> <i class="icon-envelope"></i> <label id="badge" class="badge bg-blue-400"></label></a></li>
+                                <li class="<?php echo $arrs[6]?>"><a href="CCDO_Trash.php"><span>Trash</span><i class=" icon-trash"></i></a></li>
 
                                 <li class="navigation-header"><span>Logs</span> <i class="icon-menu" title="Logs"></i></li>
 

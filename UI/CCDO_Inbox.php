@@ -19,7 +19,6 @@ else if(isset($_SESSION['idEvent'])){
 else{
 	echo "<script>window.location='index.php';</script>";
 }
-	
 ?>
 			<!-- Main content -->
 			<div class="content-wrapper">

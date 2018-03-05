@@ -4,11 +4,24 @@ session_start();
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
-include('../UI/header/header_user.php');
 $doc = new DocumentHandler();
-$id = $_SESSION['idAccount'];
 $connect = new Connect();
 $con = $connect-> connectDB();
+if(isset($_SESSION['idAccount'])){
+	include('../UI/header/header_user.php');
+	$id = $_SESSION['idAccount'];
+}
+else if(isset($_SESSION['idSuperAdmin'])){
+	include('../UI/header/header_sadmin.php');
+	$id = $_SESSION['idSuperAdmin'];
+}
+else if(isset($_SESSION['idEvent'])){
+	include('../UI/header/header_events.php');
+	$id = $_SESSION['idEvent'];
+}
+else{
+	echo "<script>window.location='index.php';</script>";
+}
 if(isset($_GET['idTracking'])){
 	$idTracking = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idTracking'])));
 	//check if read or not
@@ -49,6 +62,21 @@ else if(isset($_GET['idEvents'])){
 		}
 	}
 	$type = "events";
+}
+else if(isset($_GET['idservice_request'])){
+	$idservice_request = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idservice_request'])));
+	//check if read or not
+	$check = $doc->checkIfReadRequest($idservice_request,$id);
+	$infos = $doc->getServiceRequestInfo($idservice_request,$id);
+	$firstRowLocation = $doc->getServiceReqLocationById($idservice_request,$id);
+	$servicelocation = $doc->getServiceReqLocation($idservice_request);
+	$locations = '';
+	if($servicelocation){
+		foreach ($servicelocation as $location) {
+			$locations.= $location['name']." (".$location['email'].") <br>";
+		}
+	}
+	$type = "service request";
 }
 ?>
 			<!-- Main content -->
@@ -154,6 +182,17 @@ else if(isset($_GET['idEvents'])){
 									<h6><strong>End Date and Time : </strong><?php echo $info['endDateTime'];?></h6>
 									<h6><strong>Event Location : </strong><?php echo $info['eventLocation'];?></h6>
 									<h6><strong>Event Details : </strong> <?php echo $info['message']?></h6>
+									<?php }
+								else if(isset($_GET['idservice_request'])){?>
+									<h6><strong>Contact Person : </strong><?php echo $info['contact'];?></h6>
+									<h6><strong>Contact Number : </strong><?php echo $info['contact_no'];?></h6>
+									<h6><strong>Email Address : </strong><?php echo $info['email'];?></h6>
+									<h6><strong>Organization : </strong><?php echo $info['organization'];?></h6>
+									<h6><strong>Address : </strong><?php echo $info['address'];?></h6>
+									<h6><strong>Activity Date : </strong><?php echo $info['activity_date'];?></h6>
+									<h6><strong>Activity Time : </strong> <?php echo $info['activity_time']?></h6>
+									<h6><strong>Venue : </strong> <?php echo $info['activity_time']?></h6>
+									<h6><strong>Expected Number of Participants : </strong> <?php echo $info['no_participants']?></h6>
 									<?php }else{
 
 									echo $info['message'];} 
@@ -165,7 +204,7 @@ else if(isset($_GET['idEvents'])){
 									<input type="hidden" name="link" value="<?php echo $info['filePath'];?>">
 									<input type="submit" name="inbox" value="Download Attached File" class="btn-link">
 								</form>
-								<?php }?>
+								<?php }?>	
 							</div>
 							
 						</div>
@@ -241,7 +280,46 @@ else if(isset($_GET['idEvents'])){
 					<!-- /summernote editor -->
 				</form>
 				</div>
-<?php }}} ?>
+<?php } else if($type=='service request'){?>
+			<form action="replyFunction.php" id='form1' method="POST">
+                    <!-- Summernote editor -->
+					<div class="panel panel-white">
+						<div class="panel-heading">
+							<h5 class="panel-title">Reply</h5>
+						</div>
+
+						<div class="panel-body">
+							<div>
+								
+								<div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="radio-inline radio-right">
+                                            <input type="radio" name="replyEvent" value="APPROVE" class="styled" checked="checked">
+                                            APPROVE
+                                        </label>
+
+                                        <label class="radio-inline radio-right">
+                                            <input type="radio" name="replyEvent" value="DISAPPROVE" class="styled">
+                                            DISAPPROVE
+                                        </label>
+                                    </div>
+                                </div>
+								
+							</div>
+
+
+							<div class="text-right">
+									<input type="hidden" name="idEvents" value="<?php echo $idEvents;?>">
+									<input type="hidden" name="type" value="<?php echo $type?>">
+									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
+									<input type="hidden" name="id" value="<?php echo $id;?>">
+									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+					</div>
+					
+					<!-- /summernote editor -->
+				</form>
+				</div>
+				<?php }}}?>
 			</div>
 			<!-- /main content -->
 
@@ -250,7 +328,6 @@ else if(isset($_GET['idEvents'])){
 
 	</div>
 	<!-- /page container -->
-
 </body>
 </html>
 <script type="text/javascript">
