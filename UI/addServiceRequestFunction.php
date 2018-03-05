@@ -19,6 +19,7 @@ if(isset($_POST['txtContactPerson'])){
 	$organization= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOrganization'])));
 	$participants= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtExpected'])));
 	$requestedservice= mysqli_real_escape_string($con,stripcslashes(trim($_POST['selectRequestedService'])));
+	$venue = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtVenue'])));
 	$datecreated = date("m/d/Y");
 	$timecreated = date("h:i:sa");
 	$serviceID = null;
@@ -33,7 +34,7 @@ if(isset($_POST['txtContactPerson'])){
 		$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
 	}
 
-	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts);
+	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue);
 
 	if($requestedservice!=7){
 		$serviceID=$handler->getServiceId($requestedservice);
