@@ -94,5 +94,11 @@ class EventHandler{
 		$result = $con->update($query);
 		return $result;
 	}
+	public function getServiceList(){
+		$query = "SELECT * FROM service_list";
+		$con = new Connect();
+		$result = $con->select($query);
+		return $result;
+	}
 }
 ?>

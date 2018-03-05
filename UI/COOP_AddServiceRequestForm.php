@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<?php
+session_start();
+
+require("../config/config.php");
+require("../Handlers/AccountHandler.php");
+require("../Handlers/EventHandler.php");
+if(!isset($_SESSION['idEvent'])){
+    ?>
+    <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head >    
     <title>CCDO - Service / Request Form</title>
@@ -6,20 +14,20 @@
     <link rel="icon" href="../assets/images/CCDO Logo.png" />
 
     <!-- Global stylesheets -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/core.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/components.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/colors.css" rel="stylesheet" type="text/css"/>
-	<!-- /global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/colors.css" rel="stylesheet" type="text/css"/>
+    <!-- /global stylesheets -->
 
-	<!-- Core JS files -->
-	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-	<!-- /core JS files -->
+    <!-- Core JS files -->
+    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
 
     <!-- Theme JS files -->
     <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
@@ -65,6 +73,18 @@
         <!-- Page content -->
         <div class="page-content">
 
+    <?php
+}
+else {
+    $id = $_SESSION['idEvent'];
+    $handler = new AccountHandler();
+    $cooperativeProfile = $handler->getCoopAccounts($id);
+    $departmentProfile = $handler-> getDepartmentAccounts($id);
+    $eventhandler = new EventHandler();
+    include('../UI/header/header_events.php');
+    $servicelist = $eventhandler->getServiceList();
+}
+?>
             <!-- Main Content -->
                     <div class="content-wrapper">
                         <div class="content">
@@ -95,23 +115,27 @@
                                                             <input class="form-control" type="text" id="txtContactPerson" name="txtContactPerson" required="required">
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-md-4">
+                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label><span class="text-danger">* </span><strong>Organization / Cooperative:</strong></label>
-                                                            <textarea  ID="txtOrganization" name="txtOrganization" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
+                                                            <label><span class="text-danger">* </span><strong>Contact Number:</strong></label>
+                                                            <input class="form-control" type="text" id="txtContactNumber" name="txtContactNumber" required="required">
                                                         </div>
                                                     </div>
-
+                                                     <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label><span class="text-danger">* </span><strong>Email Address: </strong></label>
+                                                            <input class="form-control" type="text" id="txtEmail" name="txtEmail" required="required">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                   
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">* </span><strong>Address:</strong></label>
                                                             <textarea  ID="txtAddress" name="txtAddress" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Activity Date:</strong></label>
@@ -125,6 +149,14 @@
                                                             <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
+                                                     <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label><span class="text-danger">* </span><strong>Organization / Cooperative:</strong></label>
+                                                            <textarea  ID="txtOrganization" name="txtOrganization" class="form-control" type="MultiLine" required="required" maxlength="1000"></textarea>
+                                                        </div>
+                                                    </div>
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -132,26 +164,23 @@
                                                             <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required">
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Requested Service:</strong></label>
                                                             <select class="form-control" id="selectRequestedService" name="selectRequestedService" onchange="checkForOthers()" value="">
+                                                                <?php if($servicelist){
+                                                                    $count = 1;
+                                                                    foreach($servicelist as $list){
+                                                                        if($count==1){?>
                                                                 <optgroup label="Cooperative:">
-                                                                    <option>Pre-Membership Education Seminar (PMES)</option>
-                                                                    <option>CDA Mandatory Training</option>
-                                                                    <option>Capability Training Seminar</option>
-                                                                </optgroup>
+                                                                <?php }else if($count==4){?>
                                                                 <optgroup label="Livelihood:">
-                                                                    <option>Livelihood Skills Training</option>
-                                                                    <option>Community Capability Development Seminar</option>
-                                                                    <option>Project Proposal Development / Business Plan</option>
-                                                                </optgroup>
+                                                                <?php }else if($count==7){?>
                                                                 <optgroup label="Others:">
-                                                                    <option value="7">Please Specify...</option>
-                                                                </optgroup>
+                                                                <?php }?>
+                                                                    <option id="<?php echo $list['idservice'];?>"><?php echo $list['service'];?></option>
+                                                                <?php $count++;}}?>
+                                                                <option value="7">Please Specify...</option>
                                                             </select>
                                                         </div>
                                                     </div>

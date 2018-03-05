@@ -3,10 +3,10 @@ $handler = new AccountHandler();
 $eventmanager = $handler->getAccountById($_SESSION['idEvent']);
 $arrs = array();
 $title ="";
-if(strpos($_SERVER['REQUEST_URI'],'COOP_AddEvent.php')){
+if(strpos($_SERVER['REQUEST_URI'],'COOP_AddServiceRequestForm.php')){
     $arrs[0]="active";
     $arrs[1]="";
-    $title = "COOP - Add Events";
+    $title = "COOP - Service Request";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'COOP_EventList.php')){
     $arrs[0]="";
@@ -171,7 +171,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                     <li>
                                         <a href="#"><i class="icon-calendar"></i><span> Events</span></a>
                                         <ul>
-                                            <li class="<?php echo $arrs[0];?>"><a href="COOP_AddEvent.php">Add Events</a></li>
+                                            <li class="<?php echo $arrs[0];?>"><a href="COOP_AddServiceRequestForm.php">Service Request</a></li>
                                             <li class="<?php echo $arrs[1];?>"><a href="COOP_EventList.php">Event List</a></li>
                                         </ul>
                                     </li>

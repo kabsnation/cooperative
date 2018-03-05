@@ -28,7 +28,7 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 			}
 			else if($result['idaccount_type']==4){
 				$_SESSION["idEvent"]= $result["idAccounts"];
-				$arrs[1] ="COOP_AddEvent.php";
+				$arrs[1] ="COOP_AddServiceRequestForm.php";
 			}
 			$arrs[0]= 1;
 			$audit->trail('LOGIN ACCCOUNT; ID: '. $result["idAccounts"],'SUCCESSFUL',$username);
