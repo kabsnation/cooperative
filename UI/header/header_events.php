@@ -18,6 +18,20 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     $arrs[1]="";
     $title = "COOP - Edit Account";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="active";
+    $arrs[3]="";
+    $title = "CCDO - Inbox";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="active";
+    $title = "CCDO - Trash";
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -176,6 +190,13 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                         </ul>
                                     </li>
 
+                                     <li>
+                                            <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
+                                            <ul>
+                                                <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
+                                                <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
+                                            </ul>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
