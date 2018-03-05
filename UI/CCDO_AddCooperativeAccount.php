@@ -369,7 +369,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Services/Benefits Offered to Members:</strong></label>
                                                                 <input  ID="txtServicesBenefitsOfferedtoMembers" 
-                                                                name="txtServicesBenefitsOfferedtoMembers" required="required" class="form-control"></input>
+                                                                name="txtServicesBenefitsOfferedtoMembers" required="required" class="form-control" maxlength="100"></input>
                                                             </div>
                                                         </div>
                                                     </div>

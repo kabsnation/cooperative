@@ -4,7 +4,7 @@ require("../Handlers/AccountHandler.php");
 require("../Handlers/AuditTrail.php");
 require("../config/config.php");
 $handler = new AccountHandler();
-$audit = new AuditTrail();
+$auditTrail = new AuditTrail();
 $connect = new Connect();
 $id = $_SESSION['idAccountAdmin'];
 $con = $connect-> connectDB();
@@ -113,7 +113,7 @@ if(isset($_POST['txtUsername'])){
 									if($cooperativeId!=""){
 										$result = $handler->addCoopAccount($username,$password,$cooperativeId);
 										if($result){
-											$audit->trail('ADD COOPERATIVE ACCOUNT; ID: '.$result,'SUCCESSFUL',$id);
+											$auditTrail->trail("ADD COOPERATIVE ACCOUNT; ID: ".$result,'SUCCESSFUL',$id);
 											echo "<script>
 												window.location = 'CCDO_AddCooperativeAccount.php';
 												alert('Success');
