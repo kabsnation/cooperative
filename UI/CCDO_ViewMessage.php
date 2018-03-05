@@ -220,7 +220,7 @@ else if(isset($_GET['idservice_request'])){
 
 						<div class="panel-body">
 							<div>
-									<textarea type="text" class="summernote" id="reply" name="reply" required="required"></textarea>
+								<textarea type="text" class="summernote" id="reply" name="reply" required="required"></textarea>
 								
 							</div>
 
@@ -289,11 +289,12 @@ else if(isset($_GET['idservice_request'])){
 						</div>
 
 						<div class="panel-body">
-							<div>
+							<div class="row">
 								
-								<div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="radio-inline radio-right">
+								<div class="col-md-12">
+									<center>
+                                    <div class="form-group" style="font-size: 15px;">
+                                        <label class="radio-inline radio-right" style="border-color: #fff">
                                             <input type="radio" name="replyEvent" value="APPROVE" class="styled" checked="checked">
                                             APPROVE
                                         </label>
@@ -303,19 +304,23 @@ else if(isset($_GET['idservice_request'])){
                                             DISAPPROVE
                                         </label>
                                     </div>
+                                    </center>
                                 </div>
+
+                                <div class="col-md-12">
+									<textarea type="text" class="form-control" required="required" placeholder="Type here for any remarks..." cols="5" rows="5"></textarea>
+								</div>
 								
 							</div>
 
-
-							<div class="text-right">
-									<input type="hidden" name="idEvents" value="<?php echo $idEvents;?>">
-									<input type="hidden" name="type" value="<?php echo $type?>">
-									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
-									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+							<div class="text-right" style="margin-top: 10px;">
+								<input type="hidden" name="idEvents" value="<?php echo $idEvents;?>">
+								<input type="hidden" name="type" value="<?php echo $type?>">
+								<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
+								<input type="hidden" name="id" value="<?php echo $id;?>">
+								<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+							</div>
 					</div>
-					
 					<!-- /summernote editor -->
 				</form>
 				</div>
