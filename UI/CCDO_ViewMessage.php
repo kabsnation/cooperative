@@ -178,21 +178,34 @@ else if(isset($_GET['idservice_request'])){
 
 								<?php 
 									if(isset($_GET['idEvents'])){?>
-									<h6><strong>Start Date and Time : </strong><?php echo $info['startDateTime'];?></h6>
-									<h6><strong>End Date and Time : </strong><?php echo $info['endDateTime'];?></h6>
-									<h6><strong>Event Location : </strong><?php echo $info['eventLocation'];?></h6>
-									<h6><strong>Event Details : </strong> <?php echo $info['message']?></h6>
+									<h6><strong>Start Date and Time: </strong><?php echo $info['startDateTime'];?></h6>
+									<h6><strong>End Date and Time: </strong><?php echo $info['endDateTime'];?></h6>
+									<h6><strong>Event Location: </strong><?php echo $info['eventLocation'];?></h6>
+									<h6><strong>Event Details: </strong> <?php echo $info['message']?></h6>
 									<?php }
 								else if(isset($_GET['idservice_request'])){?>
-									<h6><strong>Contact Person : </strong><?php echo $info['contact'];?></h6>
-									<h6><strong>Contact Number : </strong><?php echo $info['contact_no'];?></h6>
-									<h6><strong>Email Address : </strong><?php echo $info['email'];?></h6>
-									<h6><strong>Organization : </strong><?php echo $info['organization'];?></h6>
-									<h6><strong>Address : </strong><?php echo $info['address'];?></h6>
-									<h6><strong>Activity Date : </strong><?php echo $info['activity_date'];?></h6>
-									<h6><strong>Activity Time : </strong> <?php echo $info['activity_time']?></h6>
-									<h6><strong>Venue : </strong> <?php echo $info['activity_time']?></h6>
-									<h6><strong>Expected Number of Participants : </strong> <?php echo $info['no_participants']?></h6>
+
+								<div class="col-md-6">
+									<h6 class="text-muted">Contact Information</h6>
+									<h6><strong>Contact Person: </strong><?php echo $info['contact'];?></h6>
+									<h6><strong>Contact Number: </strong><?php echo $info['contact_no'];?></h6>
+									<h6><strong>Email Address: </strong><?php echo $info['email'];?></h6>
+								</div>
+
+								<div class="col-md-6">
+									<h6 class="text-muted">Organization / Cooperative Information</h6>
+									<h6><strong>Name: </strong><?php echo $info['organization'];?></h6>
+									<h6><strong>Address: </strong><?php echo $info['address'];?></h6>
+								</div>
+								
+								<div class="col-md-12">
+									<h6 class="text-muted">Service Request Information</h6>
+									<h6><strong>Activity Date: </strong><?php echo $info['activity_date'];?></h6>
+									<h6><strong>Activity Time: </strong> <?php echo $info['activity_time']?></h6>
+									<h6><strong>Venue: </strong> <?php echo $info['activity_time']?></h6>
+									<h6><strong>Expected Number of Participants: </strong> <?php echo $info['no_participants']?></h6>
+								</div>	
+									
 									<?php }else{
 
 									echo $info['message'];} 
