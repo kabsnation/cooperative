@@ -15,8 +15,10 @@ $id = $_POST['id'];
 	            	$myArray[3][] = "idReply=".$row['idreply'];
 	            else if($row['idTracking']!=null)
 	            	$myArray[3][] = "idTracking=".$row['idTracking'];
-	            else
+	            else if($row['idEvents']!=null)
 	            	$myArray[3][]="idEvents=".$row['idEvents'];
+	            else
+	            	$myArray[3][]="idservice_request=".$row['idservice_request'];
 	            $myArray[4][] = $row['idlocation'];
 	            $myArray[5][] = $row['isopen'];
 	            $myArray[6][]= $row['canbedeleted'];
