@@ -103,7 +103,7 @@ else {
 
                                 <div class="panel-body">
 
-                                    <form class="form-validate-jquery">
+                                    <form id="form1" action="addServiceRequestFunction.php" method="POST" class="form-validate-jquery" enctype="multipart/form-data">
                                         <fieldset class="content-group">
                                             <div class="col-lg-12">
 
@@ -202,7 +202,7 @@ else {
                                 <div class="panel-footer">
                                     <div class="heading-elements">
                                         <div class="text-right">
-                                            <input type="button" ID="btnSend" value="Submit" class="btn bg-info" />
+                                            <input type="button" ID="btnSend" onclick="confirm()" value="Submit" class="btn bg-info" />
                                         </div>
                                     </div>
                                 </div>
@@ -231,6 +231,92 @@ else {
             var y = document.getElementById("Others");
             y.style.display = "none";
         }
+    }
+    function confirm(){
+        swal({
+                    title: "Are you sure?",
+                    text: "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#FF7043",
+                    confirmButtonText: "Submit",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+            function(isConfirm){
+                if(isConfirm){
+                    var status = validateForm();
+                         if(status==1){
+                            validate();
+                         }
+                         else{
+                            $("#form1").submit(function(e) {
+                                e.preventDefault();    
+                                var formData = new FormData(this);
+
+                                $.ajax({
+                                    url: "addServiceRequestFunction.php",
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (data) {
+                                        console.log(data);
+                                        success();
+                                    },
+                                    error: function(data){
+                                        failed();
+                                    },
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false
+                                });
+                            });
+                            $('#form1').submit();
+                        }
+           }
+        });
+    }
+    function validateForm(){
+                var inputs = document.getElementsByTagName('input');
+                var checker = document.getElementById('checker');
+                if(checker.value==''){
+                    return 1;
+                }
+                for(var i = 0; i<inputs.length; ++i){
+                    if(!inputs[i].checkValidity()){
+                        //console.log(inputs[o].value);
+                        return 1;
+                        break;
+                    }
+                }
+            }
+            function validate(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Fill out all the required fields.",
+                        confirmButtonColor: "#EF5350",
+                        type: "error"
+                    });},500);
+            }
+   function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location=window.location;
+                        });},500); 
+            }
+    function failed(){
+        setTimeout(function(){
+            swal({
+                title: "Failed!",
+                text: "Some items has not yet been responded",
+                type: "warning"
+                },
+                function(isConfirm){});},500);
     }
 </script>
 
