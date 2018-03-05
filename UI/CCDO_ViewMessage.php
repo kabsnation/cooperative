@@ -296,12 +296,12 @@ else if(isset($_GET['idservice_request'])){
                                     <div class="form-group" style="font-size: 15px;">
                                         <label class="radio-inline radio-right" style="border-color: #fff">
                                             <input type="radio" name="replyEvent" value="APPROVE" class="styled" checked="checked">
-                                            APPROVE
+                                            <strong>APPROVE</strong>
                                         </label>
 
                                         <label class="radio-inline radio-right">
                                             <input type="radio" name="replyEvent" value="DISAPPROVE" class="styled">
-                                            DISAPPROVE
+                                            <strong>DISAPPROVE</strong>
                                         </label>
                                     </div>
                                     </center>
