@@ -9,6 +9,8 @@ if(strpos($_SERVER['REQUEST_URI'],'SuperAdmin_Dashboard.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Dashboard";
 }
 
@@ -18,6 +20,8 @@ else if(strpos($_SERVER['REQUEST_URI'],'SuperAdmin_DocumentTracker.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Document Tracker";
 }
 else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
@@ -26,6 +30,8 @@ else if(strpos($_SERVER['REQUEST_URI'],'ViewTracking.php')){
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Document Tracker";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_EventList.php')) {
@@ -34,6 +40,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_EventList.php')) {
     $arrs[2]="active";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Event List";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_AccountsList.php')) {
@@ -42,6 +50,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_AccountsList.php')) {
     $arrs[2]="";
     $arrs[3]="active";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Account List";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAndUpdateCooperativeProfile.php')) {
@@ -50,6 +60,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAndUpdateCooperativeProfile.ph
     $arrs[2]="";
     $arrs[3]="active";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Account List";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAndUpdateDepartmentProfile.php')) {
@@ -58,6 +70,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewAndUpdateDepartmentProfile.php
     $arrs[2]="";
     $arrs[3]="active";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Account List";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
@@ -66,6 +80,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Edit Account";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_TransactionLogs.php')) {
@@ -74,7 +90,29 @@ else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_TransactionLogs.php')) {
     $arrs[2]="";
     $arrs[3]="";
     $arrs[4]="active";
+    $arrs[5]="";
+    $arrs[6]="";
     $title = "CCDO - Transaction Logs";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
+    $arrs[6]="";
+    $title = "CCDO - Inbox";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="active";
+    $title = "CCDO - Trash";
 }
 ?>
 <!DOCTYPE html>
@@ -239,6 +277,10 @@ else if (strpos($_SERVER['REQUEST_URI'],'SuperAdmin_TransactionLogs.php')) {
                                 <li class="navigation-header"><span>Accounts</span> <i class="icon-menu" title="Accounts"></i></li>
 
                                 <li class="<?php echo $arrs[3];?>"><a href="SuperAdmin_AccountsList.php"><i class="icon-users4"></i> <span>Accounts List</span></a></li>
+
+                                <li class="navigation-header"><span>Monitoring</span> <i class="icon-menu" title="Monitoring"></i></li>
+                                 <li class="<?php echo $arrs[5]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
+                                <li class="<?php echo $arrs[6]?>"><a href="CCDO_Trash.php">Trash</a></li>
 
                                 <li class="navigation-header"><span>Logs</span> <i class="icon-menu" title="Logs"></i></li>
 

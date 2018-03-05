@@ -16,5 +16,9 @@ UI/files/1516216914.pdf
 *.jpg
 >>>>>>> bdd1b05e00071451a122445d11695ed18c2add86
 *.dat
+<<<<<<< HEAD
 config/config.php
 config/config.php
+=======
+UI/CCDO_ViewAndUpdateDepartmentProfile.php
+>>>>>>> 12d08107788615c0419e10eb9dfd01b1c745490f
