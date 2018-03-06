@@ -22,8 +22,9 @@ if(isset($_POST['txtContactPerson'])){
 	$venue = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtVenue'])));
 	$datecreated = date("m/d/Y");
 	$timecreated = date("h:i:sa");
-	$serviceID = null;
-	$idAccounts = 0;
+	$serviceID= "NULL";
+	$idAccounts = "NULL";
+	$status="Waiting for confirmation";
 	$others = " ";
 
 	if(isset($_SESSION['idEvent'])){
@@ -34,12 +35,16 @@ if(isset($_POST['txtContactPerson'])){
 		$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
 	}
 
-	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue);
-
 	if($requestedservice!=7){
 		$serviceID=$handler->getServiceId($requestedservice);
-		$result = $handler->addserviceId($serviceID,$RequestId);
 	}
+
+	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
+	
+	if($idAccounts=="NULL"){
+		$inbox=$handler->addinbox($status,$RequestId);
+	}
+
 
 	if($RequestId!= ""){
 			$audit->trail('ADD REQUEST; ID: '.$RequestId,'SUCCESSFUL',$idAccounts);
