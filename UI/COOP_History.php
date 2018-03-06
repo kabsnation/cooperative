@@ -1,22 +1,24 @@
 <?php
 session_start();
-
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
+require("../Handlers/EventHandler.php");
 require("../config/config.php");
+$doc = new DocumentHandler();
+$event = new EventHandler();
 if(isset($_SESSION['idAccount'])){
     include('../UI/header/header_user.php');
     $id = $_SESSION['idAccount'];
+$history = $doc->getHistory($id);
 }
 else if(isset($_SESSION['idEvent'])){
     include('../UI/header/header_events.php');
     $id = $_SESSION['idEvent'];
+    $eventHistory = $event->getHistory($id);
 }
 else{
     echo "<script>window.location='index.php';</script>";
 }
-$doc = new DocumentHandler();
-$history = $doc->getHistory($id);
 ?>
 
                     <!-- Main content -->    
@@ -46,6 +48,7 @@ $history = $doc->getHistory($id);
 
                                                     <div class="col-lg-12">
                                                         <table class="table datatable-html" id="tableHistory" style="font-size: 13px; width: 100%;">
+                                                            <?php if(isset($history)){?>
                                                             <thead>
                                                                 <tr>
                                                                     <th>Tracking No.</th>
@@ -56,7 +59,7 @@ $history = $doc->getHistory($id);
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php if($history){foreach($history as $hist){?>
+                                                                <?php foreach($history as $hist){?>
                                                                 <tr>
                                                                     <td><?php echo $hist['trackingNumber'];?></td>
                                                                     <td><?php echo $hist['title'];?></td>
@@ -64,8 +67,28 @@ $history = $doc->getHistory($id);
                                                                     <td><?php echo $hist['datetime'];?></td>
                                                                     <td><?php echo $hist['name'];?></td>
                                                                 </tr>
-                                                                <?php }}?>
+                                                                <?php }?>
                                                             </tbody>
+                                                            <?php }else if(isset($eventHistory)){?>
+                                                             <thead>
+                                                                <tr>
+                                                                    <th>Title</th>
+                                                                    <th>Status</th>
+                                                                    <th>Date</th>
+                                                                    <th>Receipients</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php foreach($eventHistory as $hist){?>
+                                                                <tr>
+                                                                    <td><?php echo $hist['title'];?></td>
+                                                                    <td><?php echo $hist['status'];?></td>
+                                                                    <td><?php echo $hist['datetime'];?></td>
+                                                                    <td><?php echo $hist['name'];?></td>
+                                                                </tr>
+                                                                <?php }?>
+                                                            </tbody>
+                                                            <?php } ?>
                                                         </table>
                                                     </div>
                                                 </div>

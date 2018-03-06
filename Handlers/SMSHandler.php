@@ -30,6 +30,20 @@ class SMSHandler{
 			echo "Error Num ". $result . " was encountered!".' '.$message;
 		}
 	}	
+	public function sendSMS2($contactNumber,$message){
+		$result = $this->itexmo($contactNumber,$message,"TR-COOPE230127_4LPZ6");
+		if ($result == ""){
+			echo "iTexMo: No response from server!!!";	
+		}
+
+		else if ($result == 0){
+			echo "<script>window.location='COOP_AddEvent.php';alert('Success!');</script>";
+		}
+
+		else{	
+			echo "Error Num ". $result . " was encountered!".' '.$message;
+		}
+	}
 }
 
 ?>

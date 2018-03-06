@@ -3,7 +3,7 @@ require("../fpdf181/fpdf.php");
 require_once('../config/config.php');
 class pdfMaker extends FPDF{
 
-function FancyTable($data,$mindate,$maxdate,$name)
+function FancyTable($data,$mindate,$maxdate,$name,$type)
 {
     // Colors, line width and bold font
     $this->SetFillColor(1,10,100);
@@ -25,12 +25,17 @@ function FancyTable($data,$mindate,$maxdate,$name)
     $this->Cell(0,10, 'Date Printed: '.date('m/d/y'),0,0,'R');
     $this->SetY(55);
     $this->Cell(0,10, 'Prepared by: '.$name,0,0,'R');
-	$header = array('Tracking No.', 'Title', 'Type', 'Date Added','Date Completed');
+    if($type==1){
+        $header = array('Tracking No.', 'Title', 'Type', 'Date Added','Date Completed');
+        $w = array(30, 40, 35, 42.5,42.5);
+    }else{
+        $header = array('Title', 'Location', 'Date and Time');
+        $w = array(65, 82, 42);
+    }
     $wt = array(190);
     $counter = 1;
     $this->SetY(65);
     $this->SetTextColor(255);
-    $w = array(30, 40, 35, 42.5,42.5);
     $this->SetFont('arial','','8');
     for($i=0;$i<count($header);$i++)
         $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
@@ -46,11 +51,20 @@ function FancyTable($data,$mindate,$maxdate,$name)
     	foreach($data as $row)
 	    {
 	        $this->Cell($w[$counter-1],6,$row,'LR',0,'L',$fill);
-	        if($counter ==5){
-		        $this->Ln();
-		        $fill = !$fill;
-		        $counter =0;
-	        }
+            if($type ==1){
+                    if($counter ==5){
+                    $this->Ln();
+                    $fill = !$fill;
+                    $counter =0;
+                }
+            }else{
+                    if($counter ==3){
+                    $this->Ln();
+                    $fill = !$fill;
+                    $counter =0;
+                }
+            }
+	        
 	        $counter++;
 	    }
     }

@@ -3,21 +3,25 @@ session_start();
 
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
+require("../Handlers/EventHandler.php");
 require("../config/config.php");
+$doc = new DocumentHandler();
+$event = new EventHandler();
 if(isset($_SESSION['idAccount'])){
     include('../UI/header/header_user.php');
     $id = $_SESSION['idAccount'];
+$trackings = $doc->getTransactionLogs($id);
+$history = $doc->getHistory($id);
 }
 else if(isset($_SESSION['idEvent'])){
     include('../UI/header/header_events.php');
     $id = $_SESSION['idEvent'];
+    $events = $event->getEventTransacLogs($id);
+    $history = $event->getHistory($id);
 }
 else{
     echo "<script>window.location='index.php';</script>";
 }
-$doc = new DocumentHandler();
-$trackings = $doc->getTransactionLogs($id);
-$history = $doc->getHistory($id);
 ?>
 <form action="print.php" id="form1" method="POST">
 
@@ -79,6 +83,7 @@ $history = $doc->getHistory($id);
 
                                                         <div class="col-lg-12">
                                                             <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
+                                                                <?php if(isset($trackings)){?>
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Tracking No.</th>
@@ -89,17 +94,35 @@ $history = $doc->getHistory($id);
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php if($trackings){foreach($trackings as $tracking){?>
+                                                                    <?php foreach($trackings as $tracking){?>
                                                                     <tr>
                                                                        
-                                                                         <td><?php echo $tracking['trackingNumber'];?></td>
+                                                                        <td><?php echo $tracking['trackingNumber'];?></td>
                                                                         <td><?php echo $tracking['title'];?></td>
                                                                         <td><?php echo $tracking['Document'];?></td>
                                                                         <td><?php echo $tracking['dateadded'];?></td>
                                                                         <td><?php echo $tracking['datecompleted'];?></td>
                                                                     </tr>
-                                                                    <?php }}?>
+                                                                    <?php }?>
                                                                 </tbody>
+                                                                <?php }else if(isset($events)){?>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Title</th>
+                                                                            <th>Location</th>
+                                                                            <th>Date</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <?php foreach($events as $eventt){?>
+                                                                     <tr>
+                                                                        <td><?php echo $eventt['title'];?></td>
+                                                                        <td><?php echo $eventt['location'];?></td>
+                                                                        <td><?php echo $eventt['date'];?></td>
+                                                                    </tr>
+                                                                    <?php }?>
+                                                                </tbody>
+                                                                <?php }?>
                                                             </table>
                                                         </div>
                                                     </div>
@@ -135,8 +158,12 @@ $history = $doc->getHistory($id);
                 function( settings, data, dataIndex ) {
                     var min  = $('#min-date').val();
                     var max  = $('#max-date').val();
+                    <?php if(isset($trackings)){?>
                     var createdAt = data[3] || 0;
+                    <?php }else {?>
 
+                    var createdAt = data[2] || 0;
+                    <?php }?>
                     if  ( 
                             ( min == "" || max == "" )
                             || 

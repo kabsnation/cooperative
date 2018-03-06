@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 session_start();
 require("../config/config.php");
 require("../Handlers/ServiceRequestHandler.php");
@@ -43,6 +43,8 @@ if(isset($_POST['txtContactPerson'])){
 	
 	if($idAccounts=="NULL"){
 		$inbox=$handler->addinbox($status,$RequestId);
+	}else{
+		$handler->sendToDept($RequestId);
 	}
 
 
@@ -50,7 +52,7 @@ if(isset($_POST['txtContactPerson'])){
 			$audit->trail('ADD REQUEST; ID: '.$RequestId,'SUCCESSFUL',$idAccounts);
 	}
 	else{
-		$audit->trail('ADD EVENT; ID: '.$RequestId,'FAILED',$idAccounts);
+		$audit->trail('ADD REQUEST; ID: '.$RequestId,'FAILED',$idAccounts);
 	}
 }
 else
