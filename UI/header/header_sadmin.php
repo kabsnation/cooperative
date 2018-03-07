@@ -284,7 +284,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
                                 <li class="navigation-header"><span>Monitoring</span> <i class="icon-menu" title="Monitoring"></i></li>
                                 <li class="<?php echo $arrs[1];?>"><a href="SuperAdmin_DocumentTracker.php"><i class="icon-file-eye2"></i> <span>Document Tracker</span></a></li>
                                 <li class="<?php echo $arrs[2];?>"><a href="SuperAdmin_EventList.php"><i class="icon-calendar22"></i><span>Event Viewer</span></a></li>
-                                <li class="<?php echo $arrs[2];?>"><a href="CCDO_ServiceRequestList.php"><i class="icon-cogs"></i><span>Service Request Tracker</span></a></li>
+                                <li class="<?php echo $arrs[7];?>"><a href="CCDO_ServiceRequestList.php"><i class="icon-cogs"></i><span>Service Request Tracker</span></a></li>
 
                                 <li class="navigation-header"><span>Accounts</span> <i class="icon-menu" title="Accounts"></i></li>
 
