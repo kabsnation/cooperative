@@ -38,12 +38,11 @@ if(isset($_POST['txtContactPerson'])){
 	if($requestedservice!=7){
 		$serviceID=$handler->getServiceId($requestedservice);
 	}
-
-	$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
-	
 	if($idAccounts=="NULL"){
+		$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,3,$venue,$serviceID,1);
 		$inbox=$handler->addinbox($status,$RequestId);
 	}else{
+		$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
 		$handler->sendToDept($RequestId);
 	}
 

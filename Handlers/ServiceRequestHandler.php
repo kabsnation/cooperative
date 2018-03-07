@@ -1,8 +1,8 @@
 <?php 
 class ServiceRequestHandler{
-	public function addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID){
+	public function addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID,$ispublic = 0){
 		$con = new Connect();
-		$query = "INSERT INTO service_request (contact_person,organization,contact_no,address,activity_date,activity_time,date_created,time_created,no_participants,venue,other,status,idservice,email,idAccounts) VALUES ('" .$contactperson."','".$organization."','".$contactnumber."','".$address."','".$date."','".$time."','".$datecreated."','".$timecreated."','".$participants."','".$venue."','".$others."','PENDING',".$serviceID.",'".$email."',".$idAccounts.")";
+		$query = "INSERT INTO service_request (contact_person,organization,contact_no,address,activity_date,activity_time,date_created,time_created,no_participants,venue,other,status,idservice,email,idAccounts,ispublic) VALUES ('" .$contactperson."','".$organization."','".$contactnumber."','".$address."','".$date."','".$time."','".$datecreated."','".$timecreated."','".$participants."','".$venue."','".$others."','PENDING',".$serviceID.",'".$email."',".$idAccounts.",$ispublic)";
 		$lastId = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 		return $lastId;
 	}
@@ -40,12 +40,13 @@ class ServiceRequestHandler{
 				$res = $con->insert($query);
 			}
 		}
+		return $result;
 	}
 	public function disapprove($idservice_request,$message=''){
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE service_request SET status='DISAPPROVED' WHERE idservice_request=$idservice_request";
+		$query = "UPDATE service_request,location SET service_request.status='DISAPPROVED' , location.canbedeleted =1 , location.status ='DISAPPROVED' WHERE service_request.idservice_request=$idservice_request and location.idservice_request = $idservice_request";
 		$result = $con->update($query);
 		if($result){
 			$query = "SELECT contact_no,email FROM service_request WHERE idservice_request = $idservice_request";
@@ -63,18 +64,18 @@ class ServiceRequestHandler{
 			else{
 				// get number and email
 				if($row = $ress->fetch_assoc()){
-					//send sms and email
+					//send sms and e-mail
 					$SMSmessage = $SMS->sendSMS2($row['contact_no'],'Your service request has been disapproved. - CCDO'); 
 					$Mailmessage = $mail->sendMail2($row['email'],'Your request has been disapproved. -CCDO');
 				}
 			}
 		}
 	}
-	public function approve($idservice_request,$id,$message=''){
+	public function approve($idservice_request,$id,$idlocation,$message=''){
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE location SET status ='APPROVED' WHERE idservice_request=$idservice_request and idAccounts=$id";
+		$query = "UPDATE location SET status ='APPROVED' and canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
 		$result = $con->update($query);
 		if($result){
 			//insert remarks
@@ -104,7 +105,7 @@ class ServiceRequestHandler{
 				}
 					
 			}
-			else{
+			else if($id!=3){
 				//check if all is approve
 				$query ="SELECT count(*) as count FROM location WHERE idservice_request=$idservice_request and status in ('DISAPPROVED','WAITING FOR CONFIRMATION')";
 				$result = $con->select($query);

@@ -5,7 +5,6 @@ require("../config/config.php");
 require("../Handlers/AccountHandler.php");
 require("../Handlers/EventHandler.php");
 if(!isset($_SESSION['idEvent'])){
-    echo "<script>window.location='index.php';</script>";
 ?>
     <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -74,7 +73,10 @@ if(!isset($_SESSION['idEvent'])){
         <!-- Page content -->
         <div class="page-content">
 
-    <?php
+    <?php 
+    
+    $eventhandler = new EventHandler();
+    $servicelist = $eventhandler->getServiceList();
 }
 else {
     $id = $_SESSION['idEvent'];

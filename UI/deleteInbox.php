@@ -1,6 +1,14 @@
 <?php
 session_start();
-$id = $_SESSION['idAccount'];
+if(isset($_SESSION['idAccount'])){
+	$id = $_SESSION['idAccount'];
+}
+else if(isset($_SESSION['idSuperAdmin'])){
+	$id = $_SESSION['idSuperAdmin'];
+}
+else if(isset($_SESSION['idEvent'])){
+	$id = $_SESSION['idEvent'];
+}
 require("../config/config.php");
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/AuditTrail.php");
