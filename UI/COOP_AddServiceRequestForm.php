@@ -165,14 +165,18 @@ else {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Time:</strong></label>
-                                                            <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits">
+                                                            <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits" required="required">
                                                         </div>
                                                     </div>
+
+                                                </div>
+
+                                                <div class="row">
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Expected Number of Participants:</strong></label>
-                                                            <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required">
+                                                            <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required" min="1">
                                                         </div>
                                                     </div>
 
