@@ -13,6 +13,8 @@ $conn = new Connect();
 $con=$conn->connectDB();
 $doc = new DocumentHandler();
 $id = $_POST['id'];
+date_default_timezone_set('Asia/Manila');
+$date = date('m/d/Y h:i:s a', time());
 if(!empty($_POST['reply']) && isset($_POST['idTracking']) && isset($_POST['id']) || isset($_POST['idReply'])){
 
 $idTracking =$_POST['idTracking'];
@@ -96,12 +98,14 @@ else if($_POST['type']=='service request'){
 		//send to 4 departments
 		$servicereq->approve($idservice_request,$id,$idlocation,$message);
 		$servicereq->sendToDept($idservice_request);
+		$servicereq->addHistory($idlocation,'APPROVE',$date);
 	}
 	else if($id != 3 && $reply == 'APPROVE'){
 		if($message !='' && $message !=' ')
 			$servicereq->approve($idservice_request,$id,$idlocation,$message);
 		else
 			$servicereq->approve($idservice_request,$id,$idlocation);
+		$servicereq->addHistory($idlocation,'APPROVE',$date);
 	}
 	else if($reply=='DISAPPROVE'){
 		// send sms and email and get contact number in service request
@@ -112,6 +116,7 @@ else if($_POST['type']=='service request'){
 		else{
 			$servicereq->disapprove($idservice_request);
 		}
+		$servicereq->addHistory($idlocation,'DISAPPROVE',$date);
 	}
 	$audit->trail('SERVICE REQUEST; ID: '. $idservice_request,$reply,$id);
 }

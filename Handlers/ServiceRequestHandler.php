@@ -75,13 +75,14 @@ class ServiceRequestHandler{
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE location SET status ='APPROVED' and canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
-		$result = $con->update($query);
+		$query = "UPDATE location SET status ='APPROVED', canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
+		$result = $con->update($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+
 		if($result){
 			//insert remarks
 			if($message!=''){
 				$query="INSERT INTO remarks(remarks,idservice_request) VALUES('$message',$idservice_request)";
-				$res = $con->insert($query);
+				$res = $con->insert($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);;
 			}
 			if($id==1){
 				//update service request
@@ -138,5 +139,11 @@ class ServiceRequestHandler{
 		$result = $con->select($query);
 		return $result;
 	}	
+
+	public function addHistory($idlocation,$status,$date){
+		$con = new Connect();
+		$query = "INSERT into history (idlocation,status,datetime) values($idlocation,'$status','$date')";
+		$result = $con->insert($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+	}
 }
 ?>
