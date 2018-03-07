@@ -5,7 +5,7 @@ $arrs = array();
 $title ="";
 $_SESSION['counter']=0;
 $id = $_SESSION['idAccount'];
-if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
+if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument1.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
@@ -93,21 +93,21 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     <title><?php echo $title;?></title>
  <link rel="icon" href="../assets/images/CCDO Logo.png" />
 
-	<!-- Global stylesheets -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
-	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
-	<!-- /global stylesheets -->
+<!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
 
-	<!-- Core JS files -->
-	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
-	<!-- /core JS files -->
+    <!-- Core JS files -->
+    <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
 
     <!-- Theme JS files -->
     <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
@@ -140,16 +140,19 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
     <script type="text/javascript" src="assets/js/plugins/pickers/pickadate/legacy.js"></script>
     <script type="text/javascript" src="assets/js/pages/picker_date.js"></script>
+    <script type="text/javascript" src="assets/js/core/libraries/jquery_ui/core.min.js"></script>
+    <script type="text/javascript" src="assets/js/pages/wizard_form.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/wizards/form_wizard/form.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins/forms/wizards/form_wizard/form_wizard.min.js"></script>
     <!-- /theme JS files -->
-    
 
 </head>
 <body>
     
-        <div id="header">
+    <div id="header">
 
-                    <!-- Main navbar -->
-        <div id="header" class="navbar navbar-inverse">
+    <!-- Main navbar -->
+    <div id="header" class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.html">
                 <img src="assets/images/CCDO Logo.png"/></a>
@@ -183,80 +186,79 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
             </ul>
         </div>
     </div>
-
     <!-- /main navbar -->
 
-            <!-- Page container -->
-            <div class="page-container">
+    <!-- Page container -->
+    <div class="page-container">
 
-                <!-- Page content -->
-                <div class="page-content">
+        <!-- Page content -->
+        <div class="page-content">
 
-                    <!-- Main sidebar -->
-                    <div class="sidebar sidebar-main">
-                        <div class="sidebar-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
 
-                            <!-- User menu -->
-                            <div class="sidebar-user">
-                                <div class="category-content">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img src="assets/images/CCDO Logo.png" class="img-circle img-sm" alt="" style="background-color: White" />
-                                        </div>
-                                        <div class="media-body">
-                                            <span class="media-heading text-semibold">
-                                                <label  ID="txtUser" Text="Username"><?php echo $info['name']?></label></span>
-                                        </div>
-                                        <div class="media-right media-middle">
-                                            <ul class="icons-list">
-                                                <li>
-                                                    <a  href="EditAccount.php"><i class="icon-cog3"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="category-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="assets/images/CCDO Logo.png" class="img-circle img-sm" alt="" style="background-color: White" />
                                 </div>
-                            </div>
-                            <?php }}?>
-                            <!-- /user menu -->
-
-<!-- Main Navigation -->
-                            <div class="sidebar-category sidebar-category-visible">
-                                <div class="category-content no-padding">
-                                    <ul class="navigation navigation-main navigation-accordion">
-
-                                       <li>
-                                            <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
-                                            <ul>
-                                                <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Send Document</a></li>
-                                                <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
-                                            </ul>
-                                        </li>
-
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">
+                                        <label  ID="txtUser" Text="Username"><?php echo $info['name']?></label></span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list">
                                         <li>
-                                            <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
-                                            <ul>
-                                                <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
-                                                <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
-                                            </ul>
+                                            <a  href="EditAccount.php"><i class="icon-cog3"></i></a>
                                         </li>
-
-                                        <li>
-                                            <a href="#"><i class="icon-stack-text"></i><span>Logs</span></a>
-                                            <ul>
-                                                <li class="<?php echo $arrs[4]?>"><a href="COOP_TransactionLogs.php">Transaction Logs</a></li>
-                                                <li class="<?php echo $arrs[5]?>"><a href="COOP_History.php">History</a></li>
-                                            </ul>
-                                        </li>
-                                        
                                     </ul>
                                 </div>
                             </div>
-                            <!-- /Main Navigation -->
-
                         </div>
                     </div>
-                    <!--/ Main sidebar -->
+                    <?php }}?>
+                    <!-- /user menu -->
+
+                    <!-- Main Navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+                            <ul class="navigation navigation-main navigation-accordion">
+
+                               <li>
+                                    <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
+                                    <ul>
+                                        <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument1.php">Send Document</a></li>
+                                        <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="icon-mail5"></i><span>Messages</span></a>
+                                    <ul>
+                                        <li class="<?php echo $arrs[2]?>"><a href="CCDO_Inbox.php">Inbox <label id="badge" class="badge bg-blue-400"></label></a></li>
+                                        <li class="<?php echo $arrs[3]?>"><a href="CCDO_Trash.php">Trash</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="icon-stack-text"></i><span>Logs</span></a>
+                                    <ul>
+                                        <li class="<?php echo $arrs[4]?>"><a href="COOP_TransactionLogs.php">Transaction Logs</a></li>
+                                        <li class="<?php echo $arrs[5]?>"><a href="COOP_History.php">History</a></li>
+                                    </ul>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /Main Navigation -->
+
+                </div>
+            </div>
+            <!--/ Main sidebar -->
 
     <script type="text/javascript">
 

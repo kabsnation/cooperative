@@ -213,18 +213,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
             </ul>
         </div>
     </div>
-    <script type="text/javascript">
-        function logOut(){
-            $.ajax({
-            type: "POST",
-            url: "/coop/UI/logout.php",
-            data: "type='admin'",
-            success: function(data){
-                 window.location ='index.php';
-            }
-        });
-        }
-    </script>
+ 
     <!-- /main navbar -->
 
     <!-- Page container -->
@@ -294,3 +283,93 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
                 </div>
             </div>
             <!-- /main sidebar -->
+<script type="text/javascript">
+        function logOut(){
+            $.ajax({
+            type: "POST",
+            url: "/coop/UI/logout.php",
+            data: "type='admin'",
+            success: function(data){
+                 window.location ='index.php';
+            }
+        });
+        }
+         setInterval(realTime1,1000);
+        function realTime1(){
+             $.ajax({
+                type: "POST",
+                url: "checkerCounter.php",
+                data: "id=<?php echo $id;?>",
+                success: function(data){
+                     if(data == 1){
+                        console.log(data);
+                        addToCounter();
+                    }
+                },
+                dataType: "json"
+            });
+        } 
+        function addToCounter(){
+             $.ajax({
+                type: "POST",
+                url: "realtimeCounter.php",
+                data: "",
+                success: function(data){ 
+                    var badge = document.getElementById('badge');
+                    if(data !=0){
+                        badge.innerHTML = data;
+                        console.log('addto'+data);
+                        toNotify();  
+                    }
+                    
+                    else{
+
+                        badge.innerHTML = null;
+                    }
+                    
+                },
+                dataType: "json",
+                error:function(data){
+                    alert(data);
+                }
+            });
+        }
+        function toNotify(){
+            $.ajax({
+                type: "POST",
+                url: "notifyFunction.php",
+                data: "id=<?php echo $id;?>",
+                success: function(data){ 
+                    if(data!=0){
+                        
+                        console.log('toNotify'+data);
+                        for(var i =0; i<data.length;i++){
+                            newMessageNotification(data[i].title,data[i].name);
+                        }
+                    }  
+                },
+                dataType: "json",
+                error:function(data){
+                    alert(data);
+                }
+            });
+        }
+        function newMessageNotification(title,sender){
+            PNotify.desktop.permission();
+            (new PNotify({
+                title: 'New message from '+sender,
+                type: 'success',
+                text: title + ' (Click this to open the message)',
+                hide: false,
+                desktop: {
+                    desktop: true,
+                    addclass: 'bg-green',
+                    icon: 'assets/images/pnotify/info.png'
+                }
+            })
+            ).get().click(function(e) {
+                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
+                window.location='CCDO_Inbox.php';
+            });
+        }
+    </script>

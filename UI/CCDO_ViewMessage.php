@@ -22,14 +22,39 @@ else if(isset($_SESSION['idEvent'])){
 else{
 	echo "<script>window.location='index.php';</script>";
 }
-if(isset($_GET['idTracking'])){
-	$idTracking = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idTracking'])));
+//check what document
+$arr = array();
+$idlocation ='';
+if(isset($_GET['idlocation'])){
+	$idlocation = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idlocation'])));
+	$result = $doc->checkInbox($idlocation);
+	foreach($result as $res){
+		if(isset($res['idEvents'])){
+			$arr[0] =$res['idEvents'];
+			$arr[1] = 'event';
+		}
+		else if(isset($res['idservice_request'])){
+			$arr[0] =$res['idservice_request'];
+			$arr[1] = 'service request';
+		}
+		else if(isset($res['idTracking'])){
+			$arr[0] =$res['idTracking'];
+			$arr[1] = 'tracking';
+		}
+		else if(isset($res['idReply'])){
+			$arr[0] =$res['idReply'];
+			$arr[1] = 'reply';
+		}
+	}
+}
+if($arr[1]=='tracking'){
+	$idTracking = $arr[0];
 	//check if read or not
-	$doc->checkIfRead($idTracking,$id);
+	$doc->checkIfRead($idTracking,$id,$idlocation);
 	//check if need a reply
 	$doc->checkReply($idTracking,$id);
-	$infos = $doc->getInboxInfo($idTracking,$id);
-	$firstRowLocation = $doc->getTrackingLocationById($idTracking,$id);
+	$infos = $doc->getInboxInfo($idTracking,$id,$idlocation);
+	$firstRowLocation = $doc->getTrackingLocationById($idTracking,$id,$idlocation);
 	$trackingLocation = $doc->getTrackingLocation($idTracking);
 	$locations = '';
 	if($trackingLocation){
@@ -39,8 +64,8 @@ if(isset($_GET['idTracking'])){
 	}
 	$type ="tracking";
 }
-else if(isset($_GET['idReply'])){
-	$idReply = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idReply'])));
+else if($arr[1]=='reply'){
+	$idReply = $arr[0];
 	//check if read or not
 	$check = $doc->checkIfReadReply($idReply,$id);
 	$infos = $doc->getReplyInfo($idReply,$id);
@@ -48,8 +73,8 @@ else if(isset($_GET['idReply'])){
 	$locations = '';
 	$type = "reply";
 }
-else if(isset($_GET['idEvents'])){
-	$idEvents = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idEvents'])));
+else if($arr[1]=='event'){
+	$idEvents =$arr[0];
 	//check if read or not
 	$check = $doc->checkIfReadEvent($idEvents,$id);
 	$infos = $doc->getEventInfo($idEvents,$id);
@@ -63,12 +88,12 @@ else if(isset($_GET['idEvents'])){
 	}
 	$type = "events";
 }
-else if(isset($_GET['idservice_request'])){
-	$idservice_request = mysqli_real_escape_string($con,stripcslashes(trim($_GET['idservice_request'])));
+else if($arr[1]=='service request'){
+	$idservice_request = $arr[0];
 	//check if read or not
-	$check = $doc->checkIfReadRequest($idservice_request,$id);
-	$infos = $doc->getServiceRequestInfo($idservice_request,$id);
-	$firstRowLocation = $doc->getServiceReqLocationById($idservice_request,$id);
+	$check = $doc->checkIfReadRequest($idservice_request,$id,$idlocation);
+	$infos = $doc->getServiceRequestInfo($idservice_request,$id,$idlocation);
+	$firstRowLocation = $doc->getServiceReqLocationById($idservice_request,$id,$idlocation);
 	$servicelocation = $doc->getServiceReqLocation($idservice_request);
 	$locations = '';
 	if($servicelocation){
@@ -177,13 +202,13 @@ else if(isset($_GET['idservice_request'])){
 							<div class="col-lg-12">
 
 								<?php 
-									if(isset($_GET['idEvents'])){?>
+									if($arr[1]=='event'){?>
 									<h6><strong>Start Date and Time: </strong><?php echo $info['startDateTime'];?></h6>
 									<h6><strong>End Date and Time: </strong><?php echo $info['endDateTime'];?></h6>
 									<h6><strong>Event Location: </strong><?php echo $info['eventLocation'];?></h6>
 									<h6><strong>Event Details: </strong> <?php echo $info['message']?></h6>
 									<?php }
-								else if(isset($_GET['idservice_request'])){?>
+								else if($arr[1]=='service request'){?>
 
 								<div class="col-md-6">
 									<h6 class="text-muted">Contact Information</h6>
@@ -207,9 +232,9 @@ else if(isset($_GET['idservice_request'])){
 									<h6><strong>Expected Number of Participants: </strong> <?php echo $info['no_participants']?></h6>
 								</div>	
 									
-									<?php }else{
-
-									echo $info['message'];} 
+									<?php }
+									else{
+										echo $info['message'];} 
 									if(isset($info['filePath']) && $info['filePath']!=NULL){
 								?>
 								<br>
@@ -329,6 +354,7 @@ else if(isset($_GET['idservice_request'])){
 
 							<div class="text-right" style="margin-top: 10px;">
 								<input type="hidden" name="idservice_request" value="<?php echo $idservice_request;?>">
+								<input type="hidden" name="idlocation" value="<?php echo $idlocation;?>">
 								<input type="hidden" name="type" value="<?php echo $type?>">
 								<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 								<input type="hidden" name="id" value="<?php echo $id;?>">

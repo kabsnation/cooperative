@@ -5,7 +5,6 @@ require("../config/config.php");
 require("../Handlers/AccountHandler.php");
 require("../Handlers/EventHandler.php");
 if(!isset($_SESSION['idEvent'])){
-    echo "<script>window.location='index.php';</script>";
 ?>
     <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -74,7 +73,10 @@ if(!isset($_SESSION['idEvent'])){
         <!-- Page content -->
         <div class="page-content">
 
-    <?php
+    <?php 
+    
+    $eventhandler = new EventHandler();
+    $servicelist = $eventhandler->getServiceList();
 }
 else {
     $id = $_SESSION['idEvent'];
@@ -165,14 +167,18 @@ else {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Time:</strong></label>
-                                                            <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits">
+                                                            <input id="txtTime" name="txtTime" type="text" class="form-control pickatime-limits" required="required">
                                                         </div>
                                                     </div>
+
+                                                </div>
+
+                                                <div class="row">
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">*</span><strong> Expected Number of Participants:</strong></label>
-                                                            <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required">
+                                                            <input id="txtExpected" name="txtExpected" type="number" class="form-control" required="required" min="1">
                                                         </div>
                                                     </div>
 

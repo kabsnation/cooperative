@@ -11,14 +11,7 @@ $id = $_POST['id'];
 	            $myArray[0][] = $row['title'];
 	            $myArray[1][] = $row['name'];
 	            $myArray[2][] = $row ['DateTime'];
-	            if($row['idreply']!=null)
-	            	$myArray[3][] = "idReply=".$row['idreply'];
-	            else if($row['idTracking']!=null)
-	            	$myArray[3][] = "idTracking=".$row['idTracking'];
-	            else if($row['idEvents']!=null)
-	            	$myArray[3][]="idEvents=".$row['idEvents'];
-	            else
-	            	$myArray[3][]="idservice_request=".$row['idservice_request'];
+	            $myArray[3][]="idlocation=".$row['idlocation'];
 	            $myArray[4][] = $row['idlocation'];
 	            $myArray[5][] = $row['isopen'];
 	            $myArray[6][]= $row['canbedeleted'];
