@@ -120,7 +120,7 @@ class DocumentHandler{
 	}
 	public function getServiceRequestInfo($idservice_request,$id){
 		$con = new Connect();
-		$query ="SELECT 'SERVICE REQUEST' as title,contact_person as contact,address,contact_no,organization ,activity_date,activity_time,venue,no_participants,email,service_request.idservice_request as receiverId,service_request.idservice_request,concat(date_created,'-',time_created) as DateTime,location.idAccounts as receiver,concat(first_name,' ', last_name) as name FROM service_request JOIN location ON location.idservice_request = service_request.idservice_request JOIN accounts ON accounts.idAccounts = service_request.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE location.idAccounts = $id and location.idservice_request = $idservice_request";
+		$query ="SELECT 'SERVICE REQUEST' as title,contact_person as contact,address,contact_no,organization ,activity_date,activity_time,venue,no_participants,email,service_request.idservice_request as receiverId,service_request.idservice_request,concat(date_created,'-',time_created) as DateTime,location.idAccounts as receiver,concat(first_name,' ', last_name) as name, if(other='',service_list.service,other) as service_req FROM service_request JOIN location ON location.idservice_request = service_request.idservice_request JOIN accounts ON accounts.idAccounts = service_request.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info JOIN service_list ON service_request.idservice= service_list.idservice WHERE location.idAccounts = $id and location.idservice_request = $idservice_request";
 		$result = $con->select($query);
 		return $result;
 	}

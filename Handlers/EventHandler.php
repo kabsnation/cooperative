@@ -13,7 +13,24 @@ class EventHandler{
 		$result = $con->select($query);
 		return $result;
 	}
-
+	public function getEventTransacLogs($id){
+		$con = new Connect();
+		$query = "SELECT eventName as title,SUBSTRING_INDEX(datetime, '\n', 1) AS date, datetime as datetime,eventLocation as location FROM events UNION SELECT ifnull(service,other) as title,date_created as date, concat(date_created,'-',time_created) as datetime,venue as location FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice  ORDER BY datetime DESC";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getEventTransacLogsByDate($mindate,$maxdate){
+		$con = new Connect();
+		$query = "SELECT eventName as title,eventLocation as location,datetime FROM events WHERE (SUBSTRING_INDEX(datetime, '\n', 1) BETWEEN '$mindate' AND '$maxdate') and events.status='DONE' UNION SELECT ifnull(service,other) as title,venue as location, concat(date_created,'-',time_created) as datetime FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice where (date_created BETWEEN '$mindate' AND '$maxdate') and service_request.status='DONE' order by datetime";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getHistory($id){
+		$con = new Connect();
+		$query="SELECT history.status,history.datetime,location.idlocation,coalesce(eventName,service,other) as title,COALESCE (department,concat(first_name,' ', last_name)) as name FROM history JOIN location ON history.idlocation = location.idlocation LEFT OUTER JOIN service_request ON service_request.idservice_request = location.idservice_request LEFT OUTER JOIN events ON events.idEvents = location.idEvents JOIN accounts ON location.idAccounts = accounts.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info LEFT OUTER JOIN service_list on service_list.idservice = service_request.idservice WHERE service_request.idAccounts = $id or events.idAccounts = $id ORDER BY idhistory DESC";
+		$result = $con->select($query);
+		return $result;
+	}
 	public function addRecipient($idEvents,$idAccounts,$eventName,$eventLocation,$startDateTime,$endDateTime){
 		$con = new Connect();
 		$SMS = new SMSHandler();
@@ -90,7 +107,7 @@ class EventHandler{
 	}
 	public function deleteEvent($idEvents){
 		$query="UPDATE events SET markasdeleted = 1 WHERE idEvents = $idEvents";
-		$con = new Connect();
+		$con = new Connect();       
 		$result = $con->update($query);
 		return $result;
 	}

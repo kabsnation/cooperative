@@ -200,6 +200,7 @@ else if(isset($_GET['idservice_request'])){
 								
 								<div class="col-md-12">
 									<h6 class="text-muted">Service Request Information</h6>
+									<h6><strong>Service: </strong><?php echo $info['service_req'];?></h6>
 									<h6><strong>Activity Date: </strong><?php echo $info['activity_date'];?></h6>
 									<h6><strong>Activity Time: </strong> <?php echo $info['activity_time']?></h6>
 									<h6><strong>Venue: </strong> <?php echo $info['activity_time']?></h6>
@@ -321,17 +322,17 @@ else if(isset($_GET['idservice_request'])){
                                 </div>
 
                                 <div class="col-md-12">
-									<textarea type="text" class="form-control" required="required" placeholder="Type here for any remarks..." cols="5" rows="5"></textarea>
+									<textarea type="text" class="form-control" name="reply" required="required" placeholder="Type here for any remarks..." cols="5" rows="5"></textarea>
 								</div>
 								
 							</div>
 
 							<div class="text-right" style="margin-top: 10px;">
-								<input type="hidden" name="idEvents" value="<?php echo $idEvents;?>">
+								<input type="hidden" name="idservice_request" value="<?php echo $idservice_request;?>">
 								<input type="hidden" name="type" value="<?php echo $type?>">
 								<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 								<input type="hidden" name="id" value="<?php echo $id;?>">
-								<input type="button" id="send" onclick="confirm()" class="btn bg-teal" value="Send" name="send"/>
+								<input type="submit" id="send"  class="btn bg-teal" value="Send" name="send"/>
 							</div>
 					</div>
 					<!-- /summernote editor -->
