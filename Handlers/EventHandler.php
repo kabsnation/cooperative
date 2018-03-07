@@ -15,7 +15,7 @@ class EventHandler{
 	}
 	public function getEventTransacLogs($id){
 		$con = new Connect();
-		$query = "SELECT eventName as title,SUBSTRING_INDEX(datetime, '\n', 1) AS date, datetime as datetime,eventLocation as location FROM events UNION SELECT ifnull(service,other) as title,date_created as date, concat(date_created,'-',time_created) as datetime,venue as location FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice  ORDER BY datetime DESC";
+		$query = "SELECT eventName as title,SUBSTRING_INDEX(datetime, '\n', 1) AS date, datetime as datetime,eventLocation as location FROM events UNION SELECT ifnull(service,other) as title,date_created as date, concat(date_created,'-',time_created) as datetime,venue as location FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice where service_request.status ='APPROVED' ORDER BY datetime DESC";
 		$result = $con->select($query);
 		return $result;
 	}
