@@ -68,7 +68,7 @@ include('../UI/header/header_user.php');
                                 <h6 class="form-wizard-title text-semibold">
                                     <span class="form-wizard-count">2</span>
                                     Choosing your Recipients
-                                    <small class="display-block">Second, choose the person you want to send the documents.</small>
+                                    <small class="display-block">Second, choose the person or department you want to send the documents.</small>
                                 </h6>
 
                                 <div class="col-md-12">
@@ -130,7 +130,7 @@ include('../UI/header/header_user.php');
                                     <div class="col-md-4">
                                         <center>
                                             <div class="form-group">
-                                                <label class="display-block"><span class="text-danger">* </span> Upload File/s:</label>
+                                                <label class="display-block"><span class="text-danger">* </span> <strong>Upload File/s:</strong></label>
                                                 <input type="file" id="file" name="file" required="required" class="file-styled">
                                                 <span class="help-block">Multiple file upload is not allowed. Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)</span>
                                             </div>
@@ -208,7 +208,7 @@ include('../UI/header/header_user.php');
                                 <h6 class="form-wizard-title text-semibold">
                                     <span class="form-wizard-count">5</span>
                                     Adding a Message with the Document
-                                    <small class="display-block">Fifth, you can add or not some message or remarks along with the document.</small>
+                                    <small class="display-block">Fifth, you can add some message or remarks along with the document.</small>
                                 </h6>
 
                                 <div class="row">
@@ -303,7 +303,7 @@ include('../UI/header/header_user.php');
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 5%;">Number</th>
-                                                            <th style="width: 30%;">Department</th>
+                                                            <th style="width: 95%;">Department</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -363,7 +363,7 @@ var table = $('#table').DataTable();
  function selectAll(){
     alert('asd');
  }
- 
+
  $('#btnSend').submit(function(ev) {
     ev.preventDefault(); // to stop the form from submitting
     /* Validations go here */
