@@ -46,7 +46,7 @@ class ServiceRequestHandler{
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE service_request SET status='DISAPPROVED' WHERE idservice_request=$idservice_request";
+		$query = "UPDATE service_request,location SET service_request.status='DISAPPROVED' , location.canbedeleted =1 , location.status ='DISAPPROVED' WHERE service_request.idservice_request=$idservice_request and location.idservice_request = $idservice_request";
 		$result = $con->update($query);
 		if($result){
 			$query = "SELECT contact_no,email FROM service_request WHERE idservice_request = $idservice_request";
@@ -75,7 +75,7 @@ class ServiceRequestHandler{
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE location SET status ='APPROVED' WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
+		$query = "UPDATE location SET status ='APPROVED' and canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
 		$result = $con->update($query);
 		if($result){
 			//insert remarks
@@ -119,7 +119,6 @@ class ServiceRequestHandler{
 			}
 			
 		}
-		return $query;
 	}
 	
 }

@@ -78,11 +78,7 @@ $result = $doc->inboxCoopById($id,1);
                                                 <td><?php echo $info['name'];?></td>
                                                 <td><?php echo $info['DateTime'];?></td>
                                                 <td class="text-center">
-                                                    <?php if($info['idTracking']==null){?>
-                                                        <a href='CCDO_ViewMessage.php?idReply=<?php echo $info['idreply'];?>'><i class='icon-mail-read'></i> Open </a></li><a href='#' class='text-danger' onclick='promptDelete(<?php echo $info['idlocation'];?>);'><i class='icon-trash'></i> Delete </a></li>
-                                                    <?php }else{?>
-                                                        <a href='CCDO_ViewMessage.php?idTracking=<?php echo $info['idTracking'];?>'><i class='icon-mail-read'></i> Open </a></li><a href='#' class='text-danger' onclick='promptDelete(<?php echo $info['idTracking'];?>);'><i class='icon-trash'></i> Delete </a></li>
-                                                    <?php }?>
+                                                        <a href='CCDO_ViewMessage.php?idlocation=<?php echo $info['idlocation'];?>'><i class='icon-mail-read'></i> Open </a></li><a href='#' class='text-danger' onclick='promptDelete(<?php echo $info['idlocation'];?>);'><i class='icon-trash'></i> Delete </a></li>
                                                 </td>
                                             </tr>
                                             <?php }}?>
@@ -245,9 +241,11 @@ $result = $doc->inboxCoopById($id,1);
                                     success: function(data){
                                         if(data == '1'){
                                             failed();
+                                            console.log(data);
                                         }
                                         else{
                                             success();
+                                            console.log(data);
                                         }
                                     }
                                 });

@@ -92,12 +92,12 @@ else if($_POST['type']=='service request'){
 	$idservice_request = $_POST['idservice_request'];
 	$idlocation = $_POST['idlocation'];
 	$message = mysqli_real_escape_string($con,stripcslashes(trim($_POST['reply'])));
-	if($id==3){
+	if($id==3 && $reply =='APPROVE'){
 		//send to 4 departments
 		$servicereq->approve($idservice_request,$id,$idlocation,$message);
 		$servicereq->sendToDept($idservice_request);
 	}
-	else if($id != 3){
+	else if($id != 3 && $reply == 'APPROVE'){
 		if($message !='' && $message !=' ')
 			$servicereq->approve($idservice_request,$id,$idlocation,$message);
 		else
@@ -105,10 +105,13 @@ else if($_POST['type']=='service request'){
 	}
 	else if($reply=='DISAPPROVE'){
 		// send sms and email and get contact number in service request
-		if($message !='' && $message != ' ')
-			$event->disapprove($idservice_request,$message);
-		else
-			$event->disapprove($idservice_request);
+		if($message !='' && $message != ' '){
+			$ye = $servicereq->disapprove($idservice_request,$message);
+			echo $ye;
+		}
+		else{
+			$servicereq->disapprove($idservice_request);
+		}
 	}
 	$audit->trail('SERVICE REQUEST; ID: '. $idservice_request,$reply,$id);
 }
