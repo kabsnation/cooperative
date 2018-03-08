@@ -17,7 +17,7 @@ class SMSHandler{
 	public function sendSMS($contactNumber,$eventName,$eventLocation,$startDateTime,$endDateTime){
 		$message = $eventName.' '.$eventLocation.' '.$startDateTime.' '.$endDateTime;
 		echo $message;
-		$result = $this->itexmo($contactNumber,$message,"TR-COOPE230127_4LPZ6");
+		$result = $this->itexmo($contactNumber,$message,"TR-COOPE873400_YAQ55");
 		if ($result == ""){
 			echo "iTexMo: No response from server!!!";	
 		}
@@ -31,7 +31,7 @@ class SMSHandler{
 		}
 	}	
 	public function sendSMS2($contactNumber,$message){
-		$result = $this->itexmo($contactNumber,$message,"TR-COOPE230127_4LPZ6");
+		$result = $this->itexmo($contactNumber,$message,"TR-COOPE873400_YAQ55");
 		if ($result == ""){
 			echo "iTexMo: No response from server!!!";	
 		}

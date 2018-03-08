@@ -42,7 +42,7 @@ include('../UI/header/header_sadmin.php');
 					<div class="row">
 						<div class="col-lg-3">
 
-							<a href="SuperAdmin_DocumentTracker.php?key=gxt" style="color: #fff">
+							<a onclick="redirect(0)" style="color: #fff">
 								<div class="panel bg-primary">
 									<div class="panel-body">
 										<h3 class="no-margin" id="pending">0</h3>
@@ -56,7 +56,7 @@ include('../UI/header/header_sadmin.php');
 
 						<div class="col-lg-3">
 
-							<a href="SuperAdmin_DocumentTracker.php?key=gtx" style="color: #fff">
+							<a onclick="redirect(1)" style="color: #fff">
 								<div class="panel bg-success-400">
 									<div class="panel-body">
 										<h3 class="no-margin" id="done">0</h3>
@@ -89,7 +89,7 @@ include('../UI/header/header_sadmin.php');
 								<div class="panel bg-indigo-400">
 									<div class="panel-body">
 
-										<h3 class="no-margin" id="event">None</h3>
+										<h3 class="no-margin" id="service">0</h3>
 										Ongoing Service Requests
 										<div class="text-muted text-size-small"><p class="text-muted btn-link"><i class="icon-eye"></i> Click to View</p></div>
 									</div>
@@ -181,6 +181,13 @@ include('../UI/header/header_sadmin.php');
 	</div>
 	<!-- /page container -->
 <script type="text/javascript">
+	function redirect(checker){
+		var date = $('#date_picker').val();
+		if(checker==0)
+			window.location ="SuperAdmin_DocumentTracker.php?date="+date+"&key=gtx";
+		else
+			window.location ="SuperAdmin_DocumentTracker.php?date="+date+"&key=txg";
+	}
 	setInterval(realtime,1000);
 	function realtime(){
 		var date = $('#date_picker').val();
@@ -193,10 +200,10 @@ include('../UI/header/header_sadmin.php');
             	$('#pending').html(data[0]);
             	$('#done').html(data[1]);
             	$('#registered').html(data[2]);
-            	$('#event').html(data[3]);
+            	$('#service').html(data[3]);
             	$('#bod').html(data[4]);
             	$('#upcoming').html(data[5]);
-            	document.getElementById("link").href="SuperAdmin_EventList.php?Id="+data[6]+"&dash=true"; 
+            	document.getElementById("link").href="CCDO_ServiceRequestList.php?dash=true"; 
             	console.log(data);
             },
            	error:function(data){

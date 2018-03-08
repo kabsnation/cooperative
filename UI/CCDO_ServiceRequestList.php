@@ -111,6 +111,7 @@ $serviceList = $handler->getServiceRequestList();
 </html>
 <script type="text/javascript">
       $('#table').dataTable( {
+        "order": [[ 0, 'desc' ]],
               "columnDefs": [ {
                 "targets": 0,
                 "orderable": true

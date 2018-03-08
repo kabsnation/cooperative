@@ -9,9 +9,28 @@ require("../Handlers/AccountHandler.php");
 date_default_timezone_set('Asia/Manila');
 $account = new AccountHandler();
 $doc = new DocumentHandler();
+//check if coop account
 $trackingNumber = $doc->getTrackingNumber();
 $documentType = $doc->getDocumentType();
 $id = $_SESSION['idAccount'];
+$accnt = $account->checkIfCoop($id);
+$arr = array();
+if($row = $accnt->fetch_array()){
+    if(isset($row[0])){
+        echo "<script>change('CSRL-SDF-F02')</script>";
+        $arr[0] = 1;
+        $arr[1] = 1;
+        $arr[2] = 2;
+        $arr[3] = 3;
+        $arr[4] = 4;
+    }
+    else{
+        $arr[0] = 1;
+        $arr[1] = 1;
+        $arr[2] = 2;
+        $arr[3] = 3;
+    }
+}
 $adminAccount = $account->getAccountById($id);
 $cooperativeProfile = $account->getCoopAccounts($id);
 $departmentProfile = $account->getDepartmentAccounts($id);

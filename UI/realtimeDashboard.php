@@ -1,7 +1,9 @@
 <?php
-require("../Handlers/DocumentHandler.php");
 require("../config/config.php");
+require("../Handlers/DocumentHandler.php");
+require("../Handlers/ServiceRequestHandler.php");
 $doc = new DocumentHandler();
+$servicereq = new ServiceRequestHandler();
 $pendingCount = $doc->getCountPendingDoc($_POST['date']);
 $doneCount = $doc->getCountDoneDoc($_POST['date']);
 $accCount = $doc->getCountAccounts();
@@ -9,6 +11,7 @@ $doneCountDate= $doc->getCountPendingDocDate($_POST['date']);
 $pendingCountDate=$doc->getCountPendingDoc($_POST['date']);
 $total = $doc->getTotalDoc($_POST['date']);
 $event = $doc->getUpcomingEvent();
+$service = $servicereq->getCount();
 $ongoing = $doc->getOngoingTracking($_POST['date']);
 $finished = $doc->getFinishedTracking($_POST['date']);
 $eventDetails = $doc->getEventDetails();
@@ -16,11 +19,11 @@ $arrs = array();
 $arrs[0]=$pendingCount;
 $arrs[1]=$doneCount;
 $arrs[2] = $total;
-if($event == 0){
-	$arrs[3] = "None";
+if($service == 0){
+	$arrs[3] = 0;
 }
 else{
-	$arrs[3]=$event[0];
+	$arrs[3]=$service;
 }
 $arrs[4] ='<tr class="active border-double">
 			<td colspan="5">Ongoing Documents</td>
@@ -28,7 +31,6 @@ $arrs[4] ='<tr class="active border-double">
 				<label id="badge" class="badge bg-blue-400">'.$pendingCount.'</label>
 			</td></tr>';
 $arrs[5]='';
-$arrs[6]=$event[1];
 if($ongoing){
 	foreach($ongoing as $ong){
 	$datetime1 = new DateTime(date("m/d/Y h:i:s a"));// to

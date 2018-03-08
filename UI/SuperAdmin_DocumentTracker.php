@@ -7,11 +7,12 @@ require("../Handlers/DocumentHandler.php");
 require("../Handlers/AccountHandler.php");
 require("../config/config.php");
 $doc = new DocumentHandler();
-if(isset($_GET['key'])){
-    if($_GET['key']=='gxt') 
-        $tracking =  $doc->getOngoingTracking();
+if(isset($_GET['key']) && isset($_GET['date'])){
+    if($_GET['key']=='gtx') {
+        $tracking =  $doc->getOngoingTracking($_GET['date']);
+    }
     else
-        $tracking =  $doc->getFinishedTracking();
+        $tracking =  $doc->getFinishedTracking($_GET['date']);
 }
 else
     $tracking =  $doc->getAllTracking();
@@ -76,7 +77,7 @@ include('../UI/header/header_sadmin.php');
                                                             <td><?php echo $track['Document'];?></td>
                                                             <td><?php echo $track['Status'];?></td>
                                                             <td><?php echo $track['DateTime'];?></td>
-                                                            <td class="text-center"><a href="ViewTracking.php?trackingId=<?php echo $track['trackingNumber'];?>"><i class="icon-eye"></i> View</a></td>
+                                                            <td class="text-center"><a href="ViewTracking.php?trackingId=<?php echo $track['idTracking'];?>"><i class="icon-eye"></i> View</a></td>
                                                         </tr>
                                                         <?php }} ?>
                                                 </tbody>

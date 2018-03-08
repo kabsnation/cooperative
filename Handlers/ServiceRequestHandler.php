@@ -6,7 +6,13 @@ class ServiceRequestHandler{
 		$lastId = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 		return $lastId;
 	}
-
+	public function getCount(){
+		$con = new Connect();
+		$query = "SELECT count(*) FROM service_request WHERE status ='PENDING';";
+		$result = $con->select($query);
+		$row = $result->fetch_array();
+		return $row[0];
+	}
 	public function getServiceId($requestedservice){
 		$con = new Connect();
 		$query="SELECT idservice from service_list where service = '".$requestedservice."'";

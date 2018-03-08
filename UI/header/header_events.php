@@ -218,7 +218,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'COOP_History.php')) {
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+                        <li><a href="EditAccount.php"><i class="icon-cog5"></i> Account settings</a></li>
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
@@ -312,6 +312,37 @@ else if (strpos($_SERVER['REQUEST_URI'],'COOP_History.php')) {
         });
         }
          setInterval(realTime1,1000);
+         setInterval(realTime2,600000);
+        function realTime2(){
+             $.ajax({
+                type: "POST",
+                url: "checkerCounter1.php",
+                data: "id=<?php echo $id;?>",
+                success: function(data){
+                     if(data!=0)
+                        newMessageNotification1();
+                },
+                dataType: "json"
+            });
+        }
+        function newMessageNotification1(){
+            PNotify.desktop.permission();
+            (new PNotify({
+                title: 'Warning',
+                type: 'error',
+                text: 'You have a pending message that needs a reply.',
+                hide: false,
+                desktop: {
+                    desktop: true,
+                    addclass: 'bg-green',
+                    icon: 'assets/images/pnotify/info.png'
+                }
+            })
+            ).get().click(function(e) {
+                if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target)) return;
+                window.location='CCDO_Inbox.php';
+            });
+        }
         function realTime1(){
              $.ajax({
                 type: "POST",

@@ -347,7 +347,7 @@ else if($arr[1]=='service request'){
                                 </div>
 
                                 <div class="col-md-12">
-									<textarea type="text" class="form-control" name="reply" required="required" placeholder="Type here for any remarks..." cols="5" rows="5"></textarea>
+									<textarea type="text" class="form-control" name="reply" placeholder="Type here for any remarks..." cols="5" rows="5"></textarea>
 								</div>
 								
 							</div>
@@ -358,7 +358,7 @@ else if($arr[1]=='service request'){
 								<input type="hidden" name="type" value="<?php echo $type?>">
 								<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 								<input type="hidden" name="id" value="<?php echo $id;?>">
-								<input type="submit" id="send"  class="btn bg-teal" value="Send" name="send"/>
+								<input type="button" onclick="confirm()" id="send"  class="btn bg-teal" value="Send" name="send"/>
 							</div>
 					</div>
 					<!-- /summernote editor -->
