@@ -3,21 +3,35 @@ date_default_timezone_set('Asia/Manila');
 class DocumentHandler{
 	public function getTrackingNumber(){
 		$con = new Connect();
-		$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
-		$trackingNumber = $con->select($query);
-		if($trackingNumber){
-			while($row=$trackingNumber->fetch_assoc()){
-				if($row['trackingNumber']!= NULL){
-					$number = explode("-", $row['trackingNumber']);
-					$tempo = $this->incrementNumber($number[1]);
-					$number = $number[0]."-".$tempo;
-				}
-				else{
+		//check the current date and the last date in the database
+		$query = "SELECT dateadded FROM tracking ORDER BY idTracking DESC LIMIT 1";
+		$date = $con->select($query);
+		if($date){
+				if($row = $date->fetch_assoc()){
+				if($row['dateadded'] != date("m/d/Y")){
 					$number = 'CCDO-00001';
 				}
+				else{
+					$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
+					$trackingNumber = $con->select($query);
+					if($trackingNumber){
+						while($row=$trackingNumber->fetch_assoc()){
+							if($row['trackingNumber']!= NULL){
+								$number = explode("-", $row['trackingNumber']);
+								$tempo = $this->incrementNumber($number[1]);
+								$number = $number[0]."-".$tempo;
+							}
+							else{
+								$number = 'CCDO-00001';
+							}
+						}
+						return $number;	
+					}
+				}
 			}
-			return $number;	
 		}
+		
+		
 		return 'CCDO-00001';
 	}
 	public function incrementNumber($trackingNumber){
@@ -30,24 +44,25 @@ class DocumentHandler{
 		$documentType = $con->select($query);
 		return $documentType;
 	}
-	public function addDocument($title,$trackingNumber,$documentType,$senderId,$reply,$file = "",$message = ""){
+	public function addDocument($controlNumber,$title,$trackingNumber,$documentType,$senderId,$reply,$file = "",$message = ""){
 		$con = new Connect();
 		$query= "INSERT INTO inbox_info(title,message) VALUES('".$title."','".$message."')";
-		$result = $con->insertReturnLastId($query);
-		$query = "INSERT INTO tracking(trackingNumber,dateadded,timeadded,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('".$trackingNumber."','".date("m/d/Y")."','".date("h:i:s a")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
-		$result = $con->insertReturnLastId($query);
-		
+		$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+		if($result){
+			$query = "INSERT INTO tracking(control_number,trackingNumber,dateadded,timeadded,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('$controlNumber','".$trackingNumber."','".date("m/d/Y")."','".date("h:i:s a")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
+			$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+		}
 		return $result;
 	}
 	public function addDocumentLocation($recipient,$trackingId){
 		$con = new Connect();
 		$query = "INSERT INTO location(status,idAccounts,idTracking) VALUES('WAITING FOR CONFIRMATION','".$recipient."','".$trackingId."')";
-		$result = $con->insert($query);
+		$result = $con->insert($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 		return $result;
 	}
 	public function getTrackingById($id){
 		$con = new Connect();
-		$query = "SELECT trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status FROM tracking,document_type,inbox_info WHERE Status='ONGOING' and inbox_info.idinbox_info = tracking.idinbox_info and tracking.idDocument_Type= document_type.idDocument_Type and idAccounts=$id ORDER BY idTracking DESC";
+		$query = "SELECT idTracking,trackingNumber,title,CONCAT(dateadded,'-',timeadded) as DateTime,Document,Status FROM tracking,document_type,inbox_info WHERE Status='ONGOING' and inbox_info.idinbox_info = tracking.idinbox_info and tracking.idDocument_Type= document_type.idDocument_Type and idAccounts=$id ORDER BY idTracking DESC";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -59,19 +74,19 @@ class DocumentHandler{
 	}
 	public function getLocationDeptByTrackingNumber($trackingNumber){
 		$con = new Connect();
-		$query="SELECT location.status,department.Department FROM tracking JOIN inbox_info ON tracking.idinbox_info = inbox_info.idinbox_info JOIN location ON tracking.idtracking = location.idTracking JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN department ON department.idDepartment = accounts.idDepartment WHERE tracking.Status='ONGOING' and trackingNumber ='".$trackingNumber."'";
+		$query="SELECT location.status,department.Department FROM tracking JOIN inbox_info ON tracking.idinbox_info = inbox_info.idinbox_info JOIN location ON tracking.idtracking = location.idTracking JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN department ON department.idDepartment = accounts.idDepartment WHERE tracking.Status='ONGOING' and tracking.idTracking ='".$trackingNumber."'";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getLocationCoopByTrackingNumber($trackingNumber){
 		$con = new Connect();
-		$query = "SELECT location.status ,cooperative_profile.Cooperative_Name FROM tracking,location,inbox_info,accounts,cooperative_profile WHERE tracking.Status='ONGOING' and tracking.idinbox_info= inbox_info.idinbox_info and location.idAccounts= accounts.idAccounts and tracking.idTracking = location.idTracking and accounts.idCooperative_Profile = cooperative_profile.idCooperative_Profile and trackingNumber ='".$trackingNumber."'";
+		$query = "SELECT location.status ,cooperative_profile.Cooperative_Name FROM tracking,location,inbox_info,accounts,cooperative_profile WHERE tracking.Status='ONGOING' and tracking.idinbox_info= inbox_info.idinbox_info and location.idAccounts= accounts.idAccounts and tracking.idTracking = location.idTracking and accounts.idCooperative_Profile = cooperative_profile.idCooperative_Profile and tracking.idTracking ='".$trackingNumber."'";
 		$result = $con-> select($query);
 		return $result;
 	}
 	public function getTrackingInfo($trackingNumber){
 		$con = new Connect();
-		$query ="SELECT title,trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info where trackingNumber = '$trackingNumber'";
+		$query ="SELECT title,trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info where idTracking = $trackingNumber";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -103,6 +118,12 @@ class DocumentHandler{
 	public function getNewMessageCount($id){
 		$con = new Connect();
 		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and location.status !='DISAPPROVED'";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getMessageCount($id){
+		$con = new Connect();
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and canbedeleted = 0 and location.status !='DISAPPROVED'";
 		$result = $con->select($query);
 		return $result;
 	}

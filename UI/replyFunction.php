@@ -3,6 +3,7 @@ date_default_timezone_set('Asia/Manila');
 require("../config/config.php");
 require("../Handlers/DocumentHandler.php");
 require("../Handlers/SMSHandler.php");
+require("../Mailer/PHPMailerAutoload.php");
 require("../Handlers/MailHandler.php");
 require("../Handlers/EventHandler.php");
 require("../Handlers/ServiceRequestHandler.php");
@@ -111,7 +112,6 @@ else if($_POST['type']=='service request'){
 		// send sms and email and get contact number in service request
 		if($message !='' && $message != ' '){
 			$ye = $servicereq->disapprove($idservice_request,$message);
-			echo $ye;
 		}
 		else{
 			$servicereq->disapprove($idservice_request);

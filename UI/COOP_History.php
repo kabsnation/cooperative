@@ -48,7 +48,7 @@ else{
 
                                                     <div class="col-lg-12">
                                                         <table class="table datatable-html" id="tableHistory" style="font-size: 13px; width: 100%;">
-                                                            <?php if(isset($history)){?>
+                                                            <?php if(isset($_SESSION['idAccount'])){?>
                                                             <thead>
                                                                 <tr>
                                                                     <th>Tracking No.</th>
@@ -59,7 +59,7 @@ else{
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php foreach($history as $hist){?>
+                                                                <?php if(isset($history)){foreach($history as $hist){?>
                                                                 <tr>
                                                                     <td><?php echo $hist['trackingNumber'];?></td>
                                                                     <td><?php echo $hist['title'];?></td>
@@ -67,9 +67,9 @@ else{
                                                                     <td><?php echo $hist['datetime'];?></td>
                                                                     <td><?php echo $hist['name'];?></td>
                                                                 </tr>
-                                                                <?php }?>
+                                                                <?php }}?>
                                                             </tbody>
-                                                            <?php }else if(isset($eventHistory)){?>
+                                                            <?php }else if(isset($_SESSION['idEvent'])){?>
                                                              <thead>
                                                                 <tr>
                                                                     <th>Title</th>
@@ -79,14 +79,14 @@ else{
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php foreach($eventHistory as $hist){?>
+                                                                <?php if(isset($eventHistory)){foreach($eventHistory as $hist){?>
                                                                 <tr>
                                                                     <td><?php echo $hist['title'];?></td>
                                                                     <td><?php echo $hist['status'];?></td>
                                                                     <td><?php echo $hist['datetime'];?></td>
                                                                     <td><?php echo $hist['name'];?></td>
                                                                 </tr>
-                                                                <?php }?>
+                                                                <?php }}?>
                                                             </tbody>
                                                             <?php } ?>
                                                         </table>

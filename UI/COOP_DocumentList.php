@@ -103,7 +103,7 @@ include('../UI/header/header_user.php');
                     var type = "<td>"+data[2][i]+"</td>";
                     var title = "<td>"+data[3][i]+"</td>";
                     var date = "<td>"+data[1][i]+"</td>";
-                    var action = "<a href='ViewTracking.php?trackingId="+data[0][i]+"'>View</a>";
+                    var action = "<a href='ViewTracking.php?trackingId="+data[4][i]+"'>View</a>";
                     table.row.add([trackingNumber,title,type,date, action]).draw(false);
                 }
                 realTime();

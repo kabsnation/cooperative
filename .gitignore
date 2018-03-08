@@ -22,6 +22,10 @@ config/config.php
 =======
 UI/CCDO_ViewAndUpdateDepartmentProfile.php
 >>>>>>> 12d08107788615c0419e10eb9dfd01b1c745490f
+<<<<<<< HEAD
 Handlers/EventHandler.php
 Handlers/SMSHandler.php
 UI/COOP_AddEvent.php
+=======
+UI/a.php
+>>>>>>> 5767332cfb46a66ea609c8bc7404b0fff0aeedd8
