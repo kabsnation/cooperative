@@ -166,7 +166,7 @@ include('../UI/header/header_user.php');
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label"> <span class="text-danger">* </span> <strong> Document Title:</strong></label>
-                                                <textarea type="text" name="title" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
+                                                <textarea type="text" name="txtDocumentName" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
                                             </div>
                                         </div>
 
@@ -192,12 +192,12 @@ include('../UI/header/header_user.php');
                                             <div class="form-group">
                                                 <label class="display-block text-semibold"><span class="text-danger">* </span> <strong> Does the Document needs a Reply?</strong></label>
                                                 <label class="radio-inline radio-right">
-                                                    <input type="radio" name="reply" value="1" class="styled" checked="checked">
+                                                    <input type="radio" id="reply" name="reply" value="1" class="styled" checked="checked">
                                                     Yes
                                                 </label>
 
                                                 <label class="radio-inline radio-right">
-                                                    <input type="radio" name="reply" value="0" class="styled">
+                                                    <input type="radio" id="reply" name="reply" value="0" class="styled">
                                                     No
                                                 </label>
                                             </div>
@@ -207,7 +207,7 @@ include('../UI/header/header_user.php');
 
                                 <div class="form-wizard-actions">
                                     <button class="btn btn-default" id="validation-back" type="reset">Back</button>
-                                    <button class="btn btn-info" id="validation-next" type="submit">Next</button>
+                                    <button class="btn btn-info" id="validation-next" type="submit" onclick="updateDocumentTitle()">Next</button>
                                 </div>
                             </fieldset>
 
@@ -229,7 +229,7 @@ include('../UI/header/header_user.php');
 
                                 <div class="form-wizard-actions">
                                     <button class="btn btn-default" id="validation-back" type="reset">Back</button>
-                                    <button class="btn btn-info" id="validation-next" type="submit">Next</button>
+                                    <button class="btn btn-info" id="validation-next" type="submit" onclick="updateMessage();">Next</button>
                                 </div>
                             </fieldset>
 
@@ -268,11 +268,11 @@ include('../UI/header/header_user.php');
                                                 <span class="text-bold text-muted" style="font-size: 15px;">Transaction Details</span>
                                                 <ul class="list-condensed list-unstyled">
                                                     <li><strong>Document Title:</strong></li>
-                                                    <li>Sample Document</li>
+                                                    <li><label id="txtDocumentTitle"></label></li>
                                                     <li><strong>Document Type:</strong></li>
-                                                    <li>Attend</li>
+                                                    <li><label id="txtDocumentType"></label></li>
                                                     <li><strong>Needs a Reply?</strong></li>
-                                                    <li>No</li>
+                                                    <li><label id="txtReply"></label></li>
                                                 </ul>
                                             </div>
 
@@ -282,7 +282,6 @@ include('../UI/header/header_user.php');
                                                     <li><strong>Sender Name</strong></li>
                                                     <?php if($adminAccount){
                                                         foreach($adminAccount as $admin){?>
-                                                        <br>
                                                         <li><?php echo $admin['name'];?></li>
                                                         <!-- echo yung session -->
                                                         <input type="hidden" name="accountId" value="<?php echo "$id";?>">
@@ -292,7 +291,7 @@ include('../UI/header/header_user.php');
                                                 <span class="text-muted" style="font-size: 15px;">File</span>
                                                 <ul class="list-condensed list-unstyled invoice-payment-details">
                                                     <li><strong>Attached File:</strong></li>
-                                                    <li><a href="#">Download Attached File</a></li>
+                                                    <li><label id="txtFileName"></label></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -303,7 +302,7 @@ include('../UI/header/header_user.php');
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="control-label"><strong>Message:</strong></label>
-                                                    <textarea type="text" class="summernote-airmode" id="message1" name="message1" readonly="true" disabled="true">Sample</textarea>
+                                                    <textarea type="text" class="summernote-airmode" id="message1" name="message1" readonly="true" disabled="true"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -351,6 +350,50 @@ include('../UI/header/header_user.php');
 </html>
 
 <script type="text/javascript">
+    $('#txtDocumentName').on('keyup', function() {
+        $('#txtDocumentName1').val($(this).val());
+    });
+
+    $('#documentType').on('change', function() {
+        $('#txtDocuType').val($(this).val());
+    });
+
+    function updateDocumentTitle(){
+        var x = document.getElementById('txtDocumentName').value;
+        document.getElementById('txtDocumentTitle').innerHTML = x;
+
+        var y = document.getElementById('documentType');
+        var text= y.options[y.selectedIndex].text;
+        document.getElementById('txtDocumentType').innerHTML = text;
+
+        var selectedOption = $("input:radio[name=reply]:checked").val()
+        if (selectedOption == 0) {
+            document.getElementById('txtReply').innerHTML = "No";
+        }
+
+        if(selectedOption == 1){
+            document.getElementById('txtReply').innerHTML = "Yes";
+        }
+    }
+
+    function updateFile(){
+        var upfile = document.getElementById('file');
+        document.getElementById('txtFileName').innerHTML = upfile;
+    }
+
+    function updateMessage(){
+        var cleanText = $('#message').summernote('code');
+        $('#message1').summernote('code', cleanText);
+    }
+
+    function getTableData(){
+        var table = $('#example').DataTable();
+ 
+        $('#example tbody').on( 'click', 'tr', function () {
+            console.log( table.row( this ).data() );
+        } );
+    }
+
     $('#message').summernote({
       toolbar: [
         // [groupName, [list of button]]
@@ -512,6 +555,10 @@ table.columns.adjust().draw();
 
         if (oInput.type == "file") {
             var sFileName = oInput.value;
+
+            var fileName = sFileName.split(/(\\|\/)/g).pop();
+            document.getElementById('txtFileName').innerHTML = fileName;
+
              if (sFileName.length > 0) {
                 var blnValid = false;
                 for (var j = 0; j < _validFileExtensions.length; j++) {
@@ -534,6 +581,8 @@ table.columns.adjust().draw();
         }
         return true;
     }
+
+
 
     <?php
 
