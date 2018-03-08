@@ -27,9 +27,9 @@ if(isset($_POST['txtContactPerson'])){
 	$status="Waiting for confirmation";
 	$others = " ";
 
-	if(isset($_SESSION['idEvent'])){
-		$idAccounts = $_SESSION['idEvent']; 
-	}
+	// if(isset($_SESSION['idEvent'])){
+	// 	$idAccounts = $_SESSION['idEvent']; 
+	// }
 
 	if(isset($_POST['txtOthers'])){
 		$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
