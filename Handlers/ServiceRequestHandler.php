@@ -75,8 +75,8 @@ class ServiceRequestHandler{
 		$con = new Connect();
 		$SMS = new SMSHandler();
 		$mail = new MailHandler();
-		$query = "UPDATE location SET status ='APPROVED' and canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
-		$result = $con->update($query);
+		$query = "UPDATE location SET status ='APPROVED' , canbedeleted=1 WHERE idservice_request=$idservice_request and idAccounts=$id and location.idlocation = $idlocation";
+		$result = $con->update($query);                                                                                  
 		if($result){
 			//insert remarks
 			if($message!=''){
