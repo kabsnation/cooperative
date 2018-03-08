@@ -3,21 +3,32 @@ date_default_timezone_set('Asia/Manila');
 class DocumentHandler{
 	public function getTrackingNumber(){
 		$con = new Connect();
-		$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
-		$trackingNumber = $con->select($query);
-		if($trackingNumber){
-			while($row=$trackingNumber->fetch_assoc()){
-				if($row['trackingNumber']!= NULL){
-					$number = explode("-", $row['trackingNumber']);
-					$tempo = $this->incrementNumber($number[1]);
-					$number = $number[0]."-".$tempo;
-				}
-				else{
-					$number = 'CCDO-00001';
+		//check the current date and the last date in the database
+		$query = "SELECT dateadded FROM tracking ORDER BY idTracking DESC LIMIT 1";
+		$date = $con->select($query);
+		if($row = $date->fetch_assoc()){
+			if($row['dateadded'] != date("m/d/Y")){
+				$number = 'CCDO-00001';
+			}
+			else{
+				$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
+				$trackingNumber = $con->select($query);
+				if($trackingNumber){
+					while($row=$trackingNumber->fetch_assoc()){
+						if($row['trackingNumber']!= NULL){
+							$number = explode("-", $row['trackingNumber']);
+							$tempo = $this->incrementNumber($number[1]);
+							$number = $number[0]."-".$tempo;
+						}
+						else{
+							$number = 'CCDO-00001';
+						}
+					}
+					return $number;	
 				}
 			}
-			return $number;	
 		}
+		
 		return 'CCDO-00001';
 	}
 	public function incrementNumber($trackingNumber){
@@ -30,19 +41,20 @@ class DocumentHandler{
 		$documentType = $con->select($query);
 		return $documentType;
 	}
-	public function addDocument($title,$trackingNumber,$documentType,$senderId,$reply,$file = "",$message = ""){
+	public function addDocument($controlNumber,$title,$trackingNumber,$documentType,$senderId,$reply,$file = "",$message = ""){
 		$con = new Connect();
 		$query= "INSERT INTO inbox_info(title,message) VALUES('".$title."','".$message."')";
-		$result = $con->insertReturnLastId($query);
-		$query = "INSERT INTO tracking(trackingNumber,dateadded,timeadded,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('".$trackingNumber."','".date("m/d/Y")."','".date("h:i:s a")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
-		$result = $con->insertReturnLastId($query);
-		
+		$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+		if($result){
+			$query = "INSERT INTO tracking(control_number,trackingNumber,dateadded,timeadded,idDocument_Type,idAccounts,Status,filePath,needReply,idinbox_info) VALUES('$controlNumber','".$trackingNumber."','".date("m/d/Y")."','".date("h:i:s a")."','".$documentType."','".$senderId."','ONGOING','".$file."',".$reply.",$result)";
+			$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+		}
 		return $result;
 	}
 	public function addDocumentLocation($recipient,$trackingId){
 		$con = new Connect();
 		$query = "INSERT INTO location(status,idAccounts,idTracking) VALUES('WAITING FOR CONFIRMATION','".$recipient."','".$trackingId."')";
-		$result = $con->insert($query);
+		$result = $con->insert($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 		return $result;
 	}
 	public function getTrackingById($id){
