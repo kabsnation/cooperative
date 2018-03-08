@@ -212,5 +212,11 @@ class AccountHandler{
 		$query = "UPDATE membership_profile SET Total_Number_of_Membership='$membertrainings', Total_Male='$male',Total_Female='$female', Number_of_Regular='$regularmember', Number_of_Associate='$associatemember', Training_Attended_by_Member='$membertrainings', Training_Attended_by_Officers ='$officertrainings', idMembership_composition='$composition' ,Training_Attended_by_Mgt_Staff='$stafftrainings' WHERE idMembership_Profile= $idmember";
 		$result = $con->update($query);
 	}
+	public function checkIfCoop($id){
+		$con = new Connect();
+		$query = "SELECT idCooperative_Profile FROM accounts WHERE idAccounts = $id";
+		$result = $con->select($query);
+		return $result;
+	}
 }
 ?>
