@@ -17,7 +17,7 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	$message =$_POST['message'];
 	$reply = $_POST['reply'];
 	$file = "";
-	$controlNumber = $_POST['type'];
+	echo $controlNumber = $_POST['type'];
 	$uploadOk=0;
 	$doneUpload=0;
 	if($_FILES['file']['size']!=0){
@@ -49,6 +49,7 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	$trackingId = $doc->addDocument($controlNumber,$title,$trackingNumber,$documentType,$id,$reply,$target_file,$message);
 	if($trackingId != ""){
 		foreach($_POST['checkbox'] as $recipient){
+			echo $recipient;
 			$result = $doc->addDocumentLocation($recipient,$trackingId);
 			if($result){
 				$audit->trail('ADD DOCUMENT; ID: '. $trackingId,'SUCCESSFUL',$id);

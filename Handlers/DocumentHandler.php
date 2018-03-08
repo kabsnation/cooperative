@@ -84,6 +84,12 @@ class DocumentHandler{
 		$result = $con-> select($query);
 		return $result;
 	}
+	public function getAdminByTrackingNumber($trackingNumber){
+		$con = new Connect();
+		$query = "SELECT location.status ,concat(first_name,'-',last_name) as name FROM tracking JOIN location ON location.idTracking = tracking.idTracking JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE tracking.Status='ONGOING' and tracking.idTracking = $trackingNumber and location.idAccounts = 1";
+		$result = $con-> select($query);
+		return $result;
+	}
 	public function getTrackingInfo($trackingNumber){
 		$con = new Connect();
 		$query ="SELECT title,trackingNumber,CONCAT(dateadded,'-',timeadded) as DateTime,Document,tracking.Status,ifnull((SELECT email_address FROM account_info JOIN accounts ON accounts.idAccount_info = account_info.idAccount_Info where accounts.idaccounts = tracking.idAccounts),cooperative_profile.Email_Address) as email,filePath,COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) as name FROM tracking JOIN document_type ON document_type.idDocument_Type = tracking.idDocument_Type  LEFT OUTER JOIN accounts ON accounts.idAccounts = tracking.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info where idTracking = $trackingNumber";
@@ -201,16 +207,18 @@ class DocumentHandler{
 				$result = $con->update($query);
 				if($result){
 			 		//checking 
-			 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
-			 		$checkResult = $con->select($check);
-			 		if($checkResult){
-			 			$row = $checkResult->fetch_assoc();
-			 			if($row['counter']==0){
-			 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
-			 				$resultDone = $con->update($doneQuery);
-			 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
-							$con->insert($queryHistory);
-			 			}
+			 		if($id==1){
+			 			$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
+				 		$checkResult = $con->select($check);
+				 		if($checkResult){
+				 			$row = $checkResult->fetch_assoc();
+				 			if($row['counter']==0){
+				 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
+				 				$resultDone = $con->update($doneQuery);
+				 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
+								$con->insert($queryHistory);
+				 			}
+				 		}
 			 		}
 			 		return $result;
 			 	}
@@ -221,14 +229,20 @@ class DocumentHandler{
 		}
 		
 	}
+	public function checkIfLast($idTracking){
+		$con = new Connect();
+		$query="SELECT count(*) FROM tracking JOIN location ON location.idTracking = tracking.idTracking WHERE tracking.idTracking = $idTracking AND location.status = 'WAITING FOR CONFIRMATION' and location.idAccounts = 1";
+		$result = $con->select($query) ;
+		return $result;
+	}
 	 public function replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message,$idTracking=''){
 	 	$con = new Connect();
 	 	$query = "INSERT INTO inbox_info(title,message) VALUES('$title','$message')";
-	 	$result = $con->insertReturnLastId($query);
+	 	$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 	 	$query = "INSERT INTO reply(idAccounts,idinbox_info,trackingNumber) VALUES($id,$result,'$trackingNumber')";
-	 	$result = $con->insertReturnLastId($query);
+	 	$result = $con->insertReturnLastId($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 	 	$query = "INSERT INTO location(idreply,idAccounts,canbedeleted) VALUES($result,$receiverId,1)";
-	 	$result = $con->insert($query);
+	 	$result = $con->insert($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
 		return $result;
 	}
 	public function  deleteInbox($idlocation,$del){
@@ -271,19 +285,35 @@ class DocumentHandler{
 			$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'RECEIVED','".date("m/d/Y-h:i:sa")."')";
 			$con->insert($queryHistory);
 			$resultDelete = $con->update($queryDelete);
+
 				if($resultUpdate){
 		 		//checking 
-			 		$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
-			 		$checkResult = $con->select($check);
-			 		if($checkResult){
-			 			$row = $checkResult->fetch_assoc();
-			 			if($row['counter']==0){
-			 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
-			 				$resultDone = $con->update($doneQuery);
-			 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
-							$con->insert($queryHistory);
-				 		}
+					if($id==1){
+						$check = "SELECT count(*) as counter FROM location JOIN tracking ON tracking.idTracking = location.idTracking WHERE tracking.idTracking = $idTracking and location.Status != 'RECEIVED';";
+				 		$checkResult = $con->select($check);
+				 		if($checkResult){
+				 			$row = $checkResult->fetch_assoc();
+				 			if($row['counter']==0){
+				 				$doneQuery = "UPDATE tracking SET Status='DONE', datecompleted='".date("m/d/Y")."',timecompleted='".date("h:i:sa")."' WHERE idTracking = $idTracking";
+				 				$resultDone = $con->update($doneQuery);
+				 				$queryHistory = "INSERT INTO history(idlocation,status,datetime) VALUES ((SELECT idlocation FROM location where idAccounts = $id and idTracking = $idTracking),'DONE','".date("m/d/Y-h:i:sa")."')";
+								$con->insert($queryHistory);
+					 		}
+						}
 					}
+					else{
+								// check if last
+			$last = $this->checkIfLast($idTracking);
+						if($last){
+							if($row = $last->fetch_array()){
+								if($row[0]==0){// if 0 means all is done, now it will be sent to the super admin
+									$this->addDocumentLocation(1,$idTracking);
+								}
+							}
+						}
+					}
+			
+			 		
 				}
 			}
 		}

@@ -347,7 +347,7 @@ include('../UI/header/header_user.php');
 
                                     <div class="form-wizard-actions">
                                         <button class="btn btn-default" id="validation-back" type="reset">Back</button>
-                                        <input type="button" onclick="confirm()"  ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
+                                        <input type="submit"  ID="btnSend" text="Submit" class="btn bg-info" value="Submit" />
                                     </div>
 
                                 </div>
