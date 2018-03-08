@@ -85,12 +85,12 @@ include('../UI/header/header_sadmin.php');
 
 						<div class="col-lg-3">
 
-							<a id="link" style="color: #fff">
+							<a id="link" href="CCDO_ServiceRequestList.php" style="color: #fff">
 								<div class="panel bg-indigo-400">
 									<div class="panel-body">
 
 										<h3 class="no-margin" id="event">None</h3>
-										Upcoming Event
+										Ongoing Service Requests
 										<div class="text-muted text-size-small"><p class="text-muted btn-link"><i class="icon-eye"></i> Click to View</p></div>
 									</div>
 								</div>
