@@ -83,7 +83,7 @@ else{
 
                                                         <div class="col-lg-12">
                                                             <table class="table datatable-html" id="my-table" style="font-size: 13px; width: 100%;">
-                                                                <?php if(isset($trackings)){?>
+                                                                <?php if(isset($_SESSION['idAccount'])){?>
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Tracking No.</th>
@@ -94,7 +94,7 @@ else{
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php foreach($trackings as $tracking){?>
+                                                                    <?php if(isset($trackings)){foreach($trackings as $tracking){?>
                                                                     <tr>
                                                                        
                                                                         <td><?php echo $tracking['trackingNumber'];?></td>
@@ -103,9 +103,9 @@ else{
                                                                         <td><?php echo $tracking['dateadded'];?></td>
                                                                         <td><?php echo $tracking['datecompleted'];?></td>
                                                                     </tr>
-                                                                    <?php }?>
+                                                                    <?php }}?>
                                                                 </tbody>
-                                                                <?php }else if(isset($events)){?>
+                                                                <?php }else if(isset($_SESSION['idEVent'])){?>
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Title</th>
@@ -114,13 +114,13 @@ else{
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    <?php foreach($events as $eventt){?>
+                                                                    <?php if(isset($events)){ foreach($events as $eventt){?>
                                                                      <tr>
                                                                         <td><?php echo $eventt['title'];?></td>
                                                                         <td><?php echo $eventt['location'];?></td>
                                                                         <td><?php echo $eventt['date'];?></td>
                                                                     </tr>
-                                                                    <?php }?>
+                                                                    <?php }}?>
                                                                 </tbody>
                                                                 <?php }?>
                                                             </table>
