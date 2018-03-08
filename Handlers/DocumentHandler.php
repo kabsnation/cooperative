@@ -6,28 +6,31 @@ class DocumentHandler{
 		//check the current date and the last date in the database
 		$query = "SELECT dateadded FROM tracking ORDER BY idTracking DESC LIMIT 1";
 		$date = $con->select($query);
-		if($row = $date->fetch_assoc()){
-			if($row['dateadded'] != date("m/d/Y")){
-				$number = 'CCDO-00001';
-			}
-			else{
-				$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
-				$trackingNumber = $con->select($query);
-				if($trackingNumber){
-					while($row=$trackingNumber->fetch_assoc()){
-						if($row['trackingNumber']!= NULL){
-							$number = explode("-", $row['trackingNumber']);
-							$tempo = $this->incrementNumber($number[1]);
-							$number = $number[0]."-".$tempo;
+		if($date){
+				if($row = $date->fetch_assoc()){
+				if($row['dateadded'] != date("m/d/Y")){
+					$number = 'CCDO-00001';
+				}
+				else{
+					$query = "SELECT trackingNumber FROM Tracking ORDER BY idTracking DESC LIMIT 1";
+					$trackingNumber = $con->select($query);
+					if($trackingNumber){
+						while($row=$trackingNumber->fetch_assoc()){
+							if($row['trackingNumber']!= NULL){
+								$number = explode("-", $row['trackingNumber']);
+								$tempo = $this->incrementNumber($number[1]);
+								$number = $number[0]."-".$tempo;
+							}
+							else{
+								$number = 'CCDO-00001';
+							}
 						}
-						else{
-							$number = 'CCDO-00001';
-						}
+						return $number;	
 					}
-					return $number;	
 				}
 			}
 		}
+		
 		
 		return 'CCDO-00001';
 	}
@@ -115,6 +118,12 @@ class DocumentHandler{
 	public function getNewMessageCount($id){
 		$con = new Connect();
 		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and location.status !='DISAPPROVED'";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function getMessageCount($id){
+		$con = new Connect();
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and canbedeleted = 0 and location.status !='DISAPPROVED'";
 		$result = $con->select($query);
 		return $result;
 	}
