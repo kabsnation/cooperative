@@ -17,18 +17,35 @@ $accnt = $account->checkIfCoop($id);
 $arr = array();
 if($row = $accnt->fetch_array()){
     if(isset($row[0])){
-        echo "<script>change('CSRL-SDF-F02')</script>";
+        $tochange= "change('CSRL-SDF-F01');";
         $arr[0] = 1;
-        $arr[1] = 1;
-        $arr[2] = 2;
-        $arr[3] = 3;
-        $arr[4] = 4;
+        $arr[1] = 0;
+        $arr[2] = 1;
+        $arr[3] = 2;
+        $arr[4] = 3;
+        $arr[5] = 4;
+        $arr[6] = 5;
+        $vsbl = 'style="visibility: hidden;"';
     }
     else{
+        // $tochange ='';
+        // $arr[0] = 0;
+        // $arr[1] = 1;
+        // $arr[2] = 2;
+        // $arr[3] = 3;
+        // $arr[4] = 4;
+        // $arr[5] = 5;
+        // $arr[6] = 6;
+        // $vsbl = 'style="visibility: visible;"';
+         $tochange= "change('CSRL-SDF-F01');";
         $arr[0] = 1;
-        $arr[1] = 1;
-        $arr[2] = 2;
-        $arr[3] = 3;
+        $arr[1] = 0;
+        $arr[2] = 1;
+        $arr[3] = 2;
+        $arr[4] = 3;
+        $arr[5] = 4;
+        $arr[6] = 5;
+        $vsbl = 'style="visibility: hidden;"';
     }
 }
 $adminAccount = $account->getAccountById($id);
@@ -43,7 +60,8 @@ include('../UI/header/header_user.php');
                 <div class="content">
 
                     <!-- Wizard with validation -->
-                    <div class="panel panel-white">
+                    <div class="panel panel-white">  
+                        <form action="documentFunction.php" id="form1" method="POST" enctype="multipart/form-data">
                         <div class="panel-heading">
                             <h6 class="panel-title">Send Document</h6>
                             <div class="heading-elements">
@@ -53,11 +71,11 @@ include('../UI/header/header_user.php');
                             </div>
                         </div>
 
-                        <form class="form-validation" action="documentFunction.php" method="POST" enctype="multipart/form-data">
-
+                      
+                            <?php if($arr[0] == 0){?>
                             <fieldset class="step" id="validation-step1">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">1</span>
+                                    <span class="form-wizard-count"><?php echo $arr[1];?></span>
                                     Document Type
                                     <small class="display-block">First, select whether the document is either incoming or outgoing.</small>
                                 </h6>
@@ -69,23 +87,23 @@ include('../UI/header/header_user.php');
                                             <div class="row">
                                                 <div class="col-md-3"></div>
                                                 <div class="col-md-3">
-                                                    <button type="submit" id="validation-next" class="btn btn-block btn-primary" style="font-size: 15px;"><i class=" icon-file-download"></i> Incoming</button>
+                                                    <button type="submit" id="validation-next" onclick="change(0)" class="btn btn-block btn-primary" style="font-size: 15px;"><i class=" icon-file-download"></i> Incoming</button>
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <button type="submit" id="validation-next" class="btn btn-block btn-success" value="Outgoing" style="font-size: 15px;"><i class=" icon-file-upload"></i> Outgoing</button>
+                                                    <button type="submit" id="validation-next" onclick="change(1)" class="btn btn-block btn-success" value="Outgoing" style="font-size: 15px;"><i class=" icon-file-upload"></i> Outgoing</button>
                                                 </div>
                                                 <div class="col-md-3"></div>
                                             </div>
-
                                         </div>
                                     <br/><br/><br/><br/>
                                 </div>
                             </fieldset>
-
+                            <?php }?>
                             <fieldset class="step" id="validation-step2">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">2</span>
+                                     <input type="text" id="tType" class="label" name="tType" disabled="true">
+                                    <span class="form-wizard-count"><?php echo $arr[2];?></span>
                                     Choosing your Recipients
                                     <small class="display-block">Second, choose the person or department you want to send the documents.</small>
                                 </h6>
@@ -132,14 +150,14 @@ include('../UI/header/header_user.php');
                                 </div>
 
                                 <div class="form-wizard-actions">
-                                    <button class="btn btn-default" id="validation-back" type="reset">Back</button>
+                                    <button class="btn btn-default" id="validation-back" type="reset" <?php echo $vsbl;?>> Back</button>
                                     <button class="btn btn-info" id="validation-next" type="submit">Next</button>
                                 </div>
                             </fieldset>
 
                             <fieldset class="step" id="validation-step3">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">3</span>
+                                    <span class="form-wizard-count"><?php echo $arr[3];?></span>
                                     Uploading the Document
                                     <small class="display-block">Third, upload the file or document you want to send.</small>
                                 </h6>
@@ -153,7 +171,6 @@ include('../UI/header/header_user.php');
                                                     <input type="file" id="file" name="file" required="required" class="file-styled" onchange="ValidateSingleInput(this); ValidateSize(this);">
                                                 </div>
                                             </center>
-
                                             <br/>
                                                 <span>NOTE: <br/>Multiple file upload is not allowed. <br/><br/>
                                                 Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)
@@ -174,7 +191,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step4">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">4</span>
+                                    <span class="form-wizard-count"><?php echo $arr[4];?></span>
                                     Filling out Additional Document Details
                                     <small class="display-block">Fourth, fill out the following additional document information.</small>
                                 </h6>
@@ -185,7 +202,7 @@ include('../UI/header/header_user.php');
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label"> <span class="text-danger">* </span> <strong> Document Title:</strong></label>
-                                                <textarea type="text" name="txtDocumentName" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
+                                                <textarea type="text" name="title" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
                                             </div>
                                         </div>
 
@@ -232,7 +249,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step5">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">5</span>
+                                    <span class="form-wizard-count"><?php echo $arr[5];?></span>
                                     Adding a Message with the Document
                                     <small class="display-block">Fifth, you can add some message or remarks along with the document.</small>
                                 </h6>
@@ -254,7 +271,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step6">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">6</span>
+                                    <span class="form-wizard-count"><?php echo $arr[6];?></span>
                                     Review your Transaction
                                     <small class="display-block">Lastly, in here you can review and edit back your transaction before sending it.</small>
                                 </h6>
@@ -265,7 +282,7 @@ include('../UI/header/header_user.php');
                                             <div class="col-sm-6 content-group">
                                                 <ul class="list-condensed list-unstyled">
                                                     <li><strong>Generated Tracking Number:</strong></li>
-                                                    <li><?php echo $trackingNumber;?></li>
+                                                    <li><label id="tNumber"></label></li>
                                                     <input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
                                                 </ul>
                                             </div>
@@ -274,7 +291,7 @@ include('../UI/header/header_user.php');
                                                 <div class="invoice-details">
                                                     <ul class="list-condensed list-unstyled">
                                                         <li><strong>Date Added:</strong></li>
-                                                        <li><?php echo date("m/d/Y") ?></li>
+                                                        <li><?php echo date("m/d/Y"); ?></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -369,6 +386,19 @@ include('../UI/header/header_user.php');
 </html>
 
 <script type="text/javascript">
+    function change(value){
+        var val = document.getElementById('tType');
+        var tNumber = document.getElementById('tNumber');
+        if(value === 0){
+            tNumber.innerHTML ='CSRL-SRS-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+            val.value = 'CSRL-SRS-FO1';
+        }
+        else if(value ===1){
+            tNumber.innerHTML ='CCDO-SDF-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+            val.value = 'CCDO-SDF-FO1';
+        }
+    }
+    <?php echo $tochange;?>
     $('#txtDocumentName').on('keyup', function() {
         $('#txtDocumentName1').val($(this).val());
     });
@@ -481,17 +511,19 @@ table.columns.adjust().draw();
                          else{
                              $("#form1").submit(function(e) {
                                 e.preventDefault();    
-                                var formData = new FormData(this);
+                                var formData = new FormData($("#form1"));
 
                                 $.ajax({
                                     url: "documentFunction.php",
                                     type: 'POST',
                                     data: formData,
                                     success: function (data) {
-                                        success();
+                                        console.log(data);
+                                        //success();
                                     },
                                     error: function(data){
-                                        failed();
+                                        console.log(data);
+                                        //failed();
                                     },
                                     cache: false,
                                     contentType: false,
@@ -561,7 +593,6 @@ table.columns.adjust().draw();
             alert('File size exceeds 25 MB');
             $(file).val(''); //for clearing with Jquery
         } else {
-
         }
     }
 
@@ -587,22 +618,15 @@ table.columns.adjust().draw();
                         break;
                     }
                 }
-                 
                 if (!blnValid) {
                     alert("Sorry, " + sFileName + " is invalid, please refer to the allowed extensions.");
                     oInput.value = "";
                     return false;
                 }
-
-
-
             }
         }
         return true;
     }
-
-
-
     <?php
 
     if(isset($_POST['success'])){

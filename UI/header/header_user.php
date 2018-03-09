@@ -292,6 +292,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                 url: "checkerCounter.php",
                 data: "id=<?php echo $id;?>",
                 success: function(data){
+                    console.log(data);
                      if(data == 1){
                         addToCounter();
                     }
