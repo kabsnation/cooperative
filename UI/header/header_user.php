@@ -5,7 +5,7 @@ $arrs = array();
 $title ="";
 $_SESSION['counter']=0;
 $id = $_SESSION['idAccount'];
-if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument1.php')){
+if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
