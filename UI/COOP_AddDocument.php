@@ -44,6 +44,7 @@ include('../UI/header/header_user.php');
                                 <fieldset class="content-group">
                                     <div class="col-lg-12">
 
+                                        
                                         <div class="row">
                                             
                                             <div class="col-lg-6">
@@ -69,6 +70,22 @@ include('../UI/header/header_user.php');
                                               </div>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label class="display-block text-semibold"><span class="text-danger">* </span> <strong> Document Flow:</strong></label>
+                                                <label class="radio-inline radio-right">
+                                                    <input type="radio" name="flow" value="1" class="styled" checked="checked">
+                                                    Incoming
+                                                </label>
+
+                                                <label class="radio-inline radio-right">
+                                                    <input type="radio" name="flow" value="0" class="styled">
+                                                    Outgoing
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br/>
 
                                         <div class="row">
                                             <div class="col-md-6">
