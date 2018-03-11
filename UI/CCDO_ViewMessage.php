@@ -437,7 +437,7 @@ else if($arr[1]=='service request'){
 	                        url: "replyFunction.php",
 	                        data: form_data,
 	                        success: function(data){
-	                           success(data);
+	                           success();
 	                        }
 	                    });
                 	}
@@ -456,7 +456,7 @@ else if($arr[1]=='service request'){
                         type: "error"
                     });},500);
             }
-    function success(location){
+    function success(){
         setTimeout(function(){
             swal({
                 title: "Success!",
@@ -464,7 +464,7 @@ else if($arr[1]=='service request'){
                 type: "success"
                 },
                 function(isConfirm){
-                    window.location=location;
+                    location.reload();
                 });},500); 
     }
     function failed(){

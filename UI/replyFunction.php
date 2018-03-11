@@ -27,7 +27,12 @@ $idTracking =$_POST['idTracking'];
 		if($last){
 			if($row = $last->fetch_array()){
 				if($row[0]==0){// if 0 means all is done, now it will be sent to the super admin
-					$doc->addDocumentLocation(1,$idTracking);
+					$chk = $doc->checkIfSent($idTracking);//check if it is already send to the super admin
+					if($row2 = $chk->fetch_array()){
+						if($row2[0]==0){
+							$doc->addDocumentLocation(1,$idTracking);
+						}
+					}
 				}
 			}
 		}
@@ -48,7 +53,6 @@ $idTracking =$_POST['idTracking'];
 			 $title = $_POST['title'];
 		else
 			 $title = "reply: ".$_POST['title'];
-			
 		$result = $doc->replyByIdTracking($id,$trackingNumber,$receiverId,$title,$message);
 		if($result){
 			if($_POST['idTracking']!='null'){
@@ -58,17 +62,20 @@ $idTracking =$_POST['idTracking'];
 				if($last){
 					if($row = $last->fetch_array()){
 						if($row[0]==0){// if 0 means all is done, now it will be sent to the super admin
-							$doc->addDocumentLocation(1,$idTracking);
+							$chk = $doc->checkIfSent($idTracking);//check if it is already send to the super admin
+							if($row2 = $chk->fetch_array()){
+								if($row2[0]==0){
+									$doc->addDocumentLocation(1,$idTracking);
+								}
+							}
 						}
-						echo $row[0];
 					}
 				}
-				echo "CCDO_ViewMessage.php?idTracking=".$_POST['idTracking']."";
+				
 				$audit->trail('DOCUMENT REPLY; ID: '. $_POST['idTracking'],'SUCCESSFUL',$id);
 			 }
 			 else{
 			 	$audit->trail('DOCUMENT REPLY; ID: '. $_POST['idReply'],'FAILED',$id);
-				echo "CCDO_ViewMessage.php?idReply=".$_POST['idReply']."";
 			 }
 		}
 	}

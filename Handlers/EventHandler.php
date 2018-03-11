@@ -21,7 +21,7 @@ class EventHandler{
 	}
 	public function getEventTransacLogsByDate($mindate,$maxdate){
 		$con = new Connect();
-		$query = "SELECT eventName as title,eventLocation as location,datetime FROM events WHERE (SUBSTRING_INDEX(datetime, '\n', 1) BETWEEN '$mindate' AND '$maxdate') and events.status='DONE' UNION SELECT ifnull(service,other) as title,venue as location, concat(date_created,'-',time_created) as datetime FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice where (date_created BETWEEN '$mindate' AND '$maxdate') and service_request.status='DONE' order by datetime";
+		$query = "SELECT eventName as title,eventLocation as location,datetime FROM events WHERE (SUBSTRING_INDEX(datetime, '\n', 1) BETWEEN '$mindate' AND '$maxdate') and events.status='DONE' UNION SELECT ifnull(service,other) as title,venue as location, concat(date_created,'-',time_created) as datetime FROM service_request JOIN service_list ON service_list.idservice = service_request.idservice where (date_created BETWEEN '$mindate' AND '$maxdate') and service_request.status='APPROVED' order by datetime";
 		$result = $con->select($query);
 		return $result;
 	}

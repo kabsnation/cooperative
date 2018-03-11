@@ -24,7 +24,7 @@ if(isset($_POST['txtContactPerson'])){
 	$timecreated = date("h:i:sa");
 	$serviceID= "NULL";
 	$idAccounts = "NULL";
-	$status="Waiting for confirmation";
+	$status="WAITING FOR CONFIRMATION";
 	$others = " ";
 
 	// if(isset($_SESSION['idEvent'])){

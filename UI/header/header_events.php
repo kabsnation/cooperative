@@ -4,6 +4,7 @@ $eventmanager = $handler->getAccountById($_SESSION['idEvent']);
 $arrs = array();
 $title ="";
 $id = $_SESSION['idEvent'];
+$_SESSION['counter']=0;
 if(strpos($_SERVER['REQUEST_URI'],'COOP_AddServiceRequestForm.php')){
     $arrs[0]="active";
     $arrs[1]="";

@@ -178,7 +178,9 @@ else{
 	// else {
 	//    alert('please download chrome in latest version. Thank you.')
 	// }
+
 	setInterval(realTime,1000);
+    var table = $('#tableInbox').DataTable();
     function realTime(){
         var tablee = $('#tableInbox').DataTable();
         var info = tablee.page.info();
@@ -196,22 +198,22 @@ else{
 	        },
             dataType: "json"
         });
-    }  
+
+    }
+     
     function addRow(){
          $.ajax({
             type: "POST",
             url: "realtimeInboxFunction.php",
             data: "id="+<?php echo $id;?>,
             success: function(data){
-                var tablee = $('#tableInbox').DataTable();
-                tablee.clear().draw();
+                table.clear().draw();
                 for (var i = 0; i < data[0].length; i++) {
                 	if(data[5][i]==0){
 						var title ="<td><strong>"+data[0][i]+"</strong></td>";
                 	}
                 	else
                 		var title ="<td>"+data[0][i]+"</td>";
-                    var table = $('#tableInbox').DataTable();
                     var checkbox = "<td style='width:5%''><input type='checkbox' id='check' name='checkbox[]' value='"+data[4][i]+"' class='styled'></td>";
                     
                     var type = "<td>"+data[1][i]+"</td>";

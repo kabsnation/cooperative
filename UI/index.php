@@ -3,7 +3,7 @@ $_SESSION['counter'] = 0;
 session_start();
 
 if(isset($_SESSION['idSuperAdmin']))
-    echo "<script> window.location='';</script>";
+    echo "<script> window.location='SuperAdmin_Dashboard.php';</script>";
 else if(isset($_SESSION['idAccountAdmin']))
     echo "<script> window.location='CCDO_AddCooperativeAccount.php'</script>";
 else if(isset($_SESSION['idAccount']))

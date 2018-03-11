@@ -24,7 +24,7 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 			}
 			else if($result['idaccount_type']==3){
 				$_SESSION["idAccount"]= $result["idAccounts"];
-				$arrs[1] ="COOP_AddDocument1.php";
+				$arrs[1] ="COOP_AddDocument.php";
 			}
 			else if($result['idaccount_type']==4){
 				$_SESSION["idEvent"]= $result["idAccounts"];

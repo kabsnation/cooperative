@@ -105,7 +105,7 @@ else{
                                                                     </tr>
                                                                     <?php }}?>
                                                                 </tbody>
-                                                                <?php }else if(isset($_SESSION['idEVent'])){?>
+                                                                <?php }else if(isset($_SESSION['idEvent'])){?>
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Title</th>

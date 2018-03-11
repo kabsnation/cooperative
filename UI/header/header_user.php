@@ -230,7 +230,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                <li>
                                     <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
                                     <ul>
-                                        <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument1.php">Send Document</a></li>
+                                        <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Send Document</a></li>
                                         <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
                                     </ul>
                                 </li>

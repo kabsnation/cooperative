@@ -10,6 +10,7 @@ $con = $connect->connectDB();
 $target_dir = "files/";
 $target_file="";
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+echo $_POST['documentType'];
 if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['title'])){
 	$trackingNumber = $_POST['trackingNumber'];
 	$documentType = $_POST['documentType'];
@@ -17,7 +18,7 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	$message =$_POST['message'];
 	$reply = $_POST['reply'];
 	$file = "";
-	echo $controlNumber = $_POST['type'];
+	$controlNumber = $_POST['flow'];
 	$uploadOk=0;
 	$doneUpload=0;
 	if($_FILES['file']['size']!=0){
@@ -49,7 +50,6 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	$trackingId = $doc->addDocument($controlNumber,$title,$trackingNumber,$documentType,$id,$reply,$target_file,$message);
 	if($trackingId != ""){
 		foreach($_POST['checkbox'] as $recipient){
-			echo $recipient;
 			$result = $doc->addDocumentLocation($recipient,$trackingId);
 			if($result){
 				$audit->trail('ADD DOCUMENT; ID: '. $trackingId,'SUCCESSFUL',$id);
