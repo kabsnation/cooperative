@@ -274,7 +274,7 @@ else if($arr[1]=='service request'){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="submit" id="send" class="btn bg-teal" value="Send" name="send"/>
+									<input type="button" onclick="confirm()" id="send" class="btn bg-teal" value="Send" name="send"/>
 					</div>
 					
 					<!-- /summernote editor -->
