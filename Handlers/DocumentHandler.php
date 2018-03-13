@@ -74,19 +74,19 @@ class DocumentHandler{
 	}
 	public function getLocationDeptByTrackingNumber($trackingNumber){
 		$con = new Connect();
-		$query="SELECT location.status,department.Department FROM tracking JOIN inbox_info ON tracking.idinbox_info = inbox_info.idinbox_info JOIN location ON tracking.idtracking = location.idTracking JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN department ON department.idDepartment = accounts.idDepartment WHERE tracking.Status='ONGOING' and tracking.idTracking ='".$trackingNumber."'";
+		$query="SELECT location.status,department.Department FROM tracking JOIN inbox_info ON tracking.idinbox_info = inbox_info.idinbox_info JOIN location ON tracking.idtracking = location.idTracking JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN department ON department.idDepartment = accounts.idDepartment WHERE tracking.idTracking ='".$trackingNumber."'";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getLocationCoopByTrackingNumber($trackingNumber){
 		$con = new Connect();
-		$query = "SELECT location.status ,cooperative_profile.Cooperative_Name FROM tracking,location,inbox_info,accounts,cooperative_profile WHERE tracking.Status='ONGOING' and tracking.idinbox_info= inbox_info.idinbox_info and location.idAccounts= accounts.idAccounts and tracking.idTracking = location.idTracking and accounts.idCooperative_Profile = cooperative_profile.idCooperative_Profile and tracking.idTracking ='".$trackingNumber."'";
+		$query = "SELECT location.status ,cooperative_profile.Cooperative_Name FROM tracking,location,inbox_info,accounts,cooperative_profile WHERE tracking.idinbox_info= inbox_info.idinbox_info and location.idAccounts= accounts.idAccounts and tracking.idTracking = location.idTracking and accounts.idCooperative_Profile = cooperative_profile.idCooperative_Profile and tracking.idTracking ='".$trackingNumber."'";
 		$result = $con-> select($query);
 		return $result;
 	}
 	public function getAdminByTrackingNumber($trackingNumber){
 		$con = new Connect();
-		$query = "SELECT location.status ,concat(first_name,'-',last_name) as name FROM tracking JOIN location ON location.idTracking = tracking.idTracking JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE tracking.Status='ONGOING' and tracking.idTracking = $trackingNumber and location.idAccounts = 1";
+		$query = "SELECT location.status ,concat(first_name,'-',last_name) as name FROM tracking JOIN location ON location.idTracking = tracking.idTracking JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info JOIN accounts ON accounts.idAccounts = location.idAccounts JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info WHERE tracking.idTracking = $trackingNumber and location.idAccounts = 1";
 		$result = $con-> select($query);
 		return $result;
 	}
@@ -105,13 +105,13 @@ class DocumentHandler{
 	public function getInboxCountById($id){
 		//check this.
 		$con = new Connect();
-		$query = "SELECT count(*)FROM location LEFT OUTER JOIN events ON events.idEvents = location.idEvents LEFT OUTER JOIN service_request ON service_request.idservice_request = location.idservice_request LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts or service_request.idAccounts = accounts.idAccounts or events.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE location.idAccounts = $id and location.markasdeleted =0 ";
+		$query = "SELECT count(*)FROM location LEFT OUTER JOIN events ON events.idEvents = location.idEvents LEFT OUTER JOIN service_request ON service_request.idservice_request = location.idservice_request LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts or service_request.idAccounts = accounts.idAccounts or events.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE location.idAccounts = $id and location.markasdeleted =0 and location.status not in('DISAPPROVED','APPROVED')";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function inboxCoopById($id,$deleted = 0){
 		$con = new Connect();
-		$query ="SELECT canbedeleted, isopen,location.idlocation, tracking.idTracking,reply.idreply,events.idEvents,service_request.idservice_request,coalesce(CONCAT(dateadded,'-',timeadded),reply.DateTime,CONCAT(service_request.date_created,'-',service_request.time_created),events.datetime) as DateTime,ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber,reply.idAccounts as reply_sender,location.idAccounts as receiver,username,coalesce(title,events.eventName,'SERVICE REQUEST') as title,message,(case when ispublic is null then COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) else contact_person end ) as name,service_request.status as status FROM location LEFT OUTER JOIN events ON events.idEvents = location.idEvents LEFT OUTER JOIN service_request ON service_request.idservice_request = location.idservice_request LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts or service_request.idAccounts = accounts.idAccounts or events.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE location.idAccounts = $id and location.markasdeleted =$deleted ORDER BY location.idlocation DESC;";
+		$query ="SELECT canbedeleted, isopen,location.idlocation, tracking.idTracking,reply.idreply,events.idEvents,service_request.idservice_request,coalesce(CONCAT(dateadded,'-',timeadded),reply.DateTime,CONCAT(service_request.date_created,'-',service_request.time_created),events.datetime) as DateTime,ifnull(tracking.trackingNumber,reply.trackingNumber) as trackingNumber,reply.idAccounts as reply_sender,location.idAccounts as receiver,username,coalesce(title,events.eventName,'SERVICE REQUEST') as title,message,(case when ispublic is null then COALESCE (department,cooperative_name,concat(first_name,' ', last_name)) else contact_person end ) as name,service_request.status as status FROM location LEFT OUTER JOIN events ON events.idEvents = location.idEvents LEFT OUTER JOIN service_request ON service_request.idservice_request = location.idservice_request LEFT OUTER JOIN reply ON reply.idreply = location.idreply LEFT OUTER JOIN tracking ON tracking.idTracking = location.idTracking JOIN accounts ON tracking.idAccounts = accounts.idAccounts OR reply.idAccounts = accounts.idAccounts or service_request.idAccounts = accounts.idAccounts or events.idAccounts = accounts.idAccounts LEFT OUTER JOIN inbox_info ON inbox_info.idinbox_info = tracking.idinbox_info or reply.idinbox_info = inbox_info.idinbox_info LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN cooperative_profile ON cooperative_profile.idCooperative_Profile = accounts.idCooperative_Profile LEFT OUTER JOIN account_info ON account_info.idAccount_Info = accounts.idAccount_Info  WHERE location.idAccounts = $id and location.markasdeleted =$deleted and location.status not in('DISAPPROVED','APPROVED') ORDER BY location.idlocation DESC;";
 		$result = $con->select($query);
 		return $result;
 	}
@@ -123,13 +123,13 @@ class DocumentHandler{
 	}
 	public function getNewMessageCount($id){
 		$con = new Connect();
-		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 ";
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and location.status not in('DISAPPROVED','APPROVED') ";
 		$result = $con->select($query);
 		return $result;
 	}
 	public function getMessageCount($id){
 		$con = new Connect();
-		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and canbedeleted = 0 ";
+		$query = "SELECT count(*) FROM location where idaccounts =$id and isopen = 0 and markasdeleted = 0 and canbedeleted = 0 and location.status not in('DISAPPROVED','APPROVED')";
 		$result = $con->select($query);
 		return $result;
 	}
