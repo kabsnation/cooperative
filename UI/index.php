@@ -9,7 +9,7 @@ else if(isset($_SESSION['idAccountAdmin']))
 else if(isset($_SESSION['idAccount']))
     echo "<script> window.location='COOP_AddDocument.php'</script>";
 else if(isset($_SESSION['idEvent']))
-    echo "<script> window.location='COOP_AddServiceRequestForm.php'</script>";
+    echo "<script> window.location='COOP_AddEvent.php'</script>";
 ?>
 
 <!DOCTYPE html>
@@ -144,13 +144,13 @@ else if(isset($_SESSION['idEvent']))
     }
       function success(location){
             setTimeout(function(){
+            setTimeout(window.location=location,5000);
                 swal({
                     title: "Success!",
                     text: "",
                     type: "success"
                     },
                     function(isConfirm){
-                        window.location=location;
                     });},500); 
         }
         function failed(){
@@ -174,5 +174,19 @@ else if(isset($_SESSION['idEvent']))
                 $("#btnSubmit").click();
             }
         });
-
+      var time =  localStorage.getItem("time");
+      if(time == null){
+        //get time
+        $.ajax({
+            type: "POST",
+            url: "setting.php",
+            data:"",
+            success:function(data){
+                localStorage.setItem("time", data);
+                time =  localStorage.getItem("time");
+                console.log(time);
+            }
+        });
+      }
+    console.log(time);
 </script>

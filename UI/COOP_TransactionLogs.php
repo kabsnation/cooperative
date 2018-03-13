@@ -42,7 +42,7 @@ else{
                                             <div class="heading-elements">
                                                 <div class="heading-elements">
                                                     <div class="heading-btn-group">
-                                                        <button class="btn btn-primary" >Print <i class="icon-printer"></i></button>
+                                                        <button class="btn btn-primary" type="button" onclick="printt()" >Print <i class="icon-printer"></i></button>
                                                     </div>
                                                 </div>
                                             </div>

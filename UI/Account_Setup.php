@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['idsetup']))
+    echo "<script> window.location='index.php'</script>";
+$id = $_SESSION['idsetup'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +62,6 @@
                         <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
 				</li>
-
                 <li class="dropdown dropdown-user">
 
                     
@@ -64,9 +69,7 @@
             </ul>
         </div>
     </div>
-    <!-- /main navbar -->
-
-    <!-- Page container -->
+    <!-- /main navbar -->    <!-- Page container -->
 	<div class="page-container">
 
 		<!-- Page content -->
@@ -101,7 +104,7 @@
 		                	</div>
 						</div>
 
-	                	<form class="form-validation" action="#">
+<form action="addAccountAdmin.php" method="POST"  class="form-validation" >
 							<fieldset class="step" id="validation-step1">
 								<h6 class="form-wizard-title text-semibold">
 									<span class="form-wizard-count">1</span>

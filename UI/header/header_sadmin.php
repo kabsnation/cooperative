@@ -331,6 +331,20 @@ else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
             </div>
             <!-- /main sidebar -->
 <script type="text/javascript">
+     var time =  localStorage.getItem("time");
+                console.log(time);
+      if(time == null){
+        //get time
+        $.ajax({
+            type: "POST",
+            url: "setting.php",
+            data:"",
+            success:function(data){
+                localStorage.setItem("time", data);
+                time =  localStorage.getItem("time");
+            }
+        });
+      }
         function logOut(){
             $.ajax({
             type: "POST",
@@ -342,7 +356,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
         });
         }
          setInterval(realTime1,1000);
-         setInterval(realTime2,600000);
+         setInterval(realTime2,time);
         function realTime2(){
              $.ajax({
                 type: "POST",
@@ -450,4 +464,5 @@ else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
                 window.location='CCDO_Inbox.php';
             });
         }
+
     </script>

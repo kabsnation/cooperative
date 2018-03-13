@@ -4,6 +4,7 @@ $eventmanager = $handler->getAccountById($_SESSION['idEvent']);
 $arrs = array();
 $title ="";
 $id = $_SESSION['idEvent'];
+$admin = $handler->getAccountById($id);
 $_SESSION['counter']=0;
 if(strpos($_SERVER['REQUEST_URI'],'COOP_AddServiceRequestForm.php')){
     $arrs[0]="active";
@@ -312,8 +313,21 @@ else if (strpos($_SERVER['REQUEST_URI'],'COOP_History.php')) {
             }
         });
         }
+        var time =  localStorage.getItem("time");
+      if(time == null){
+        //get time
+        $.ajax({
+            type: "POST",
+            url: "setting.php",
+            data:"",
+            success:function(data){
+                localStorage.setItem("time", data);
+                time =  localStorage.getItem("time");
+            }
+        });
+      }
          setInterval(realTime1,1000);
-         setInterval(realTime2,600000);
+         setInterval(realTime2,time);
         function realTime2(){
              $.ajax({
                 type: "POST",

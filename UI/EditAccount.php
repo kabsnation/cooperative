@@ -52,7 +52,9 @@ else
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-cogs position-left"></i> General</a></li>
                                 <li><a href="#settings" data-toggle="tab"><i class="icon-lock2 position-left"></i> Security and Login</a></li>
+                                <?php if(isset($_SESSION['idSuperAdmin'])){?>
                                 <li><a href="#realtime" data-toggle="tab"><i class="icon-bell3 position-left"></i> Realtime Notification</a></li>
+                                <?php }?>
                             </ul>
                         </div>
                     </div>
@@ -168,7 +170,7 @@ else
 
                                                         <div class="text-right">
                                                             <div class="form-group">
-                                                                <input type="button" value="Save" onclick="updateRealtime1();" class="btn btn-primary" required="required">
+                                                                <input type="submit" value="Save" onclick="updateRealtime1();" class="btn btn-primary" required="required">
                                                             </div>
                                                         </div>
 
@@ -243,6 +245,38 @@ else
             }
            
         }
+        function updateRealtime1(){
+            var time = $('#minutes').val();
+            $.ajax({
+                type: "POST",
+                url:"setting.php",
+                data:"update="+time,
+                success:function(data){
+                   success();
+                   localStorage.setItem("time", data);
+                }
+            });
+        }
+         function success(){
+                setTimeout(function(){
+                    swal({
+                        title: "Success!",
+                        text: "",
+                        type: "success"
+                        },
+                        function(isConfirm){
+                            window.location='EditAccount.php';
+                        });},500); 
+            }
+            function failed(){
+                setTimeout(function(){
+                    swal({
+                        title: "Failed!",
+                        text: "Some items has not yet been responded",
+                        type: "warning"
+                        },
+                        function(isConfirm){});},500);
+            }
     </script>
 
 </body>
