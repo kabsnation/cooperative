@@ -122,7 +122,7 @@ else {
                                                      <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label><span class="text-danger">* </span><strong>Contact Number:</strong></label>
-                                                            <input class="form-control" type="text" id="txtContactNumber" name="txtContactNumber" required="required">
+                                                            <input class="form-control" type="text" id="txtContactNumber" name="txtContactNumber" required="required" data-mask="(+63)99-999-9999" placeholder="(+63) 999-999-9999">
                                                         </div>
                                                     </div>
                                                      <div class="col-md-4">
@@ -250,6 +250,10 @@ else {
 </body>
 </form>
 <script type="text/javascript">
+
+    jQuery(function ($) {
+        $("#txtContactNumber").mask("(+63) 999-999-9999");
+    });
 
     function checkForOthers() {
         var x = document.getElementById("selectRequestedService");
