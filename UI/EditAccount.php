@@ -52,6 +52,7 @@ else
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-cogs position-left"></i> General</a></li>
                                 <li><a href="#settings" data-toggle="tab"><i class="icon-lock2 position-left"></i> Security and Login</a></li>
+                                <li><a href="#realtime" data-toggle="tab"><i class="icon-bell3 position-left"></i> Realtime Notification</a></li>
                             </ul>
                         </div>
                     </div>
@@ -100,7 +101,7 @@ else
                                                 <div class="thumbnail">
                                                     <div class="caption">
                                                         <h6 class="no-margin-top text-semibold">Change Password <a onclick="editPassword()" class="text-muted"><i class="icon-pencil4 pull-right"></i></a></h6>
-                                                        It's a good idea to use a strong password that you're not using elsewhere
+                                                        It's a good idea to use a strong password that you're not using elsewhere.
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,6 +142,43 @@ else
 
                                     </div>
 
+                                    <div class="tab-pane" id="realtime">
+                                        
+                                        <div class="row" id="changeRealtime" style="display: block;">
+                                            <div class="col-lg-6 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Change Realtime Notification<a onclick="editReal()" class="text-muted"><i class="icon-pencil4 pull-right"></i></a></h6>
+                                                        Set the time when will the system automatically notify the recipient if he/she didnt respond soon on the message inside of their Inbox.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="updateRealtime" style="display: none;">
+                                            <div class="col-lg-6 col-sm-7">
+                                                <div class="thumbnail">
+                                                    <div class="caption">
+                                                        <h6 class="no-margin-top text-semibold">Update Realtime Notification<a onclick="updateReal()" class="text-muted"><i class="icon-cross3 pull-right" title="Cancel"></i></a></h6>
+
+                                                        <div class="form-group">
+                                                            <label>Minutes:</label>
+                                                            <input type="number" id="minutes" class="form-control" min="1" />
+                                                        </div>
+
+                                                        <div class="text-right">
+                                                            <div class="form-group">
+                                                                <input type="button" value="Save" onclick="updateRealtime1();" class="btn btn-primary" required="required">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -170,6 +208,21 @@ else
             x.style.display = "block";
             y.style.display = "none";
         }
+
+        function editReal(){
+            var x = document.getElementById("changeRealtime");
+            var y = document.getElementById("updateRealtime");
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+
+        function updateReal(){
+            var x = document.getElementById("changeRealtime");
+            var y = document.getElementById("updateRealtime");
+            x.style.display = "block";
+            y.style.display = "none";
+        }
+
         function updatePass(){
             var oldpass = $('#oldpass').val();
             var oldpassword = $('#oldpassword').val();

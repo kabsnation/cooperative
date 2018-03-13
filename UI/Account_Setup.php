@@ -212,36 +212,10 @@
 
                                 <div class="form-wizard-actions">
 									<button class="btn btn-default" id="validation-back" type="reset">Back</button>
-									<button class="btn btn-info" id="validation-next" type="submit">Next</button>
-								</div>
-
-							</fieldset>
-
-							<fieldset class="step" id="validation-step3">
-								<h6 class="form-wizard-title text-semibold">
-									<span class="form-wizard-count">3</span>
-									Notification Alert
-									<small class="display-block">Set the time when will the system automatically notify the recipient if he/she didnt respond soon on the message inside of their Inbox.</small>
-								</h6>
-
-								<div class="row">
-
-									<div class="col-md-4">
-										<div class="form-group">
-                                            <label>Minutes: <span class="text-danger">*</span></label>
-                                            <input ID="txtMinute" name="txtMinute" class="form-control required" type="number" min="1"></input>
-                                        </div>
-									</div>
-
-                                </div>
-
-                                <div class="form-wizard-actions">
-									<button class="btn btn-default" id="validation-back" type="reset">Back</button>
 									<input class="btn btn-info" id="validation-next" type="submit" value="Submit">
 								</div>
 
 							</fieldset>
-
 							
 						</form>
 		            </div>
