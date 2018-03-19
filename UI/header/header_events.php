@@ -314,18 +314,22 @@ else if (strpos($_SERVER['REQUEST_URI'],'COOP_History.php')) {
         });
         }
         var time =  localStorage.getItem("time");
-      if(time == null){
+                console.log(time);
         //get time
-        $.ajax({
-            type: "POST",
-            url: "setting.php",
-            data:"",
-            success:function(data){
-                localStorage.setItem("time", data);
-                time =  localStorage.getItem("time");
-            }
-        });
-      }
+        function timee(){
+             $.ajax({
+             type: "POST",
+             url: "setting.php",
+             data:"",
+              success:function(data){
+                    if(data != time){
+                        localStorage.setItem("time", data);
+                        time =  localStorage.getItem("time");
+                    }
+                }
+            });
+        }
+        timee();
          setInterval(realTime1,1000);
          setInterval(realTime2,time);
         function realTime2(){

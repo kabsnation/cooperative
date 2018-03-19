@@ -262,18 +262,22 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
 
     <script type="text/javascript"> 
         var time =  localStorage.getItem("time");
-      if(time == null){
+                console.log(time);
         //get time
-        $.ajax({
-            type: "POST",
-            url: "setting.php",
-            data:"",
-            success:function(data){
-                localStorage.setItem("time", data);
-                time =  localStorage.getItem("time");
-            }
-        });
-      }
+        function timee(){
+             $.ajax({
+             type: "POST",
+             url: "setting.php",
+             data:"",
+              success:function(data){
+                    if(data != time){
+                        localStorage.setItem("time", data);
+                        time =  localStorage.getItem("time");
+                    }
+                }
+            });
+        }
+        timee();
         function logOut(){
             $.ajax({
             type: "POST",
