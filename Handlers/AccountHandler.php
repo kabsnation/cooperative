@@ -218,5 +218,23 @@ class AccountHandler{
 		$result = $con->select($query);
 		return $result;
 	}
+	public function updateAdmin($id,$firstname,$lastname,$middlename,$cellphonenumber,$email,$username,$password){
+		$con = new Connect();
+		$query = "UPDATE account_info JOIN accounts ON account_info.idAccount_Info = accounts.idAccount_Info SET First_Name = '$firstname', Last_Name ='$lastname' ,Cellphone_number ='$cellphonenumber', Email_Address ='$email', Username ='$username', Password = '$password' WHERE idAccounts = $id";
+		$result = $con->update($query) or trigger_error("Query Failed! SQL: $query - Error: ".mysqli_error(), E_USER_ERROR);
+		return $result;
+	}
+	public function getTime(){
+		$con = new Connect();
+		$query="SELECT time FROM setting order by idsetting desc limit 1";
+		$result = $con->select($query);
+		return $result;
+	}
+	public function updateTime($time){
+		$con = new Connect();
+		$query ="UPDATE setting SET time ='$time' order by idsetting desc limit 1 ";
+		$result = $con->update($query);
+		return $result;
+	}
 }
 ?>

@@ -218,14 +218,14 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Board of Directors:</strong></label>
                                                                 <input  ID="txtNumberOfBoardOfDirectors" 
-                                                                name="txtNumberOfBoardOfDirectors" min="1" max="99" required="required" class="form-control" type="number"></input>
+                                                                name="txtNumberOfBoardOfDirectors" min="0" required="required" class="form-control" type="number"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Employees:</strong></label>
-                                                                <input  ID="txtNumberOfEmployees" name="txtNumberOfEmployees" min="1" max="99" required="required" class="form-control" type="number"></input>
+                                                                <input  ID="txtNumberOfEmployees" name="txtNumberOfEmployees" min="0"  required="required" class="form-control" type="number"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -379,7 +379,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Cooperative Asset:</strong></label>
                                                                 <input  ID="txtTotalCooperativeAsset" 
-                                                                name="txtTotalCooperativeAsset" type="number" required="required" class="form-control" min="1" max="9999999999"></input>
+                                                                name="txtTotalCooperativeAsset" type="number" required="required" class="form-control" min="0"></input>
                                                             </div>
                                                         </div>
 
@@ -387,7 +387,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Paid-up Capital:</strong></label>
                                                                 <input  ID="txtTotalPaidUpCapital" 
-                                                                name="txtTotalPaidUpCapital" type="number" required="required" min="1" max="9999999999" class="form-control"></input>
+                                                                name="txtTotalPaidUpCapital" type="number" required="required" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -437,7 +437,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><strong>Total Volume of Sales based in Latest Financial Statement (with Members/Non-Members):</strong></label>
                                                                 <input  ID="txtTotalVolumeOfSales" 
-                                                                name="txtTotalVolumeOfSales" required="required" type="number" min="1" max="9999999999" class="form-control"></input>
+                                                                name="txtTotalVolumeOfSales" required="required" type="number" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -515,21 +515,21 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Total Number of Membership:</strong></label>
                                                                 <input  ID="txtTotalNumberOfMembership" 
-                                                                name="txtTotalNumberOfMembership" required="required" min="1" max="100" class="form-control"></input>
+                                                                name="txtTotalNumberOfMembership" required="required" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Male:</strong></label>
-                                                                <input  ID="txtMale" name="txtMale" required="required" min="1" max="100" class="form-control"></input>
+                                                                <input  ID="txtMale" name="txtMale" required="required" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Female:</strong></label>
-                                                                <input  ID="txtFemale" name="txtFemale" required="required" min="1" max="100" class="form-control"></input>
+                                                                <input  ID="txtFemale" name="txtFemale" required="required" min="0"  class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -541,7 +541,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Regular Members:</strong></label>
                                                                 <input  ID="txtNumberOfRegularMembers" 
-                                                                name="txtNumberOfRegularMembers" required="required" min="1" max="100" class="form-control"></input>
+                                                                name="txtNumberOfRegularMembers" required="required" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
 
@@ -549,7 +549,7 @@ include('../UI/header/header_admin.php');
                                                             <div class="form-group has-feedback">
                                                                 <label><span class="text-danger">* </span><strong>Number of Associate Members:</strong></label>
                                                                 <input  ID="txtNumberOfAssociateMembers" 
-                                                                name="txtNumberOfAssociateMembers" required="required" min="1" max="100" class="form-control"></input>
+                                                                name="txtNumberOfAssociateMembers" required="required" min="0" class="form-control"></input>
                                                             </div>
                                                         </div>
 

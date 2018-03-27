@@ -17,18 +17,35 @@ $accnt = $account->checkIfCoop($id);
 $arr = array();
 if($row = $accnt->fetch_array()){
     if(isset($row[0])){
-        echo "<script>change('CSRL-SDF-F02')</script>";
+        $tochange= "change('CSRL-SDF-F01');";
         $arr[0] = 1;
-        $arr[1] = 1;
-        $arr[2] = 2;
-        $arr[3] = 3;
-        $arr[4] = 4;
+        $arr[1] = 0;
+        $arr[2] = 1;
+        $arr[3] = 2;
+        $arr[4] = 3;
+        $arr[5] = 4;
+        $arr[6] = 5;
+        $vsbl = 'style="visibility: hidden;"';
     }
     else{
+        // $tochange ='';
+        // $arr[0] = 0;
+        // $arr[1] = 1;
+        // $arr[2] = 2;
+        // $arr[3] = 3;
+        // $arr[4] = 4;
+        // $arr[5] = 5;
+        // $arr[6] = 6;
+        // $vsbl = 'style="visibility: visible;"';
+         $tochange= "change('CSRL-SDF-F01');";
         $arr[0] = 1;
-        $arr[1] = 1;
-        $arr[2] = 2;
-        $arr[3] = 3;
+        $arr[1] = 0;
+        $arr[2] = 1;
+        $arr[3] = 2;
+        $arr[4] = 3;
+        $arr[5] = 4;
+        $arr[6] = 5;
+        $vsbl = 'style="visibility: hidden;"';
     }
 }
 $adminAccount = $account->getAccountById($id);
@@ -43,7 +60,8 @@ include('../UI/header/header_user.php');
                 <div class="content">
 
                     <!-- Wizard with validation -->
-                    <div class="panel panel-white">
+                    <div class="panel panel-white">  
+                        <form action="documentFunction.php" id="form1" method="POST" enctype="multipart/form-data">
                         <div class="panel-heading">
                             <h6 class="panel-title">Send Document</h6>
                             <div class="heading-elements">
@@ -53,11 +71,11 @@ include('../UI/header/header_user.php');
                             </div>
                         </div>
 
-                        <form class="form-validation" action="documentFunction.php" method="POST" enctype="multipart/form-data">
-
+                      
+                            <?php if($arr[0] == 0){?>
                             <fieldset class="step" id="validation-step1">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">1</span>
+                                    <span class="form-wizard-count"><?php echo $arr[1];?></span>
                                     Document Type
                                     <small class="display-block">First, select whether the document is either incoming or outgoing.</small>
                                 </h6>
@@ -69,23 +87,31 @@ include('../UI/header/header_user.php');
                                             <div class="row">
                                                 <div class="col-md-3"></div>
                                                 <div class="col-md-3">
-                                                    <button type="submit" id="validation-next" class="btn btn-block btn-primary" style="font-size: 15px;"><i class=" icon-file-download"></i> Incoming</button>
+<<<<<<< HEAD
+                                                    <button type="submit" id="validation-next" onclick="change(0)" class="btn btn-block btn-primary" style="font-size: 15px;"><i class=" icon-file-download"></i> Incoming</button>
                                                 </div>
 
                                                 <div class="col-md-3">
-                                                    <button type="submit" id="validation-next" class="btn btn-block btn-success" value="Outgoing" style="font-size: 15px;"><i class=" icon-file-upload"></i> Outgoing</button>
+                                                    <button type="submit" id="validation-next" onclick="change(1)" class="btn btn-block btn-success" value="Outgoing" style="font-size: 15px;"><i class=" icon-file-upload"></i> Outgoing</button>
+=======
+                                                    <button type="submit" id="validation-next" class="btn btn-block btn-primary" style="font-size: 15px;" onclick="updateDocument();" value="Incoming"><i class=" icon-file-download"></i> Incoming</button>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <button type="submit" id="validation-next1" class="btn btn-block btn-success" value="Outgoing" style="font-size: 15px;" onclick="updateDocument1();"><i class=" icon-file-upload"></i> Outgoing</button>
+>>>>>>> a0f11f3dca3b154a1391d33dbbb18b7a3971969c
                                                 </div>
                                                 <div class="col-md-3"></div>
                                             </div>
-
                                         </div>
                                     <br/><br/><br/><br/>
                                 </div>
                             </fieldset>
-
+                            <?php }?>
                             <fieldset class="step" id="validation-step2">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">2</span>
+                                     <input type="text" id="tType" class="label" name="tType" disabled="true">
+                                    <span class="form-wizard-count"><?php echo $arr[2];?></span>
                                     Choosing your Recipients
                                     <small class="display-block">Second, choose the person or department you want to send the documents.</small>
                                 </h6>
@@ -98,7 +124,7 @@ include('../UI/header/header_user.php');
                                             <table class="table datatable-html" id="table" style="font-size: 13px; width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" onchange="addToHidden(this)" ></th>
+                                                        <th style="width: 5%;"><input type="checkbox" class="styled" id="select-all"  name="select-all" onchange="addToHidden(this);" ></th>
                                                         <th style="width: 30%;">Recipients</th>
                                                         <th style="width: 20%;">Email</th>
                                                         <th style="width: 20%;">Type</th>
@@ -108,7 +134,7 @@ include('../UI/header/header_user.php');
                                                     <?php if($cooperativeProfile){
                                                         foreach($cooperativeProfile as $coop){?>
                                                     <tr>
-                                                        <td><input type="checkbox"  name="checkbox[]" onchange="addToHidden(this)" value="<?php echo $coop['idAccounts'];?>"></td>
+                                                        <td><input type="checkbox" id="checkbox[]" name="checkbox[]" onchange="addToHidden(this), addIDToTable(this);" value="<?php echo $coop['idAccounts'];?>"></td>
                                                          <td><?php echo $coop['Cooperative_Name'];?></td>
                                                          <td><?php echo $coop['Email_Address'];?></td>
                                                          <td>Cooperative</td>
@@ -117,7 +143,7 @@ include('../UI/header/header_user.php');
                                                     <?php if($departmentProfile){
                                                         foreach($departmentProfile as $dept){?>
                                                     <tr>
-                                                        <td><input type="checkbox" name="checkbox[]" value="<?php echo $dept['idAccounts'];?>" onchange="addToHidden(this)"></td>
+                                                        <td><input type="checkbox" name="checkbox[]" value="<?php echo $dept['idAccounts'];?>" onchange="addToHidden(this), addIDToTable(this);"></td>
                                                          <td><?php echo $dept['Department'];?></td>
                                                          <td><?php echo $dept['Email_Address'];?></td>
                                                          <td>Department</td>
@@ -132,14 +158,19 @@ include('../UI/header/header_user.php');
                                 </div>
 
                                 <div class="form-wizard-actions">
-                                    <button class="btn btn-default" id="validation-back" type="reset">Back</button>
+<<<<<<< HEAD
+                                    <button class="btn btn-default" id="validation-back" type="reset" <?php echo $vsbl;?>> Back</button>
                                     <button class="btn btn-info" id="validation-next" type="submit">Next</button>
+=======
+                                    <button class="btn btn-default" id="validation-back" type="reset">Back</button>
+                                    <button class="btn btn-info" id="validation-next" type="submit" onclick="passTableData();">Next</button>
+>>>>>>> a0f11f3dca3b154a1391d33dbbb18b7a3971969c
                                 </div>
                             </fieldset>
 
                             <fieldset class="step" id="validation-step3">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">3</span>
+                                    <span class="form-wizard-count"><?php echo $arr[3];?></span>
                                     Uploading the Document
                                     <small class="display-block">Third, upload the file or document you want to send.</small>
                                 </h6>
@@ -153,7 +184,6 @@ include('../UI/header/header_user.php');
                                                     <input type="file" id="file" name="file" required="required" class="file-styled" onchange="ValidateSingleInput(this); ValidateSize(this);">
                                                 </div>
                                             </center>
-
                                             <br/>
                                                 <span>NOTE: <br/>Multiple file upload is not allowed. <br/><br/>
                                                 Make sure to archive or compress the documents into a single file. (E.g. ".zip" , ".rar", etc.)
@@ -174,7 +204,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step4">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">4</span>
+                                    <span class="form-wizard-count"><?php echo $arr[4];?></span>
                                     Filling out Additional Document Details
                                     <small class="display-block">Fourth, fill out the following additional document information.</small>
                                 </h6>
@@ -185,7 +215,7 @@ include('../UI/header/header_user.php');
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="control-label"> <span class="text-danger">* </span> <strong> Document Title:</strong></label>
-                                                <textarea type="text" name="txtDocumentName" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
+                                                <textarea type="text" name="title" id="txtDocumentName" class="form-control" required="required" minlength="1" maxlength="100"></textarea>
                                             </div>
                                         </div>
 
@@ -232,7 +262,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step5">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">5</span>
+                                    <span class="form-wizard-count"><?php echo $arr[5];?></span>
                                     Adding a Message with the Document
                                     <small class="display-block">Fifth, you can add some message or remarks along with the document.</small>
                                 </h6>
@@ -254,7 +284,7 @@ include('../UI/header/header_user.php');
 
                             <fieldset class="step" id="validation-step6">
                                 <h6 class="form-wizard-title text-semibold">
-                                    <span class="form-wizard-count">6</span>
+                                    <span class="form-wizard-count"><?php echo $arr[6];?></span>
                                     Review your Transaction
                                     <small class="display-block">Lastly, in here you can review and edit back your transaction before sending it.</small>
                                 </h6>
@@ -265,7 +295,7 @@ include('../UI/header/header_user.php');
                                             <div class="col-sm-6 content-group">
                                                 <ul class="list-condensed list-unstyled">
                                                     <li><strong>Generated Tracking Number:</strong></li>
-                                                    <li><?php echo $trackingNumber;?></li>
+                                                    <li><label id="tNumber"></label></li>
                                                     <input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
                                                 </ul>
                                             </div>
@@ -274,7 +304,7 @@ include('../UI/header/header_user.php');
                                                 <div class="invoice-details">
                                                     <ul class="list-condensed list-unstyled">
                                                         <li><strong>Date Added:</strong></li>
-                                                        <li><?php echo date("m/d/Y") ?></li>
+                                                        <li><?php echo date("m/d/Y"); ?></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -284,8 +314,10 @@ include('../UI/header/header_user.php');
 
                                         <div class="row">
                                             <div class="col-md-6 col-lg-9 content-group">
-                                                <span class="text-bold text-muted" style="font-size: 15px;">Transaction Details</span>
+                                                <span class="text-muted" style="font-size: 15px;">Transaction Details</span>
                                                 <ul class="list-condensed list-unstyled">
+                                                    <li><strong>Document Circulation:</strong></li>
+                                                    <li><label id="document1"></label></li>
                                                     <li><strong>Document Title:</strong></li>
                                                     <li><label id="txtDocumentTitle"></label></li>
                                                     <li><strong>Document Type:</strong></li>
@@ -320,7 +352,7 @@ include('../UI/header/header_user.php');
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <label class="control-label"><strong>Message:</strong></label>
+                                                    <label class="control-label" style="font-size: 15px;"><strong>Message:</strong></label>
                                                     <textarea type="text" class="summernote-airmode" id="message1" name="message1" readonly="true" disabled="true"></textarea>
                                                 </div>
                                             </div>
@@ -331,11 +363,13 @@ include('../UI/header/header_user.php');
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <span class="text-bold" style="font-size: 15px;">Recipients:</span>
-                                                <table class="table datatable-html" id="table" style="font-size: 13px;"">
+                                                <table class="table datatable-html" id="table1" name="table1" style="font-size: 13px;"">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 5%;">Number</th>
-                                                            <th style="width: 95%;">Department</th>
+                                                            <th style="width: 5%;">No.</th>
+                                                            <th style="width: 30%;">Recipient</th>
+                                                            <th style="width: 35%;">Email Address</th>
+                                                            <th style="width: 30%;">Department</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -369,6 +403,19 @@ include('../UI/header/header_user.php');
 </html>
 
 <script type="text/javascript">
+    function change(value){
+        var val = document.getElementById('tType');
+        var tNumber = document.getElementById('tNumber');
+        if(value === 0){
+            tNumber.innerHTML ='CSRL-SRS-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+            val.value = 'CSRL-SRS-FO1';
+        }
+        else if(value ===1){
+            tNumber.innerHTML ='CCDO-SDF-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+            val.value = 'CCDO-SDF-FO1';
+        }
+    }
+    <?php echo $tochange;?>
     $('#txtDocumentName').on('keyup', function() {
         $('#txtDocumentName1').val($(this).val());
     });
@@ -413,6 +460,37 @@ include('../UI/header/header_user.php');
         } );
     }
 
+    function updateDocument(){
+        document.getElementById('document1').innerHTML = "Incoming";
+    }
+
+    function updateDocument1(){
+        document.getElementById('document1').innerHTML = "Outgoing";
+    }
+
+    function addIDToTable(checkbox){
+        if(checkbox.checked == true){
+            var x = document.getElementById("table").rows[0].cells;
+            alert(checkbox.value + x);
+        }
+    }
+
+    function passTableData(){
+        var TableData = new Array();
+    
+        $('#table tr').each(function(row, tr){
+            TableData[row]={
+                "No" : $(tr).find('td:eq(0)').text()
+                , "Recipients" :$(tr).find('td:eq(1)').text()
+                , "Email" : $(tr).find('td:eq(2)').text()
+                , "Type" : $(tr).find('td:eq(3)').text()
+            }
+        }); 
+        TableData.shift();  // first row is the table header - so remove
+
+        var 
+    }
+
     $('#message').summernote({
       toolbar: [
         // [groupName, [list of button]]
@@ -440,26 +518,26 @@ var table = $('#table').DataTable();
     alert('asd');
  }
 
- $('#btnSend').submit(function(ev) {
+    $('#btnSend').submit(function(ev) {
     ev.preventDefault(); // to stop the form from submitting
     /* Validations go here */
     confirm(); // If all the validations succeeded
-});
- var counter = 0;
- $('#select-all').click(function(event) {   
+    });
+    var counter = 0;
+    $('#select-all').click(function(event) {   
         if(counter ==0){
             $(':checkbox').each(function() {
                 this.checked = true;                        
             });
             counter = 1;
-            }
+        }
         else{
             $(':checkbox').each(function() {
                     this.checked = false;                        
                 });
             counter = 0;
-            }
-});
+        }
+    });
 table.columns.adjust().draw();
     function confirm(){
         swal({
@@ -481,17 +559,19 @@ table.columns.adjust().draw();
                          else{
                              $("#form1").submit(function(e) {
                                 e.preventDefault();    
-                                var formData = new FormData(this);
+                                var formData = new FormData($("#form1"));
 
                                 $.ajax({
                                     url: "documentFunction.php",
                                     type: 'POST',
                                     data: formData,
                                     success: function (data) {
-                                        success();
+                                        console.log(data);
+                                        //success();
                                     },
                                     error: function(data){
-                                        failed();
+                                        console.log(data);
+                                        //failed();
                                     },
                                     cache: false,
                                     contentType: false,
@@ -561,7 +641,6 @@ table.columns.adjust().draw();
             alert('File size exceeds 25 MB');
             $(file).val(''); //for clearing with Jquery
         } else {
-
         }
     }
 
@@ -587,22 +666,15 @@ table.columns.adjust().draw();
                         break;
                     }
                 }
-                 
                 if (!blnValid) {
                     alert("Sorry, " + sFileName + " is invalid, please refer to the allowed extensions.");
                     oInput.value = "";
                     return false;
                 }
-
-
-
             }
         }
         return true;
     }
-
-
-
     <?php
 
     if(isset($_POST['success'])){

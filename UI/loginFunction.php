@@ -15,20 +15,39 @@ if(isset($_POST["username"])&&isset($_POST["password"])){
 	if(isset($results)){
 		foreach ($results as $result) {
 			if($result['idaccount_type']==1){
-				$_SESSION["idSuperAdmin"]= $result["idAccounts"];
-				$arrs[1] ="SuperAdmin_Dashboard.php";
+				if($username =='sadmin' && $password='sadmin'){
+					$_SESSION["idsetup"]= $result["idAccounts"];
+					$arrs[1] ="Account_Setup.php";
+				}
+				else{
+					$_SESSION["idSuperAdmin"]= $result["idAccounts"];
+					$arrs[1] ="SuperAdmin_Dashboard.php";	
+				}
 			}
 			else if($result['idaccount_type']==2){
-				$_SESSION["idAccountAdmin"]= $result["idAccounts"];
-				$arrs[1] ="CCDO_AddCooperativeAccount.php";
+				if($username =='admin' && $password='admin'){
+					$_SESSION["idsetup"]= $result["idAccounts"];
+					$arrs[1] ="Account_Setup.php";
+				}
+				else{
+					$_SESSION["idAccountAdmin"]= $result["idAccounts"];
+					$arrs[1] ="CCDO_AddCooperativeAccount.php";
+				}
 			}
 			else if($result['idaccount_type']==3){
 				$_SESSION["idAccount"]= $result["idAccounts"];
-				$arrs[1] ="COOP_AddDocument1.php";
+				$arrs[1] ="COOP_AddDocument.php";
+				
 			}
 			else if($result['idaccount_type']==4){
-				$_SESSION["idEvent"]= $result["idAccounts"];
-				$arrs[1] ="COOP_AddServiceRequestForm.php";
+				if($username =='event' && $password='event'){
+					$_SESSION["idsetup"]= $result["idAccounts"];
+					$arrs[1] ="Account_Setup.php";
+				}
+				else{
+					$_SESSION["idEvent"]= $result["idAccounts"];
+					$arrs[1] ="COOP_AddEvent.php";
+				}
 			}
 			$arrs[0]= 1;
 			$audit->trail('LOGIN ACCCOUNT; ID: '. $result["idAccounts"],'SUCCESSFUL',$username);

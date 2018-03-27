@@ -27,9 +27,9 @@ function FancyTable($data,$mindate,$maxdate,$name,$type)
     $this->Cell(0,10, 'Prepared by: '.$name,0,0,'R');
     if($type==1){
         $header = array('Tracking No.', 'Title', 'Type', 'Date Added','Date Completed');
-        $w = array(30, 40, 35, 42.5,42.5);
+        $w = array(55, 50, 35, 25,25);
     }else{
-        $header = array('Title', 'Location', 'Date and Time');
+        $header = array('Title', 'Venue', 'Date and Time');
         $w = array(65, 82, 42);
     }
     $wt = array(190);

@@ -10,6 +10,7 @@ $con = $connect->connectDB();
 $target_dir = "files/";
 $target_file="";
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+echo $_POST['documentType'];
 if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['title'])){
 	$trackingNumber = $_POST['trackingNumber'];
 	$documentType = $_POST['documentType'];
@@ -17,7 +18,7 @@ if(isset($_POST['checkbox'])&& isset($_POST['documentType'])&& isset($_POST['tit
 	$message =$_POST['message'];
 	$reply = $_POST['reply'];
 	$file = "";
-	$controlNumber = $_POST['type'];
+	$controlNumber = $_POST['flow'];
 	$uploadOk=0;
 	$doneUpload=0;
 	if($_FILES['file']['size']!=0){

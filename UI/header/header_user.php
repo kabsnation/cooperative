@@ -5,7 +5,7 @@ $arrs = array();
 $title ="";
 $_SESSION['counter']=0;
 $id = $_SESSION['idAccount'];
-if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument1.php')){
+if(strpos($_SERVER['REQUEST_URI'],'COOP_AddDocument.php')){
     $arrs[0]="active";
     $arrs[1]="";
     $arrs[2]="";
@@ -230,7 +230,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                                <li>
                                     <a href="#"><i class="icon-file-text2"></i><span> Document</span></a>
                                     <ul>
-                                        <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument1.php">Send Document</a></li>
+                                        <li class="<?php echo $arrs[0]?>"><a href="COOP_AddDocument.php">Send Document</a></li>
                                         <li class="<?php echo $arrs[1]?>"><a href="COOP_DocumentList.php">Documents List</a></li>
                                     </ul>
                                 </li>
@@ -260,8 +260,24 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
             </div>
             <!--/ Main sidebar -->
 
-    <script type="text/javascript">
-
+    <script type="text/javascript"> 
+        var time =  localStorage.getItem("time");
+                console.log(time);
+        //get time
+        function timee(){
+             $.ajax({
+             type: "POST",
+             url: "setting.php",
+             data:"",
+              success:function(data){
+                    if(data != time){
+                        localStorage.setItem("time", data);
+                        time =  localStorage.getItem("time");
+                    }
+                }
+            });
+        }
+        timee();
         function logOut(){
             $.ajax({
             type: "POST",
@@ -273,7 +289,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
         });
         }
         setInterval(realTime1,1000);
-        setInterval(realTime2,600000);
+        setInterval(realTime2,time);
         function realTime2(){
              $.ajax({
                 type: "POST",
@@ -292,6 +308,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                 url: "checkerCounter.php",
                 data: "id=<?php echo $id;?>",
                 success: function(data){
+                    console.log(data);
                      if(data == 1){
                         addToCounter();
                     }
@@ -378,4 +395,5 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
                 window.location='CCDO_Inbox.php';
             });
         }
+
     </script>

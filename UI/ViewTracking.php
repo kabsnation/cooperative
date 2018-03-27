@@ -10,6 +10,7 @@ $trackingId= mysqli_real_escape_string($con,stripcslashes(trim($_GET['trackingId
 $trackInfo = $doc->getTrackingInfo($trackingId);
 $departmentProfile = $doc->getLocationDeptByTrackingNumber($trackingId);
 $cooperativeProfile = $doc->getLocationCoopByTrackingNumber($trackingId);
+$getAdmin = $doc->getAdminByTrackingNumber($trackingId);
 if(empty($trackInfo))
     echo "<script>window.location='COOP_DocumentList.php'</script>";
 if(isset($_SESSION['idSuperAdmin'])){
@@ -86,6 +87,12 @@ else{
                                                             <tbody>
                                                                 <td><?php echo $coop['Cooperative_Name'];?></td>
                                                                 <td><?php echo $coop['status'];?></td>
+                                                            </tbody>
+                                                            <?php }}?>
+                                                            <?php if($getAdmin){foreach($getAdmin as $admin){?>
+                                                            <tbody>
+                                                                <td><?php echo $admin['name'];?></td>
+                                                                <td><?php echo $admin['status'];?></td>
                                                             </tbody>
                                                             <?php }}?>
                                                         </table>

@@ -188,7 +188,7 @@ include('../UI/header/header_sadmin.php');
 		else
 			window.location ="SuperAdmin_DocumentTracker.php?date="+date+"&key=txg";
 	}
-	setInterval(realtime,1000);
+	setTimeout(realtime,1000);
 	function realtime(){
 		var date = $('#date_picker').val();
 		$.ajax({
@@ -204,7 +204,6 @@ include('../UI/header/header_sadmin.php');
             	$('#bod').html(data[4]);
             	$('#upcoming').html(data[5]);
             	document.getElementById("link").href="CCDO_ServiceRequestList.php?dash=true"; 
-            	console.log(data);
             },
            	error:function(data){
            		console.log(data);

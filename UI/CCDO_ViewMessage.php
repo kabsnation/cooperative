@@ -51,6 +51,7 @@ if($arr[1]=='tracking'){
 	$idTracking = $arr[0];
 	//check if read or not
 	$doc->checkIfRead($idTracking,$id,$idlocation);
+	
 	//check if need a reply
 	$doc->checkReply($idTracking,$id);
 	$infos = $doc->getInboxInfo($idTracking,$id,$idlocation);
@@ -273,7 +274,7 @@ else if($arr[1]=='service request'){
 									<input type="hidden" name="receiverId" value="<?php echo $receiverId;?>">
 									<input type="hidden" name="title" value="<?php echo $title;?>">
 									<input type="hidden" name="id" value="<?php echo $id;?>">
-									<input type="button" id="send" onclick="confirm(1)" class="btn bg-teal" value="Send" name="send"/>
+									<input type="button" onclick="confirm()" id="send" class="btn bg-teal" value="Send" name="send"/>
 					</div>
 					
 					<!-- /summernote editor -->
@@ -436,7 +437,7 @@ else if($arr[1]=='service request'){
 	                        url: "replyFunction.php",
 	                        data: form_data,
 	                        success: function(data){
-	                           success(data);
+	                           success();
 	                        }
 	                    });
                 	}
@@ -455,7 +456,7 @@ else if($arr[1]=='service request'){
                         type: "error"
                     });},500);
             }
-    function success(location){
+    function success(){
         setTimeout(function(){
             swal({
                 title: "Success!",
@@ -463,7 +464,7 @@ else if($arr[1]=='service request'){
                 type: "success"
                 },
                 function(isConfirm){
-                    window.location=location;
+                    location.reload();
                 });},500); 
     }
     function failed(){

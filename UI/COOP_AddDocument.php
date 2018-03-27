@@ -15,11 +15,12 @@ $id = $_SESSION['idAccount'];
 $adminAccount = $account->getAccountById($id);
 $cooperativeProfile = $account->getCoopAccounts($id);
 $departmentProfile = $account->getDepartmentAccounts($id);
+$accnt = $account->checkIfCoop($id);
+if($accnt){
+    $row = $accnt->fetch_array();
+}
 include('../UI/header/header_user.php');
 ?>
-
-            
-                
                 <!-- Main Content -->
                 <div class="content-wrapper">
 
@@ -44,12 +45,13 @@ include('../UI/header/header_user.php');
                                 <fieldset class="content-group">
                                     <div class="col-lg-12">
 
+                                        
                                         <div class="row">
                                             
                                             <div class="col-lg-6">
                                                 <label class="control-label text-bold">Tracking Number:</label>
                                                 <br/>
-                                                <label id="trackingNumber" class="label" style="color: #000; font-size: 15px;">  <?php echo $trackingNumber;?></label>
+                                                <label id="trackingNumber" class="label" style="color: #000; font-size: 15px;"><label id="tNumber"></label>
                                                     <input type="hidden" name="trackingNumber" value="<?php echo $trackingNumber;?>">
                                                 </label>
                                             </div>
@@ -69,6 +71,23 @@ include('../UI/header/header_user.php');
                                               </div>
                                             </div>
                                         </div>
+                                        <?php if(!isset($row[0])){?>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label class="display-block text-semibold"><span class="text-danger">* </span> <strong> Document Flow:</strong></label>
+                                                <label class="radio-inline radio-right">
+                                                    <input type="radio" name="flow" value="CSRL-SRS-FO1" onclick="change(0)" class="styled" checked="checked">
+                                                    Incoming
+                                                </label>
+
+                                                <label class="radio-inline radio-right">
+                                                    <input type="radio" name="flow" value="CCDO-SDF-FO1" onclick="change(1)" class="styled">
+                                                    Outgoing
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <?php }?>
+                                        <br/>
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -209,6 +228,20 @@ include('../UI/header/header_user.php');
 </body>
 </html>
 <script type="text/javascript">
+     function change(value){
+        var tNumber = document.getElementById('tNumber');
+        if(value === 0){
+            tNumber.innerHTML ='CSRL-SRS-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+        }
+        else if(value ===1){
+            tNumber.innerHTML ='CCDO-SDF-FO1 ' + '<?php echo $trackingNumber." ". date("m/d/Y");?>';
+        }
+    }
+    <?php  if(!isset($row[0])){?>
+    change(0);
+    <?php }else{?>
+        change(1);
+    <?php } ?>
     function addToHidden(checkbox){
         if(checkbox.checked == true){
             document.getElementById('checker').value='true';

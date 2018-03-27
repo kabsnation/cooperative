@@ -28,4 +28,8 @@ Handlers/SMSHandler.php
 UI/COOP_AddEvent.php
 =======
 UI/a.php
+<<<<<<< HEAD
 >>>>>>> 5767332cfb46a66ea609c8bc7404b0fff0aeedd8
+=======
+UI/header/Copyright Footer Page
+>>>>>>> 65a5eec8935c02f96c53f0d75ecd06e3e8afe06c

@@ -54,7 +54,7 @@ if($ongoing){
 				<td>'.$ong['title'].'</td>
 				<td>'.$ong['username'].'</td>
 				<td>'.$ong['DateTime'].'</td>
-				<td><a href="ViewTracking.php?trackingId='.$ong['trackingNumber'].'&dash=true">View</a></td>
+				<td><a href="ViewTracking.php?trackingId='.$ong['idTracking'].'&dash=true">View</a></td>
 			</tr>';
 	}
 }
@@ -87,7 +87,7 @@ if($finished){
 					<td>'.$done['title'].'</td>
 					<td>'.$done['username'].'</td>
 					<td>'.$done['DateTime'].'</td>
-					<td><a href="ViewTracking.php?trackingId='.$done['trackingNumber'].'&dash=true">View</a></td>
+					<td><a href="ViewTracking.php?trackingId='.$done['idTracking'].'&dash=true">View</a></td>
 				</tr>';
 	}
 }

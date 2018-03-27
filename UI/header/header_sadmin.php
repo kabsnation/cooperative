@@ -3,6 +3,7 @@ $handler = new AccountHandler();
 $admin = $handler->getAccountById($_SESSION['idSuperAdmin']);
 $arrs = array();
 $id = $_SESSION['idSuperAdmin'];
+$_SESSION['counter']=0;
 $title ="";
 if(strpos($_SERVER['REQUEST_URI'],'SuperAdmin_Dashboard.php')){
     $arrs[0]="active";
@@ -115,6 +116,17 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Inbox.php')) {
     $arrs[7]="";
     $title = "CCDO - Inbox";
 }
+else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ViewMessage.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="active";
+    $arrs[6]="";
+    $arrs[7]="";
+    $title = "CCDO - Inbox";
+}
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
     $arrs[0]="";
     $arrs[1]="";
@@ -127,6 +139,17 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_Trash.php')) {
     $title = "CCDO - Trash";
 }
 else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
+    $arrs[0]="";
+    $arrs[1]="";
+    $arrs[2]="";
+    $arrs[3]="";
+    $arrs[4]="";
+    $arrs[5]="";
+    $arrs[6]="";
+    $arrs[7]="active";
+    $title = "CCDO - Service Request Tracker";
+}
+else if (strpos($_SERVER['REQUEST_URI'],'ViewServiceRequest.php')) {
     $arrs[0]="";
     $arrs[1]="";
     $arrs[2]="";
@@ -308,6 +331,23 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
             </div>
             <!-- /main sidebar -->
 <script type="text/javascript">
+     var time =  localStorage.getItem("time");
+                console.log(time);
+        //get time
+        function timee(){
+             $.ajax({
+             type: "POST",
+             url: "setting.php",
+             data:"",
+              success:function(data){
+                    if(data != time){
+                        localStorage.setItem("time", data);
+                        time =  localStorage.getItem("time");
+                    }
+                }
+            });
+        }
+        timee();
         function logOut(){
             $.ajax({
             type: "POST",
@@ -319,7 +359,7 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
         });
         }
          setInterval(realTime1,1000);
-         setInterval(realTime2,600000);
+         setInterval(realTime2,time);
         function realTime2(){
              $.ajax({
                 type: "POST",
@@ -356,8 +396,8 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
                 url: "checkerCounter.php",
                 data: "id=<?php echo $id;?>",
                 success: function(data){
+                    console.log(data);
                      if(data == 1){
-                        console.log(data);
                         addToCounter();
                     }
                 },
@@ -427,4 +467,5 @@ else if (strpos($_SERVER['REQUEST_URI'],'CCDO_ServiceRequestList.php')) {
                 window.location='CCDO_Inbox.php';
             });
         }
+
     </script>
