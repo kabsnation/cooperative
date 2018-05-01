@@ -113,13 +113,14 @@ else if (strpos($_SERVER['REQUEST_URI'],'EditAccount.php')) {
 
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="EditAccount.php"><i class="icon-cog5"></i> Account settings</a></li>
-                        <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
+                        <li><a href="logout.php"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
     <script type="text/javascript">
+        Notification.requestPermission();
         function logOut(){
             $.ajax({
             type: "POST",

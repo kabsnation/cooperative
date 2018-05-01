@@ -1,10 +1,10 @@
 <?php
 class Connect 
 {
-	private $db_host = 'localhost';
-	private $db_user ='root';
-	private $db_pass='1234';
-	private $db_database ='coop2';
+	private $db_host = 'den1.mysql4.gear.host';
+	private $db_user ='coop';
+	private $db_pass='Vt0l!cS-wglq';
+	private $db_database ='coop';
 	private $conn = '';
 
 	public function __construct(){

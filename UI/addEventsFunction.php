@@ -69,7 +69,18 @@ if(isset($_POST['txtEventName'])){
 		}
 
 		else{
-			echo "asd";
+			$EventId=$handler->addEvent($eventName,$eventLocation,$eventDetails,$datetime[0],$datetime[1],$target_file,$idAccounts);
+
+			if($EventId != ""){
+				foreach($_POST['checkbox'] as $idAccounts){
+					echo $result = $handler->addRecipient($EventId,$idAccounts,$eventName,$eventLocation,$datetime[0],$datetime[1]);
+				} 
+
+				$audit->trail('ADD EVENT; ID: '.$EventId,'SUCCESSFUL',$idAccounts);
+			}
+			else{
+				$audit->trail('ADD EVENT; ID: '.$EventId,'FAILED',$idAccounts);
+			}
 		}
 	}
 

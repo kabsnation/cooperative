@@ -1011,6 +1011,7 @@ $info = $handler->getCoopAccountById($idCoop);
                     url: "updateCoopFunction.php",
                     data: form_data+"&id=<?php echo $idCoop;?>&idcoop="+idcoop,
                     success: function(data){
+                        console.log(data);
                         success();
                     },
                     error: function(data){

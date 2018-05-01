@@ -26,7 +26,9 @@ if(isset($_POST['txtContactPerson'])){
 	$idAccounts = "NULL";
 	$status="WAITING FOR CONFIRMATION";
 	$others = " ";
-
+	$number = explode("(+63) ", $contactnumber);
+	$number = explode("-", $number[1]);
+	echo $number = "0".$number[0].$number[1].$number[2];
 	// if(isset($_SESSION['idEvent'])){
 	// 	$idAccounts = $_SESSION['idEvent']; 
 	// }
@@ -39,13 +41,12 @@ if(isset($_POST['txtContactPerson'])){
 		$serviceID=$handler->getServiceId($requestedservice);
 	}
 	if($idAccounts=="NULL"){
-		$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,3,$venue,$serviceID,1);
+		$RequestId=$handler->addRequest($contactperson,$number,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,3,$venue,$serviceID,1);
 		$inbox=$handler->addinbox($status,$RequestId);
 	}else{
-		$RequestId=$handler->addRequest($contactperson,$contactnumber,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
+		$RequestId=$handler->addRequest($contactperson,$number,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
 		$handler->sendToDept($RequestId);
 	}
-
 
 	if($RequestId!= ""){
 			$audit->trail('ADD REQUEST; ID: '.$RequestId,'SUCCESSFUL',$idAccounts);

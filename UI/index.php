@@ -119,7 +119,10 @@ else if(isset($_SESSION['idEvent']))
 </html>
 
 <script type="text/javascript">
-    
+    Notification.requestPermission(function (result) {
+
+            console.log(result); // Chrome displays "denied"
+        });
     function submitLogin(){
         var username = $('#username').val();
         var password = $('#password').val();

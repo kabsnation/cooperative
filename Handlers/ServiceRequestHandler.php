@@ -126,6 +126,7 @@ class ServiceRequestHandler{
 			}
 			
 		}
+		return $SMSmessage;
 	}
 	public function getServiceRequestList(){
 		$con = new Connect();
@@ -141,7 +142,7 @@ class ServiceRequestHandler{
 	}
 	public function getServiceRecipient($idservice_request){
 		$con = new Connect();
-		$query = "SELECT location.status,ifnull(department.Department,concat(first_name,'-',last_name)) as name FROM service_request JOIN location ON location.idservice_request = service_request.idservice_request JOIN accounts ON accounts.idAccounts = location.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN account_info ON accounts.idAccount_Info = account_info.idAccount_Info WHERE service_request.idservice_request =$idservice_request and location.idAccounts != 3";
+		$query = "SELECT location.status,ifnull(department.Department,concat(first_name,' ',last_name)) as name FROM service_request JOIN location ON location.idservice_request = service_request.idservice_request JOIN accounts ON accounts.idAccounts = location.idAccounts LEFT OUTER JOIN department ON department.idDepartment = accounts.idDepartment LEFT OUTER JOIN account_info ON accounts.idAccount_Info = account_info.idAccount_Info WHERE service_request.idservice_request =$idservice_request and location.idAccounts != 3";
 		$result = $con->select($query);
 		return $result;
 	}	

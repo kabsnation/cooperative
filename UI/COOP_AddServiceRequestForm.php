@@ -314,11 +314,9 @@ else {
                 var textarea = document.getElementsByTagName('textarea');
                 for(var i = 0; i<inputs.length; ++i){
                     if(!inputs[i].checkValidity()){
-                        console.log(inputs[i].value);
                         return 1;
                         break;
                     }
-                    console.log(inputs[i].value);
                 }
                 for(var j =0; j<textarea.length; j++){
                     if(!textarea[j].checkValidity()){

@@ -1,6 +1,6 @@
 <?php
 require("../Handlers/AccountHandler.php");
-require ("../Handler/AuditTrail.php");
+require ("../Handlers/AuditTrail.php");
 require("../config/config.php");
 $handler = new AccountHandler();
 $audit = new AuditTrail();

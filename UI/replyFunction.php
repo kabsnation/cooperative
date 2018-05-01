@@ -122,7 +122,7 @@ else if($_POST['type']=='service request'){
 	$message = mysqli_real_escape_string($con,stripcslashes(trim($_POST['reply'])));
 	if($id==3 && $reply =='APPROVE'){
 		//send to 4 departments
-		$servicereq->approve($idservice_request,$id,$idlocation,$message);
+		echo $servicereq->approve($idservice_request,$id,$idlocation,$message);
 		$servicereq->sendToDept($idservice_request);
 		$servicereq->addHistory($idlocation,'APPROVE',$date);
 	}

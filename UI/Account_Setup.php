@@ -59,7 +59,7 @@ $id = $_SESSION['idsetup'];
 					</a>
 
 					<ul class="dropdown-menu dropdown-menu-right">
-                        <li><a onclick="logOut()"><i class="icon-switch2"></i> Logout</a></li>
+                        <li><a href="logout.php"><i class="icon-switch2"></i> Logout</a></li>
                     </ul>
 				</li>
                 <li class="dropdown dropdown-user">

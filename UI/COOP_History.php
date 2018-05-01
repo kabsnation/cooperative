@@ -55,7 +55,7 @@ else{
                                                                     <th>Title</th>
                                                                     <th>Status</th>
                                                                     <th>Date</th>
-                                                                    <th>Receipients</th>
+                                                                    <th>Recipients</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>

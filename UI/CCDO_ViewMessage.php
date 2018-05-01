@@ -437,6 +437,7 @@ else if($arr[1]=='service request'){
 	                        url: "replyFunction.php",
 	                        data: form_data,
 	                        success: function(data){
+	                        	console.log(data);
 	                           success();
 	                        }
 	                    });
