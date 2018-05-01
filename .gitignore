@@ -2,7 +2,6 @@ UI/sam.php
 UI/sama.php
 UI/sample.php
 UI/files/1514704493.ttf
-<<<<<<< HEAD
 *.jpg
 *.sql
 *.rar
@@ -10,26 +9,7 @@ UI/files/1514704493.ttf
 *.docx
 UI/files/1514811263.docx
 UI/files/1516216914.pdf
-=======
 *.docx
 *.zip
 *.jpg
->>>>>>> bdd1b05e00071451a122445d11695ed18c2add86
 *.dat
-<<<<<<< HEAD
-config/config.php
-config/config.php
-=======
-UI/CCDO_ViewAndUpdateDepartmentProfile.php
->>>>>>> 12d08107788615c0419e10eb9dfd01b1c745490f
-<<<<<<< HEAD
-Handlers/EventHandler.php
-Handlers/SMSHandler.php
-UI/COOP_AddEvent.php
-=======
-UI/a.php
-<<<<<<< HEAD
->>>>>>> 5767332cfb46a66ea609c8bc7404b0fff0aeedd8
-=======
-UI/header/Copyright Footer Page
->>>>>>> 65a5eec8935c02f96c53f0d75ecd06e3e8afe06c
