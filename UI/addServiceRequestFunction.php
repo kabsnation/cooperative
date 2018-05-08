@@ -1,0 +1,60 @@
+ <?php 
+session_start();
+require("../config/config.php");
+require("../Handlers/ServiceRequestHandler.php");
+require("../Handlers/AuditTrail.php");
+$audit = new AuditTrail();
+$handler = new ServiceRequestHandler();
+$connect = new Connect();
+$con = $connect-> connectDB();
+date_default_timezone_set('Asia/Manila');
+
+if(isset($_POST['txtContactPerson'])){
+	$contactperson= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtContactPerson'])));
+	$contactnumber= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtContactNumber'])));
+	$email= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtEmail'])));
+	$address= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtAddress'])));
+	$date= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtActivityDate'])));
+	$time= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtTime'])));
+	$organization= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOrganization'])));
+	$participants= mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtExpected'])));
+	$requestedservice= mysqli_real_escape_string($con,stripcslashes(trim($_POST['selectRequestedService'])));
+	$venue = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtVenue'])));
+	$datecreated = date("m/d/Y");
+	$timecreated = date("h:i:sa");
+	$serviceID= "NULL";
+	$idAccounts = "NULL";
+	$status="WAITING FOR CONFIRMATION";
+	$others = " ";
+	$number = explode("(+63) ", $contactnumber);
+	$number = explode("-", $number[1]);
+	echo $number = "0".$number[0].$number[1].$number[2];
+	// if(isset($_SESSION['idEvent'])){
+	// 	$idAccounts = $_SESSION['idEvent']; 
+	// }
+
+	if(isset($_POST['txtOthers'])){
+		$others = mysqli_real_escape_string($con,stripcslashes(trim($_POST['txtOthers'])));
+	}
+
+	if($requestedservice!=7){
+		$serviceID=$handler->getServiceId($requestedservice);
+	}
+	if($idAccounts=="NULL"){
+		$RequestId=$handler->addRequest($contactperson,$number,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,3,$venue,$serviceID,1);
+		$inbox=$handler->addinbox($status,$RequestId);
+	}else{
+		$RequestId=$handler->addRequest($contactperson,$number,$email,$address,$date,$time,$organization,$participants,$others,$datecreated,$timecreated,$idAccounts,$venue,$serviceID);
+		$handler->sendToDept($RequestId);
+	}
+
+	if($RequestId!= ""){
+			$audit->trail('ADD REQUEST; ID: '.$RequestId,'SUCCESSFUL',$idAccounts);
+	}
+	else{
+		$audit->trail('ADD REQUEST; ID: '.$RequestId,'FAILED',$idAccounts);
+	}
+}
+else
+echo "asdasdasda";
+?>
